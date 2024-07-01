@@ -17,9 +17,9 @@ class Board extends Sequelize.Model {
                 allowNull: false,
             },
             type: {
-                type: Sequelize.ENUM(1, 2, 3, 4, 5, 6, 7),
+                type: Sequelize.ENUM('어학', '취업', '고시/공무원', '프로그래밍', '취미/교양', '기타'),
                 allowNull: false,
-                defaultValue: 7,
+                defaultValue: '기타',
             },
             number: {
                 type: Sequelize.INTEGER,
@@ -44,7 +44,9 @@ class Board extends Sequelize.Model {
             collate: 'utf8mb4_general_ci',
         });
     }
-    static associate(db) {}
+    static associate(db) {
+        db.Board.belongsTo(db.User);
+    }
 }
 
 module.exports = Board

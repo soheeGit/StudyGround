@@ -8,12 +8,20 @@ const expressReactViews = require('express-react-views');
 
 dotenv.config();
 const pageRouter = require('./routes/page')
+const { sequelize } = require('./models')
 
 const server = express();
 server.set('port', process.env.PORT || 5000);
 server.set('view engine', 'jsx')
 server.engine('jsx', expressReactViews.createEngine());
 server.set('views', path.join(__dirname, 'client'));
+sequelize.sync({ force: false })
+    .then(() => {
+        console.log('데이터베이스 연결 성공')
+    })
+    .catch((err) => {
+        console.log(err);
+    })
 
 server.use(morgan('dev'));  //현재 개발용. 배포할때 combined로 바꿔야함
 server.use(express.json())

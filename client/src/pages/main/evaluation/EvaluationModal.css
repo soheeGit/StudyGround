@@ -1,0 +1,36 @@
+.evaluation-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  border: 1px solid black;
+  text-align: center; 
+}
+
+  .evaluation-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: black; /* 텍스트 색상은 원하는 대로 조정하세요 */
+    font-size: 20px; /* 원하는 폰트 크기로 조정하세요 */
+    background-color: white;
+    width: 440px;
+  }
+/*   
+  .icon {
+    display: block;
+    width: 100%;
+    height: auto;
+  } */
+  
+  .evaluation-button button{
+    background-color: #5CAD73;
+    border: none;
+    color: white;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+  }

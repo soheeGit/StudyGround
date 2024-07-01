@@ -28,6 +28,7 @@ class User extends Sequelize.Model {
             type: {
                 type: Sequelize.ENUM('선구자', '탐구자', '지도자', '추진자', '수행자', '전략판단가', '완주자', '환기자', '전문가'),
                 allowNull: false,
+                defaultValue: '선구자'
             } 
         }, {
             sequelize,
@@ -40,7 +41,9 @@ class User extends Sequelize.Model {
             collate: 'utf8_general_ci',
         });
     }
-    static associate(db) {}
+    static associate(db) {
+        db.User.hasMany(db.Board);
+    }
 };
 
 module.exports = User;

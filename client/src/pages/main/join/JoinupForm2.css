@@ -1,0 +1,100 @@
+  .joinup-form-container {
+    width: 580px;
+    margin: 0 auto;
+    padding: 20px;
+    position: absolute;
+    top: 70%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    overflow: auto; 
+  }
+  
+  .joinup-form-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .joinup-form-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .infoTextFrame {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .userInputFrame {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 550px; 
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .userInputFrame .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .userInputFrame .joinupInput-name {
+    margin-right: 16px;
+    width: 150px;
+    margin-top: -22px;
+  }
+  
+  .userInputFrame input {
+    padding: 10px;
+    margin-bottom: 24px;
+    border: 1px solid rgb(153, 153, 153);
+    border-radius: 3px;
+    width: 100%; 
+    background-color: #FFFBFB;
+  }
+
+  .userInputFrame input ::placeholder{
+    color: #B7ADAD;
+  }
+  
+  .joinup-form-container .JoinupForm-next{
+    padding: 10px;
+    background-color: #5CAD73;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .input-group p{
+    margin-top:-10px;
+    margin-left: 10px;
+    margin-right: 20px;
+  }
+
+  .duplicate-check-button {
+    width: 100px;
+    height: 35px;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid rgb(79, 180, 103);
+    color: rgb(79, 180, 103);
+    cursor: pointer;
+    padding-top: 5px;
+    float:right;
+    margin-right: 400px;
+    margin-top: 162px;
+  }
+  
+  .duplicate-check-button:hover {
+    background-color: rgb(79, 180, 103);
+    color: white;
+  }
+
+ 

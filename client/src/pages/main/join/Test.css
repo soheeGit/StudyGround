@@ -1,0 +1,110 @@
+.Text-Column{
+    width: 60%;
+    margin-top: 50px;
+    margin-left: 340px;
+}
+
+table {
+    border-collapse: collapse;
+}
+   
+th, td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.table-row {
+  display: block;
+  margin-bottom: 20px; 
+  width: 800px;
+  
+}
+
+.Test-button button{
+  padding: 10px;
+  background-color: #5CAD73;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 15%;
+  display: inline-block; 
+}  
+
+.Test-button {
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 10px;
+}
+
+.row-0 {
+  background-color: #FFE9E9; 
+}
+
+.row-1 {
+  background-color: #FFF3E9; 
+}
+
+.row-2 {
+  background-color: #FFFFE9;
+}
+
+.row-3 {
+  background-color: #E9FFE9; 
+}
+
+.row-4 {
+  background-color: #E9FFF8; 
+}
+
+.row-5 {
+  background-color: #E9F4FF;
+}
+
+.row-6 {
+  background-color: #ECE9FF; 
+}
+
+.row-7 {
+  background-color: #FFE9FE;
+}
+
+.row-8 {
+  background-color: #FFE9E9;
+}
+
+.text-top{
+  width: 580px;
+  height: 95px;
+  background-color: #E8FFEE;
+  text-align: center;
+  padding-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  border-radius: 10px;
+  border: 1px solid #8A8A8A;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+
+}
+
+
+.nickname, .personality {
+  width: 150px;
+  text-align: center;
+
+}
+
+.personality{
+  margin-left: 360px;
+  margin-bottom: 12px;
+}
+
+.nickname{
+  margin-bottom: -21px;
+}

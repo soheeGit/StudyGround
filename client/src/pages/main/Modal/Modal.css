@@ -1,0 +1,16 @@
+.ReactModal__Overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: rgba(28, 28, 28, 0.5) !important; /* semi-transparent gray overlay */
+}
+
+.ReactModal__Content {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    padding: 20px;
+    border-radius: 5px;
+    outline: none;
+}
+

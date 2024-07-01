@@ -1,0 +1,75 @@
+*{
+    font-family: "Imprima", sans-serif;
+}
+
+.Detail-page{
+    position: absolute;
+    margin-top: 45px;
+    left: 50%;
+    transform: translate(-50%, 0); /* 정가운데에 위치 */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* 세로방향으로 */
+    text-align: center;
+    border-radius: 10px;
+    background-color: white;
+    width: 500px;
+    height: 600px;
+    border: 1px solid #c4c4c4;
+}
+
+.Detail-top {
+    background-image: url('../../../assets/배경.png'); 
+    background-size: cover; 
+    background-position: center; 
+    height: 140px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.detailTitle{
+    width: 270px;
+    height: 60px;
+    background-color: rgb(235, 235, 235);
+    margin: 30px auto;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.detailMid {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽으로 정렬 */
+    margin-top: 25px;
+    margin-left: 20px;
+}
+    
+.contentName{
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.detail-content{
+    margin-bottom: 22px;
+}
+
+.contentText{
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.detail-participate {
+    background-color: #9AE3FA; 
+    border: none; 
+    color: black; 
+    text-align: center; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border-radius: 40px; 
+    width: 180px;
+    height: 45px;
+    margin: 10px auto;
+}
