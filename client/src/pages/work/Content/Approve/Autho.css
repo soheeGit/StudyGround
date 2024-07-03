@@ -1,0 +1,134 @@
+.container {
+  margin: 20px 50px 20px 50px;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  font-size: 0.9em;
+  color: #8a8a8a;
+}
+
+.tab-selector {
+  margin-bottom: 20px;
+}
+
+.tab-selector button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1em;
+  border-bottom: 3px solid transparent;
+  color: #8a8a8a;
+}
+
+.tab-selector button.active {
+  border-bottom: 3px solid black;
+  color: black;
+}
+
+.study-group {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.study-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+#span1 {
+  font-weight: bold;
+}
+.study-date {
+  color: #8a8a8a;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.study-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatars {
+  display: flex;
+  gap: 5px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.participant-box {
+  border: 2px solid;
+  padding: 10px;
+  border-radius: 40px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+}
+
+.participant-box.yellow {
+  border-color: yellow;
+}
+
+.participant-box.red {
+  border-color: red;
+}
+
+.participant-box.green {
+  border-color: green;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-row span {
+  margin-right: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.accept-btn {
+  background-color: #e0f7fa;
+}
+
+.reject-btn {
+  background-color: #ffebee;
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background-color: #f0f0f0;
+}
