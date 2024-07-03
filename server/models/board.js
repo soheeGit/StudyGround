@@ -3,6 +3,12 @@ const Sequelize = require('sequelize')
 class Board extends Sequelize.Model {
     static initiate(sequelize) {
         Board.init({
+            bId: {
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+                allowNull: false,
+            },
             bName: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -49,7 +55,7 @@ class Board extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Board.belongsTo(db.User);
+        db.Board.belongsToMany(db.User, { through: 'BoardUser', foreignKey: 'boardId' });
         db.Board.hasMany(db.Schedule);
     }
 }
