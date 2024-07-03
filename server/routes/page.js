@@ -1,16 +1,31 @@
-const express = require('express')
-const {isLoggedIn, isNotLoggedIn} = require('../middlewares')
-const {renderLogin, renderProfile, renderJoin, renderMain} = require('../controllers/page')
-const router = express.Router();    //모듈식 마운팅 가능한 핸들러 작성
+const express = require('express');
+const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
+const { getBoardData, postBoardData } = require('../controllers/page');
+const router = express.Router();
 
 router.use((req, res, next) => {
-    res.locals.user = req.user;     //라우터에서 공통적으로 사용할 수 있는 데이터 만들어줌
+    res.locals.user = req.user; // 인증된 사용자 정보 설정
     next();
-})
+});
 
-router.get('/login', isNotLoggedIn, renderLogin);
-router.get('/profile', isLoggedIn, renderProfile);
-router.get('/join', isNotLoggedIn, renderJoin);
-router.get('/', renderMain);
+// 데이터 조회
+router.get('/boards', isLoggedIn, async (req, res, next) => {
+    try {
+        const data = await getBoardData();
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+});
+
+// 데이터 등록
+router.post('/boards', isLoggedIn, async (req, res, next) => {
+    try {
+        const result = await postBoardData(req.body);
+        res.status(201).json(result);
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;

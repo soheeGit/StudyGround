@@ -8,14 +8,14 @@ module.exports = () => {
         clientID: process.env.KAKAO_ID,
         callbackURL: '/auth/kakao/callback',
     }, async (accessToken, refreshToken, profile, done) => {
-        console.log('kakao profile', profile)
+        console.log('profile', profile)
         try {
             const exUser = await User.findOne({
                 where: {snsId: profile.id, provider: 'kakao'},
             });
-            if(exUser){
+            if(exUser){ //로그인
                 done(null, exUser)
-            } else {
+            } else {    //회원가입
                 const newUser = await User.create({
                     uEmail: profile._json?.kakao_account?.email,
                     uId: profile.displayname,

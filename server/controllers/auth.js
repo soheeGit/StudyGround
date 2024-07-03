@@ -1,8 +1,12 @@
 const bcrypt = require('bcrypt')
 const passport = require('passport')
-const User = require('../../models/user')
+const User = require('../models/user')
 
 exports.join = async(req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const {uId, uEmail, uPassword, uName, uNumber, uBirth, uSex, uType} = req.body;
     try{
         const exUser = await User.findOne( {where: { uId } })

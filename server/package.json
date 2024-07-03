@@ -4,11 +4,11 @@
   "description": "다양한 기능을 통합한 스터디 플랫폼",
   "main": "server.js",
   "scripts": {
-    "client": "cd client && npm start",
-    "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "client": "cd ../client && npm start",
+  "server": "nodemon server.js",
+  "dev": "concurrently \"npm run server\" \"npm run client\"",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "author": "63wlsthgml",
   "license": "MIT",
   "dependencies": {

@@ -6,7 +6,7 @@ const session = require('express-session')
 const dotenv = require('dotenv')
 const passport = require('passport')
 
-dotenv.config();    //process.env 만들어줌
+dotenv.config({path: path.join(__dirname, '../.env')});    //process.env 만들어줌
 
 const pageRouter = require('./routes/page')
 const authRouter = require('./routes/auth')

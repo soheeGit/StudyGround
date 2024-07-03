@@ -1,16 +1,17 @@
-exports.renderLogin = (req, res) => {
-    res.render('main/login/Login', {title:'로그인'})
+const Board = require('../models/board');
+
+exports.getBoardData = async () => {
+    try {
+        return await Board.findAll(); // 데이터베이스에서 데이터 조회
+    } catch (error) {
+        throw new Error('데이터 조회 실패');
+    }
 };
-exports.renderProfile = (req, res) => {
-    res.render('main/profile', {title:'내 정보'})
-};
-exports.renderJoin = (req, res) => {
-    res.render('main/join/JoinupForm2', {title:'회원 가입'})
-};
-exports.renderMain = (req, res, next) => {
-    const boards = [];
-    res.render('main', {
-        title: 'studyground',
-        boards,
-    });
+
+exports.postBoardData = async (data) => {
+    try {
+        return await Board.create(data); // 데이터베이스에 데이터 추가
+    } catch (error) {
+        throw new Error('데이터 추가 실패');
+    }
 };
