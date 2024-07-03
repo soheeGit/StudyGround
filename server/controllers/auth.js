@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const passport = require('passport')
-const User = require('../models/user')
+const User = require('../../models/user')
 
 exports.join = async(req, res, next) => {
     const {uId, uEmail, uPassword, uName, uNumber, uBirth, uSex, uType} = req.body;
