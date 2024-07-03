@@ -3,35 +3,39 @@ const Sequelize = require('sequelize')
 class Board extends Sequelize.Model {
     static initiate(sequelize) {
         Board.init({
-            boardId: {
-                type: Sequelize.INTEGER,
+            bName: {
+                type: Sequelize.STRING,
                 allowNull: false,
-                unique: true,
             },
-            content: {
+            bDescription: {
                 type: Sequelize.STRING(140),
                 allowNull: false,
             },
-            count: {
+            bCurrentNumber: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 1,
+            },
+            bTotalNumber: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            type: {
+            bType: {
                 type: Sequelize.ENUM('어학', '취업', '고시/공무원', '프로그래밍', '취미/교양', '기타'),
                 allowNull: false,
                 defaultValue: '기타',
             },
-            number: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
+            bRules: {
+                type: Sequelize.STRING(140),
+                allowNull: true,
             },
-            startDate: {
+            bStartDate: {
                 type: Sequelize.DATE, 
                 allowNull: false, 
             },
-            closingDate: {
+            bClosingDate: {
                 type: Sequelize.DATE, 
-                allowNull: false,
+                allowNull: true,
             },
         }, {
             sequelize,
@@ -46,6 +50,7 @@ class Board extends Sequelize.Model {
     }
     static associate(db) {
         db.Board.belongsTo(db.User);
+        db.Board.hasMany(db.Schedule);
     }
 }
 

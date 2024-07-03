@@ -57,7 +57,8 @@ exports.login = (req, res, next) => {
                     uId: user.uId,
                     uEmail: user.uEmail,
                     uType: user.uType,
-                    createdAt: user.createdAt
+                    createdAt: user.createdAt,
+                    uStarRating: user.uStarRating,
                 }
             });
         })
