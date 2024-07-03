@@ -48,7 +48,7 @@ server.use('/api', pageRouter);
 server.use('/auth', authRouter);
 
 server.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 })
 
 server.use((req, res, next) => {
@@ -62,9 +62,9 @@ server.use((err, req, res, next) => {
     res.status(err.status || 500);
 
     if (err.status === 404) {
-        res.sendFile(path.join(__dirname, 'views', '404.html'));
+        res.sendFile(path.join(__dirname, '../client/build', '404.html'));
     } else {
-        res.sendFile(path.join(__dirname, 'views', '500.html'));
+        res.sendFile(path.join(__dirname, '../client/build', '500.html'));
     }
 });
 

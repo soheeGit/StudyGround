@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const User = require('../models/user')
+const { validationResult } = require('express-validator');
 
 exports.join = async(req, res, next) => {
     const errors = validationResult(req);
@@ -24,7 +25,10 @@ exports.join = async(req, res, next) => {
             uSex,
             uType,
         });
-        return res.redirect('/')
+        return res.status(201).json({
+            success: true,
+            message: '회원가입 성공',
+        });
     } catch (error) {
         console.error(error);
         return next(error)
@@ -45,7 +49,17 @@ exports.login = (req, res, next) => {
                 console.error(loginError)
                 return next(loginError)
             }
-            return res.redirect('/')
+            return res.status(200).json({
+                success: true,
+                message: '로그인 성공',
+                user: {
+                    id: user.id,
+                    uId: user.uId,
+                    uEmail: user.uEmail,
+                    uType: user.uType,
+                    createdAt: user.createdAt
+                }
+            });
         })
     })(req, res, next);
 }
