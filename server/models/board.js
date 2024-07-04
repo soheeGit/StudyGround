@@ -43,6 +43,14 @@ class Board extends Sequelize.Model {
                 type: Sequelize.DATE, 
                 allowNull: true,
             },
+            leaderId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users', 
+                    key: 'id'
+                }
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -57,6 +65,7 @@ class Board extends Sequelize.Model {
     static associate(db) {
         db.Board.belongsToMany(db.User, { through: 'BoardUser', foreignKey: 'boardId' });
         db.Board.hasMany(db.Schedule);
+        db.Board.belongsTo(db.User, { as: 'Leader', foreignKey: 'leaderId' });
     }
 }
 

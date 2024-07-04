@@ -67,6 +67,7 @@ class User extends Sequelize.Model {
         db.User.belongsToMany(db.Board, { through: 'BoardUser', foreignKey: 'userId' });
         db.User.hasMany(db.Review, { as: 'ReviewsWritten', foreignKey: 'reviewerId' });
         db.User.hasMany(db.Review, { as: 'ReviewsReceived', foreignKey: 'revieweeId' });
+        db.User.hasMany(db.Board, { as: 'OwnedBoards', foreignKey: 'leaderId' });
     }
 };
 
