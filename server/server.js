@@ -18,7 +18,7 @@ passportConfig();
 server.set('port', process.env.PORT || 5000);
 server.set('view engine', 'html');
 server.set('views', path.join(__dirname, 'views'));
-sequelize.sync({ force: false })
+sequelize.sync({ force: false })    //배포할때 true로 바꾸기
     .then(() => {
         console.log('데이터베이스 연결 성공')
     })

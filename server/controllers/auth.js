@@ -12,7 +12,7 @@ exports.join = async(req, res, next) => {
     try{
         const exUser = await User.findOne( {where: { uId } })
         if(exUser) {
-            return res.redirect('/join?error=exist')
+            return res.status(400).json({ error: '이미 존재하는 사용자입니다.' });
         }
         const hash = await bcrypt.hash(uPassword, 12)
         await User.create({
@@ -42,7 +42,7 @@ exports.login = (req, res, next) => {
             return next(authError);
         }
         if(!user) {
-            return res.redirect(`/?error=${info.message}`)
+            return res.status(401).json({ error: info.message });
         }
         return req.login(user, (loginError) => {
             if(loginError) {
