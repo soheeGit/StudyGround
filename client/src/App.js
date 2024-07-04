@@ -12,6 +12,7 @@ import Chat from "./pages/work/Content/Chat/Chat";
 import BigCalendar from "./pages/work/Content/Calendar/Calendar";
 import Board from "./pages/work/Content/Board/Board";
 import Storage from "./pages/work/Content/Storage/Storage";
+import Autho from './pages/work/Content/Approve/Autho';
 
 function App() {
   return (

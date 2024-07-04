@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import './Work.css';
-import Sidebar from './Sidebar/Sidebar';
+import Sidebar from './sidebar/Sidebar'
 import WorkHeader from './WorkHeader';
 import DashBoard from './Content/Dashboard/DashBoard';
 

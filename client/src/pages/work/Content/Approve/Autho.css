@@ -1,4 +1,4 @@
-.container {
+.approve-container {
   margin: 20px 50px 20px 50px;
   padding: 20px;
 }
@@ -34,14 +34,22 @@ h1 {
 }
 
 .study-group {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.study-header {
+.autho-header-container {
   display: flex;
-  align-items: center;
-  margin-bottom: 5px;
+  width: 100%;
+}
+
+.autho-header-right {
+  margin-left: auto;
+}
+
+.header-participant-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 #span1 {
   font-weight: bold;
@@ -59,71 +67,106 @@ h1 {
   margin-bottom: 10px;
 }
 
-.avatars {
-  display: flex;
-  gap: 5px;
-}
+/* 현재 작업부분 */
 
-.avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #ddd;
+.participant-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .participant-box {
-  border: 2px solid;
+  display: flex;
+  width: 40%;
+  border: 3px solid;
   padding: 10px;
   border-radius: 40px;
   margin-top: 10px;
+  margin-left: 50px;
+  margin-bottom: 10px;
   background-color: #f9f9f9;
 }
-
-.participant-box.yellow {
-  border-color: yellow;
-}
-
 .participant-box.red {
   border-color: red;
 }
-
+.participant-box.orange {
+  border-color: orange;
+}
+.participant-box.yellow {
+  border-color: #fffa8c;
+}
 .participant-box.green {
   border-color: green;
 }
-
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.participant-box.blue {
+  border-color: blue;
+}
+.participant-box.navy {
+  border-color: navy;
+}
+.participant-box.purple {
+  border-color: purple;
 }
 
-.info-row span {
-  margin-right: 20px;
+#participant-message {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+.participant-info-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+}
+
+.participant-info-box1 {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.participant-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-title {
+  text-align: center;
+  color: #6b6b6b;
+}
+.info-content {
+  text-align: center;
 }
 
 .buttons {
+  width: 40%;
+  height: 100%;
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-left: auto;
-}
-
-button {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  font-size: 0.9em;
+  margin-top: 16px;
 }
 
 .accept-btn {
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 0.9em;
   background-color: #e0f7fa;
 }
 
 .reject-btn {
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 0.9em;
   background-color: #ffebee;
 }
 

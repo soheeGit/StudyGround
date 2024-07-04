@@ -1,7 +1,7 @@
 /* work페이지 상단의 공통적인 header입니다. 프로필 아이콘, 알림 아이콘등이 해당됩니다. */
 
 import React, { useState } from 'react';
-import './WorkHeader.css';
+import './WorkHeader.css'
 import Avatar from 'antd/es/avatar/avatar';
 import { BellOutlined, CaretDownOutlined } from '@ant-design/icons';
 

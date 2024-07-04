@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.css';
-import logo1 from '../../Assets/logo1.png';
 import SidebarItem from './SidebarItem';
 import GroupSelector from './GroupSelector';
+import logo1 from '../../../assets/logo1.png'
 import { AiFillHome } from 'react-icons/ai'; /* dashboard icon */
 import { FaVideo } from 'react-icons/fa';
 import { IoChatboxEllipses } from 'react-icons/io5';
