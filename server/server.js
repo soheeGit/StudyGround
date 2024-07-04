@@ -11,6 +11,7 @@ dotenv.config({path: path.join(__dirname, '../.env')});    //process.env 만들�
 const reviewRouter = require('./routes/review')
 const pageRouter = require('./routes/page')
 const authRouter = require('./routes/auth')
+const storageRouter = require('./routes/storage')
 const { sequelize } = require('./models')
 const passportConfig = require('./passport')
 
@@ -48,6 +49,7 @@ server.use(passport.session())
 server.use('/api', pageRouter);
 server.use('/auth', authRouter);
 server.use('/reviews', reviewRouter);
+server.use('/storage', storageRouter);
 
 server.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
