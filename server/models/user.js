@@ -45,13 +45,13 @@ class User extends Sequelize.Model {
             uType: {
                 type: Sequelize.ENUM('선구자', '탐구자', '지도자', '추진자', '수행자', '전략판단가', '완주자', '환기자', '전문가'),
                 allowNull: false,
-                defaultValue: '선구자'
+                defaultValue: '선구자',
             },
-            uStarRating: {
-                type: Sequelize.FLOAT,
-                allowNull: true,
-                defaultValue: 0.0
-            } 
+            uLevel: {
+                type: Sequelize.ENUM('하양', '빨강', '주황', '노랑', '초록', '파랑', '보라'),
+                allowNull: false,
+                defaultValue: '하양',
+            },
         }, {
             sequelize,
             timestamps: true,

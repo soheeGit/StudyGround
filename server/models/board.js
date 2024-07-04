@@ -41,7 +41,7 @@ class Board extends Sequelize.Model {
             },
             bClosingDate: {
                 type: Sequelize.DATE, 
-                allowNull: true,
+                allowNull: false,
             },
             leaderId: {
                 type: Sequelize.INTEGER,
