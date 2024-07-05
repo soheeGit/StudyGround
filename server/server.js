@@ -5,7 +5,7 @@ const path = require('path')
 const session = require('express-session')
 const dotenv = require('dotenv')
 const passport = require('passport')
-const cors = require('cors');
+const cors = require('cors')
 
 dotenv.config({path: path.join(__dirname, '../.env')});    //process.env 만들어줌
 
@@ -29,7 +29,7 @@ sequelize.sync({ force: false })    //배포할때 true로 바꾸기
         console.log(err);
     })
 
-server.use(cors());
+server.use(cors());    
 server.use(morgan('dev'));  //현재 개발용. 배포할때 combined로 바꿔야함
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use(express.json())
@@ -44,6 +44,7 @@ server.use(session({
         secure: false,  //https 적용할때 true로 바꿔야함
     }
 }));
+server.use(cors());
 
 server.use(passport.initialize())
 server.use(passport.session())
