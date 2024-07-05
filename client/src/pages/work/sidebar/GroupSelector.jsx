@@ -41,9 +41,9 @@ function GroupSelector() {
   };
 
   return (
-    <div className="select-container">
+    <div className='select-container'>
       <select value={selectedGroup} onChange={handleSelect}>
-        <option value="">스터디를 선택하세요</option>
+        <option value=''>스터디를 선택하세요</option>
         {groups.map((group) => (
           <option key={group.id} value={group.title}>
             {group.title}

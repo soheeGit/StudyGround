@@ -7,7 +7,7 @@
     "@ckeditor/ckeditor5-react": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@tanstack/react-query": "^5.49.2",
+    "@tanstack/react-query": "^5.50.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
