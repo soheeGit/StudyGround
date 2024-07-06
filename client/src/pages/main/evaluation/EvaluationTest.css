@@ -1,107 +1,107 @@
 .evaluation-container {
-    width: 50%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .evaluation-container h1 {
-    text-align: left;
-    font-size: 30px;
-    margin-bottom: 20px;
-  }
-  
-  .team-select,
-  .rating-section,
-  .compliments-section,
-  .comments-section {
-    margin-bottom: 20px;
-  }
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-  .team-select label,
-  .rating-section label,
-  .compliments-section label,
-  .comments-section label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    
-  }
-  
-  .team-select p{
-    color: #757575;
-    font-size: 12px;
-  }
+.evaluation-container h1 {
+  text-align: left;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
 
-  .comments-section textarea {
-    width: 80%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-left: 120px;
-    margin-top: -22px;
-  }
-  
-  .team-select select{
-    width: 15%;
-  }
+.team-select,
+.rating-section,
+.compliments-section
+{
+  margin-bottom: 20px;
+}
 
-  .stars {
-    display: flex;
-    margin-left: 100px;
-    margin-top: -42px;
-  }
-  
-  .star {
-    font-size: 30px;
-    cursor: pointer;
-    color: white;
-    -webkit-text-stroke: 1px black; 
-  }
-  
-  .star.selected {
-    color: #ffd700;
-    -webkit-text-stroke: 1px black;
-  }
-  
-  .compliments-options {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 100px;
-    margin-top: -35px;
-  }
-  
-  .compliment-option {
-    width: 45%;
-    margin: 5px 0;
-    display: flex;
-    align-items: center;
-    
-  }
-  
-  .compliment-option input {
-    margin-right: 8px;
-  }
+.comments-section 
+{
+  margin-bottom: 70px ;
+}
 
-  .comments-section textarea {
-    height: 100px;
-    resize: vertical;
-  }
+.team-select label,
+.rating-section label,
+.compliments-section label,
+.comments-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: bold;
   
-  /* button[type='submit'] {
-    display: block;
-    width: 50%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  */
+}
+
+.team-select p{
+  color: #757575;
+  font-size: 12px;
+}
+
+.comments-section textarea {
+  width: 80%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-left: 120px;
+  margin-top: -26px;
+}
+
+.team-select select{
+  width: 15%;
+}
+
+.stars {
+  display: flex;
+  margin-left: 100px;
+  margin-top: -42px;
+}
+
+.star {
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+  -webkit-text-stroke: 1px black; 
+}
+
+.star.selected {
+  color: #ffd700;
+  -webkit-text-stroke: 1px black;
+}
+
+.compliments-options {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 100px;
+  margin-top: -35px;
+}
+
+.compliment-option {
+  width: 45%;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.compliment-option input {
+  margin-right: 8px;
+}
+
+.comments-section textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+button[type='submit'] {
+  display: block;
+  width: 40%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+}
