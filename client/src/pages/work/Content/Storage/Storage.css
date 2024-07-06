@@ -1,0 +1,46 @@
+.storage-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.storage-img-container {
+  width: 30%;
+  display: flex;
+  border: 2px solid;
+  border-radius: 10px;
+  border-color: #c0c0c0;
+  margin-left: 30px;
+  margin-right: 20px;
+}
+
+.storage-file-container {
+  width: 30%;
+  display: flex;
+  border: 2px solid;
+  border-radius: 10px;
+  border-color: #c0c0c0;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.storage-memo-container {
+  width: 30%;
+  display: flex;
+  border: 2px solid;
+  border-radius: 10px;
+  border-color: #c0c0c0;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.storage-task-container {
+  width: 100%;
+  display: flex;
+  border: 2px solid;
+  border-radius: 10px;
+  border-color: #c0c0c0;
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
