@@ -1,6 +1,6 @@
 const Board = require('../models/board');
 const BoardRequest = require('../models/boardRequest');
-const User = require('../models/user')
+const User = require('../models/user');
 
 exports.getBoardData = async (req, res) => {
     try {
@@ -13,11 +13,11 @@ exports.getBoardData = async (req, res) => {
 };
 
 exports.postBoardData = async (req, res, next) => {
-    const {bName, bDescription, bTotalNumber, bType, bStartDate, bClosingDate} = req.body;
+    const { bName, bDescription, bTotalNumber, bType, bStartDate, bClosingDate } = req.body;
     const userId = req.user.id;
     try {
-        const exBoard = await Board.findOne( {where: { bName, bDescription, bStartDate } })
-        if(exBoard) {
+        const exBoard = await Board.findOne({ where: { bName, bDescription, bStartDate } });
+        if (exBoard) {
             return res.status(400).json({ error: '이미 존재하는 스터디입니다.' });
         }
         const newBoard = await Board.create({
@@ -30,7 +30,7 @@ exports.postBoardData = async (req, res, next) => {
             leaderId: userId,
         });
 
-        await newBoard.addUser(userId);     //중간 테이블 관게추가
+        await newBoard.addUser(userId); // 중간 테이블 관계 추가
 
         return res.status(201).json({
             success: true,
@@ -45,11 +45,11 @@ exports.postBoardData = async (req, res, next) => {
                 bStartDate: newBoard.bStartDate,
                 bClosingDate: newBoard.bClosingDate,
                 leaderId: newBoard.leaderId,
-            }
+            },
         });
     } catch (error) {
         console.error(error);
-        return next(error)
+        return next(error);
     }
 };
 
@@ -72,6 +72,7 @@ exports.postApplyBoard = async (req, res) => {
 
 exports.postAcceptBoard = async (req, res) => {
     const requestId = req.params.requestId;
+    const userId = req.user.id;
 
     try {
         const request = await BoardRequest.findOne({ where: { id: requestId } });
@@ -80,14 +81,22 @@ exports.postAcceptBoard = async (req, res) => {
             return res.status(404).json({ message: 'Request not found' });
         }
 
-        if (request.status !== 'pending') {
-            return res.status(400).json({ message: 'Request already processed' });
+        const board = await Board.findOne({ where: { bId: request.boardId } });
+
+        if (!board) {
+            return res.status(404).json({ message: 'Board not found' });
         }
 
-        const board = await Board.findOne({ where: { bId: request.boardId } });
+        if (board.leaderId !== userId) {
+            return res.status(403).json({ message: 'You are not authorized to accept this request' });
+        }
 
         if (board.bCurrentNumber >= board.bTotalNumber) {
             return res.status(400).json({ message: 'Board is already full' });
+        }
+
+        if (request.status !== 'pending') {
+            return res.status(400).json({ message: 'Request already processed' });
         }
 
         request.status = 'accepted';
@@ -103,16 +112,27 @@ exports.postAcceptBoard = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
 
 exports.postRejectBoard = async (req, res) => {
     const requestId = req.params.requestId;
+    const userId = req.user.id;
 
     try {
         const request = await BoardRequest.findOne({ where: { id: requestId } });
 
         if (!request) {
             return res.status(404).json({ message: 'Request not found' });
+        }
+
+        const board = await Board.findOne({ where: { bId: request.boardId } });
+
+        if (!board) {
+            return res.status(404).json({ message: 'Board not found' });
+        }
+
+        if (board.leaderId !== userId) {
+            return res.status(403).json({ message: 'You are not authorized to reject this request' });
         }
 
         if (request.status !== 'pending') {
@@ -127,4 +147,4 @@ exports.postRejectBoard = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
