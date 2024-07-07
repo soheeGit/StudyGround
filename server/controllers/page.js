@@ -1,4 +1,5 @@
 const Board = require('../models/board');
+const BoardRequest = require('../models/boardRequest');
 const User = require('../models/user')
 
 exports.getBoardData = async (req, res) => {
@@ -51,3 +52,79 @@ exports.postBoardData = async (req, res, next) => {
         return next(error)
     }
 };
+
+exports.postApplyBoard = async (req, res) => {
+    const boardId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+        const request = await BoardRequest.create({
+            boardId,
+            userId,
+            status: 'pending',
+        });
+        res.status(200).json({ message: 'Application submitted', request });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.postAcceptBoard = async (req, res) => {
+    const requestId = req.params.requestId;
+
+    try {
+        const request = await BoardRequest.findOne({ where: { id: requestId } });
+
+        if (!request) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+
+        if (request.status !== 'pending') {
+            return res.status(400).json({ message: 'Request already processed' });
+        }
+
+        const board = await Board.findOne({ where: { bId: request.boardId } });
+
+        if (board.bCurrentNumber >= board.bTotalNumber) {
+            return res.status(400).json({ message: 'Board is already full' });
+        }
+
+        request.status = 'accepted';
+        await request.save();
+
+        board.bCurrentNumber += 1;
+        await board.save();
+
+        await board.addUser(request.userId);
+
+        res.status(200).json({ message: 'Request accepted', request });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+exports.postRejectBoard = async (req, res) => {
+    const requestId = req.params.requestId;
+
+    try {
+        const request = await BoardRequest.findOne({ where: { id: requestId } });
+
+        if (!request) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+
+        if (request.status !== 'pending') {
+            return res.status(400).json({ message: 'Request already processed' });
+        }
+
+        request.status = 'rejected';
+        await request.save();
+
+        res.status(200).json({ message: 'Request rejected', request });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}

@@ -10,7 +10,7 @@ class Board extends Sequelize.Model {
                 allowNull: false,
             },
             bName: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(20),
                 allowNull: false,
             },
             bDescription: {
@@ -66,6 +66,7 @@ class Board extends Sequelize.Model {
         db.Board.belongsToMany(db.User, { through: 'BoardUser', foreignKey: 'boardId' });
         db.Board.hasMany(db.Schedule);
         db.Board.belongsTo(db.User, { as: 'Leader', foreignKey: 'leaderId' });
+        db.Board.hasMany(db.BoardRequest, { foreignKey: 'boardId' });
     }
 }
 
