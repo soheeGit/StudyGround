@@ -63,7 +63,7 @@ exports.postApplyBoard = async (req, res) => {
             userId,
             status: 'pending',
         });
-        res.status(200).json({ message: 'Application submitted', request });
+        res.status(200).json({ message: '신청 완료되었습니다.', request });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -84,15 +84,15 @@ exports.postAcceptBoard = async (req, res) => {
         const board = await Board.findOne({ where: { bId: request.boardId } });
 
         if (!board) {
-            return res.status(404).json({ message: 'Board not found' });
+            return res.status(404).json({ message: '스터디를 찾을 수 없습니다.' });
         }
 
         if (board.leaderId !== userId) {
-            return res.status(403).json({ message: 'You are not authorized to accept this request' });
+            return res.status(403).json({ message: '권한이 없습니다.' });
         }
 
         if (board.bCurrentNumber >= board.bTotalNumber) {
-            return res.status(400).json({ message: 'Board is already full' });
+            return res.status(400).json({ message: '스터디가 꽉 찼습니다.' });
         }
 
         if (request.status !== 'pending') {
@@ -107,7 +107,7 @@ exports.postAcceptBoard = async (req, res) => {
 
         await board.addUser(request.userId);
 
-        res.status(200).json({ message: 'Request accepted', request });
+        res.status(200).json({ message: '스터디에 수락되었습니다.', request });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -128,11 +128,11 @@ exports.postRejectBoard = async (req, res) => {
         const board = await Board.findOne({ where: { bId: request.boardId } });
 
         if (!board) {
-            return res.status(404).json({ message: 'Board not found' });
+            return res.status(404).json({ message: '스터디를 찾을 수 없습니다.' });
         }
 
         if (board.leaderId !== userId) {
-            return res.status(403).json({ message: 'You are not authorized to reject this request' });
+            return res.status(403).json({ message: '권한이 없습니다.' });
         }
 
         if (request.status !== 'pending') {
@@ -142,7 +142,7 @@ exports.postRejectBoard = async (req, res) => {
         request.status = 'rejected';
         await request.save();
 
-        res.status(200).json({ message: 'Request rejected', request });
+        res.status(200).json({ message: '스터디에 거절당하셨습니다.', request });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
