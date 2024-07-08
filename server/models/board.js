@@ -67,6 +67,7 @@ class Board extends Sequelize.Model {
         db.Board.hasMany(db.Schedule);
         db.Board.belongsTo(db.User, { as: 'Leader', foreignKey: 'leaderId' });
         db.Board.hasMany(db.BoardRequest, { foreignKey: 'boardId' });
+        db.Board.hasMany(db.Notice, { foreignKey: 'boardId' });
     }
 }
 
