@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
-const { submitMemo, getMemoData, subMitNotice, getNoticeData } = require('../controllers/storage');
+const { submitMemo, getMemoData, submitNotice, getNoticeData, submitStudyMaterial, getStudyMaterialData } = require('../controllers/storage');
 const router = express.Router();
 const fs = require('fs');
 const multer = require('multer')
@@ -33,8 +33,13 @@ router.post('/submitMemo', isLoggedIn, submitMemo);
 router.get('/memo', isLoggedIn, getMemoData);
 
 // 공지사항 등록
-router.post('/submitNotice/:id', isLoggedIn, upload.array('files', maxCount), subMitNotice);
+router.post('/submitNotice/:id', isLoggedIn, upload.array('files', maxCount), submitNotice);
 // 공지사항 확인
 router.get('/notice/:id', isLoggedIn, getNoticeData);
+
+// 스터디 자료 등록
+router.post('/submitStudyMaterial/:id', isLoggedIn, upload.array('files', maxCount), submitStudyMaterial);
+// 스터디 자료 확인
+router.get('/StudyMaterial/:id', isLoggedIn, getStudyMaterialData);
 
 module.exports = router;
