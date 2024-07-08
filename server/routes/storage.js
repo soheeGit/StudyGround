@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
-const { submitMemo, getMemoData, submitNotice, getNoticeData, submitStudyMaterial, getStudyMaterialData } = require('../controllers/storage');
+const { submitMemo, updateMemo, getMemoData, submitNotice, getNoticeData, submitStudyMaterial, getStudyMaterialData } = require('../controllers/storage');
 const router = express.Router();
 const fs = require('fs');
 const multer = require('multer')
@@ -29,6 +29,8 @@ const maxCount = 10;
 
 // 메모 등록
 router.post('/submitMemo', isLoggedIn, submitMemo);
+// 메모 수정
+router.post('/updateMemo/:id', isLoggedIn, updateMemo);
 // 메모 확인
 router.get('/memo', isLoggedIn, getMemoData);
 
