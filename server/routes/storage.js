@@ -1,6 +1,9 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
-const { submitMemo, updateMemo, getMemoData, submitNotice, getNoticeData, submitStudyMaterial, getStudyMaterialData } = require('../controllers/storage');
+const { submitMemo, updateMemo, getMemoData } = require('../controllers/memo')
+const { submitNotice, getNoticeData } = require('../controllers/notice')
+const { submitStudyMaterial, getStudyMaterialData } = require('../controllers/studyMaterial');
+
 const router = express.Router();
 const fs = require('fs');
 const multer = require('multer')
