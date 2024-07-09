@@ -35,6 +35,7 @@ class Task extends Sequelize.Model {
                 fileableType: 'Task'
             }
         });
+        db.Task.hasMany(db.SubmitTask);
     }
 }
 

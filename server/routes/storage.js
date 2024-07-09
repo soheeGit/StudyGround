@@ -3,7 +3,7 @@ const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 const { submitMemo, updateMemo, getMemoData, deleteMemo } = require('../controllers/memo')
 const { submitNotice, getNoticeData, updateNotice, deleteNotice } = require('../controllers/notice')
 const { submitStudyMaterial, getStudyMaterialData, updateStudyMaterial, deleteStudyMaterial } = require('../controllers/studyMaterial');
-const { submitTask, updateTask, getTaskData, deleteTask } = require('../controllers/task');
+const { enrollTask, updateTask, getTaskData, deleteTask } = require('../controllers/task');
 
 const router = express.Router();
 const fs = require('fs');
@@ -59,7 +59,7 @@ router.get('/StudyMaterial/:id', isLoggedIn, getStudyMaterialData);
 router.get('/deleteStudyMaterial/:id', isLoggedIn, deleteStudyMaterial);
 
 // 과제 등록
-router.post('/submitTask/:id', isLoggedIn, upload.array('files', maxCount), submitTask);
+router.post('/enrollTask/:id', isLoggedIn, upload.array('files', maxCount), enrollTask);
 // 과제 수정
 router.post('/updateTask/:id', isLoggedIn, upload.array('files', maxCount), updateTask);
 // 과제 확인
@@ -67,5 +67,7 @@ router.get('/task/:id', isLoggedIn, getTaskData);
 // 과제 삭제
 router.get('/deleteTask/:id', isLoggedIn, deleteTask);
 
+// 팀원 과제 제출
+router.post('/submitTask/:id', isLoggedIn, upload.array('files', maxCount), submitTask);
 
 module.exports = router;

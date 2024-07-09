@@ -1,6 +1,6 @@
 const { Board, Review, User, Memo, Notice, File, StudyMaterial, Task } = require('../models');
 
-exports.submitTask = async(req, res, next) => {
+exports.enrollTask = async(req, res, next) => {
     const {title, deadline,  content} = req.body;
     const userId = req.user.id;
     const boardId = req.params.id;
