@@ -10,10 +10,10 @@ exports.submitStudyMaterial = async(req, res, next) => {
     try{
         const board = await Board.findOne({ where: {bId:boardId} })
         if(!board){
-            return res.status(500).json({message: '스터디를 찾을 수 없습니다.'});
+            return res.status(404).json({message: '스터디를 찾을 수 없습니다.'});
         }
         if(board.leaderId !== userId){
-            return res.status(500).json({message: '권한이 없습니다.'});
+            return res.status(403).json({message: '권한이 없습니다.'});
         }
         const studyMaterial = await StudyMaterial.create({
             title,
@@ -57,6 +57,71 @@ exports.submitStudyMaterial = async(req, res, next) => {
     }
 };
 
+exports.updateStudyMaterial = async (req, res, next) => {
+    const studyMaterialId = req.params.id;
+    const { title, content } = req.body;
+    const userId = req.user.id;
+
+    if (!title || !content) {
+        return res.status(400).json({ error: '제목과 내용을 모두 입력해야 합니다.' });
+    }
+
+    try {
+        const studyMaterial = await StudyMaterial.findOne({
+            where: {
+                id: studyMaterialId,
+                userId: userId,
+            },
+        });
+
+        if (!studyMaterial) {
+            return res.status(404).json({ error: '스터디 자료를 찾을 수 없습니다.' });
+        }
+
+        const board = await Board.findOne({where : {bId: studyMaterial.boardId}})
+        if(board.leaderId !== userId){
+            return res.status(403).json({ error: '권한이 없습니다.'})
+        }
+
+        studyMaterial.title = title;
+        studyMaterial.content = content;
+        await studyMaterial.save();
+
+        let uploadedFiles = [];
+        if (req.files && req.files.length > 0) {
+            await File.destroy({ where: { fileableType: 'StudyMaterial', fileableId: studyMaterial.id } });
+            uploadedFiles = req.files.map(file => ({
+                fileName: file.filename,
+                fileUrl: `${req.protocol}://${req.get('host')}/files/${file.filename}` // 파일 URL 생성
+            }));
+
+            const fileRecords = req.files.map(file => ({
+                fileName: file.filename,
+                fileableType: 'StudyMaterial',
+                fileableId: studyMaterial.id
+            }));
+
+            await File.bulkCreate(fileRecords);
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: '스터디 자료 수정 성공',
+            notice: {
+                title: studyMaterial.title,
+                content: studyMaterial.content,
+                userId: studyMaterial.userId,
+                createdAt: studyMaterial.createdAt,
+                updatedAt: studyMaterial.updatedAt,
+            },
+            files: uploadedFiles
+        });
+    } catch (error) {
+        console.error(error);
+        return next(error); // 500번 에러
+    }
+};
+
 exports.getStudyMaterialData = async (req, res, next) => {
     const boardId = req.params.id;
     try {
@@ -80,3 +145,31 @@ exports.getStudyMaterialData = async (req, res, next) => {
         res.status(500).json({ error: '서버 오류' });
     }
 };
+
+exports.deleteStudyMaterial = async(req, res, next) => {
+    const studyMaterialId = req.params.id;
+    const userId = req.user.id;
+
+    try{
+        const studyMaterial = await StudyMaterial.findOne({
+            where: {
+                id: studyMaterialId,
+                userId: userId
+            }
+        });
+        if (!studyMaterial) {
+            return res.status(404).json({ error: '스터디 자료를 찾을 수 없습니다.' });
+        }
+        if(studyMaterial.userId !== userId){
+            return res.status(403).json({ error: '권한이 없습니다.' })
+        }
+        await studyMaterial.destroy();
+        return res.status(200).json({
+            success: true,
+            message: '스터디 자료 삭제 성공',
+        });
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ error: '서버 오류' })
+    }
+}
