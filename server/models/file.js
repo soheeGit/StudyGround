@@ -28,6 +28,7 @@ class File extends Sequelize.Model {
     static associate(db) {
         db.File.belongsTo(db.Notice, { foreignKey: 'fileableId', constraints: false });
         db.File.belongsTo(db.StudyMaterial, { foreignKey: 'fileableId', constraints: false });
+        db.File.belongsTo(db.Task, { foreignKey: 'fileableId', constraints: false });
     }
 }
 

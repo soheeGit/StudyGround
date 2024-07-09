@@ -72,6 +72,7 @@ class User extends Sequelize.Model {
         db.User.hasMany(db.BoardRequest, { foreignKey: 'userId' });
         db.User.hasMany(db.Notice);
         db.User.hasMany(db.StudyMaterial);
+        db.User.hasMany(db.Task);
     }
 };
 
