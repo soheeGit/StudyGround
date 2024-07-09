@@ -3,7 +3,7 @@ const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 const { submitMemo, updateMemo, getMemoData, deleteMemo } = require('../controllers/memo')
 const { submitNotice, getNoticeData, updateNotice, deleteNotice } = require('../controllers/notice')
 const { submitStudyMaterial, getStudyMaterialData, updateStudyMaterial, deleteStudyMaterial } = require('../controllers/studyMaterial');
-const { enrollTask, updateTask, getTaskData, deleteTask } = require('../controllers/task');
+const { enrollTask, updateTask, getTaskData, deleteTask, submitTask } = require('../controllers/task');
 
 const router = express.Router();
 const fs = require('fs');
