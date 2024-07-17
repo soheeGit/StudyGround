@@ -1,0 +1,28 @@
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  /* flex-shrink ? sidebar의 너비를 고정시켜줌 */
+  flex-shrink: 0;
+  width: 200px;
+  height: 100vh;
+  border-right: solid;
+  border-color: #8f8d8d;
+  border-right-width: 1px;
+}
+
+.sidebar-bottom {
+  flex-grow: 1;
+}
+
+.sidebar-bottom a {
+  color: rgb(58, 58, 58);
+  text-decoration: none;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
