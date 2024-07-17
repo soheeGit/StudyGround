@@ -4,4 +4,7 @@
 
 .content-container {
   width: 100%;
+  border: solid;
+  border-width: 10px;
+  border-color: #f0f0f0;
 }

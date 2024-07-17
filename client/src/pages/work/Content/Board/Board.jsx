@@ -1,4 +1,6 @@
+import WorkHeader from '../../WorkHeader';
+
 const Board = () => {
-  return;
+  return <WorkHeader title="Board" />;
 };
 export default Board;

@@ -5,9 +5,9 @@
   flex-shrink: 0;
   width: 200px;
   height: 100vh;
-  background-color: #f0f0f0;
-}
-.sidebar-top {
+  border-right: solid;
+  border-color: #8f8d8d;
+  border-right-width: 1px;
 }
 
 .sidebar-bottom {
