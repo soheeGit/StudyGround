@@ -33,7 +33,8 @@ class Task extends Sequelize.Model {
             constraints: false,
             scope: {
                 fileableType: 'Task'
-            }
+            },
+            onDelete: 'CASCADE'
         });
         db.Task.hasMany(db.SubmitTask);
     }

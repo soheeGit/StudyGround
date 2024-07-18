@@ -29,7 +29,8 @@ class Notice extends Sequelize.Model {
             constraints: false,
             scope: {
                 fileableType: 'Notice'
-            }
+            },
+            onDelete: 'CASCADE'
         });
     }
 }

@@ -31,7 +31,8 @@ class SubmitTask extends Sequelize.Model {
             constraints: false,
             scope: {
                 fileableType: 'SubmitTask'
-            }
+            },
+            onDelete: 'CASCADE'
         });
     }
 }

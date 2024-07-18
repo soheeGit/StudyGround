@@ -29,7 +29,8 @@ class StudyMaterial extends Sequelize.Model {
             constraints: false,
             scope: {
                 fileableType: 'StudyMaterial'
-            }
+            },
+            onDelete: 'CASCADE'
         });
     }
 }

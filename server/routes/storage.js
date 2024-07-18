@@ -3,7 +3,8 @@ const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 const { submitMemo, updateMemo, getMemoData, deleteMemo } = require('../controllers/memo')
 const { submitNotice, getNoticeData, updateNotice, deleteNotice } = require('../controllers/notice')
 const { submitStudyMaterial, getStudyMaterialData, updateStudyMaterial, deleteStudyMaterial } = require('../controllers/studyMaterial');
-const { enrollTask, updateTask, getTaskData, deleteTask, submitTask, mUpdateTask } = require('../controllers/task');
+const { enrollTask, updateTask, getTaskData, deleteTask} = require('../controllers/task');
+const { submitTask, mUpdateTask, getmTaskData, mdeleteTask } =require('../controllers/submitTask')
 
 const router = express.Router();
 const fs = require('fs');
@@ -71,5 +72,9 @@ router.get('/deleteTask/:id', isLoggedIn, deleteTask);
 router.post('/submitTask/:id', isLoggedIn, upload.array('files', maxCount), submitTask);
 // 팀원 과제 수정
 router.post('/mUpdateTask/:id', isLoggedIn, upload.array('files', maxCount), mUpdateTask);
+// 팀원 과제 확인
+router.get('/mTask/:id', isLoggedIn, getmTaskData);
+// 팀원 과제 삭제
+router.get('/mDeleteTask/:id', isLoggedIn, mdeleteTask)
 
 module.exports = router;

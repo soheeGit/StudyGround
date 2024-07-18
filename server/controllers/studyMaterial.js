@@ -59,7 +59,7 @@ exports.submitStudyMaterial = async(req, res, next) => {
 
 exports.updateStudyMaterial = async (req, res, next) => {
     const studyMaterialId = req.params.id;
-    const { title, content } = req.body;
+    const { title, content, filesToDelete = [] } = req.body;
     const userId = req.user.id;
 
     if (!title || !content) {
@@ -86,6 +86,35 @@ exports.updateStudyMaterial = async (req, res, next) => {
         studyMaterial.title = title;
         studyMaterial.content = content;
         await studyMaterial.save();
+
+        if (filesToDelete.length > 0) {
+            const validFilesToDelete = await File.findAll({
+                attributes: ['id'],
+                where: {
+                    id: filesToDelete,
+                    fileableType: 'StudyMaterial',
+                    fileableId: studyMaterial.id
+                }
+            });
+        
+            if (validFilesToDelete.length > 0) {
+                const validFileIds = validFilesToDelete.map(file => file.id);
+                await File.destroy({
+                    where: {
+                        id: validFileIds,
+                        fileableType: 'StudyMaterial',
+                        fileableId: studyMaterial.id
+                    }
+                });
+        
+                validFileIds.forEach(fileId => {
+                    const filePath = path.join(__dirname, 'uploads', fileId);
+                    fs.unlink(filePath, (err) => {
+                        if (err) console.error(`파일 삭제 오류: ${err}`);
+                    });
+                });
+            }
+        } 
 
         let uploadedFiles = [];
         if (req.files && req.files.length > 0) {
