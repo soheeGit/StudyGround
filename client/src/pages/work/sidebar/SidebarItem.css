@@ -1,0 +1,47 @@
+.sidebaritem-container {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  /* padding: top right bottom left */
+  padding: 5px 8px 5px 0px;
+  margin: 5px 10px 5px 5px;
+  font-weight: 600;
+}
+
+/* sidebarItem hover 효과 */
+.sidebaritem-container:hover {
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  color: rgb(92, 92, 92);
+}
+
+/* 선택된 sidebarItem hover유지*/
+.sidebaritem-container-selected {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  /* padding: top right bottom left */
+  padding: 5px 8px 5px 0px;
+  margin: 5px 10px 5px 5px;
+  font-weight: 600;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  color: rgb(92, 92, 92);
+}
+
+.sidebaritem-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 22px;
+  margin-left: 30px;
+  margin-right: 20px;
+}
+
+.sidebaritem-title {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
