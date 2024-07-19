@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './JoinupForm2.css';
-import Top1 from '../screen/Top1'
-import { Link } from 'react-router-dom';
+import Top1 from '../screen/Top1';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function JoinupForm2() {
-  // 회원가입 폼 데이터 상태 정의
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     id: '',
     password: '',
@@ -16,7 +18,6 @@ function JoinupForm2() {
     birthDate: ''
   });
 
-  // 폼 데이터 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -25,27 +26,46 @@ function JoinupForm2() {
     });
   };
 
-  // 회원가입 폼 제출 핸들러
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    try {
+      const requestBody = {
+        uId: formData.id,
+        uEmail: formData.email,
+        uPassword: formData.password,
+        uName: formData.name,
+        uNumber: formData.phoneNumber,
+        uBirth: formData.birthDate,
+        uSex: formData.gender,
+        uType: '선구자' 
+      };
 
-    // 폼 데이터 초기화
-    setFormData({
-      id: '',
-      password: '',
-      passwordConfirm: '',
-      name: '',
-      email: '',
-      phoneNumber: '',
-      gender: '',
-      birthDate: ''
-    });
+      const response = await axios.post('http://localhost:5000/auth/join', requestBody);
+  
+      console.log('API response:', response.data);
+
+      navigate('/test');
+
+      setFormData({
+        id: '',
+        password: '',
+        passwordConfirm: '',
+        name: '',
+        email: '',
+        phoneNumber: '',
+        gender: '',
+        birthDate: ''
+      });
+    } catch (error) {
+      console.error('API error:', error);
+    }
   };
-
+  
   return (
     
     <div className='Joinup-form-wrap'>
-       <Top1 />
+      <Top1 />
       <div className="joinup-form-container">
         <h2>회원가입</h2>
         <form onSubmit={handleSubmit}>
@@ -132,7 +152,7 @@ function JoinupForm2() {
                 <input
                   type="radio"
                   name="gender"
-                  value="male"
+                  value="남자"
                   onChange={handleChange}
                 />
               </label><p>남자</p>
@@ -140,13 +160,13 @@ function JoinupForm2() {
                 <input
                   type="radio"
                   name="gender"
-                  value="female"
+                  value="여자"
                   onChange={handleChange}
                 />                
               </label><p>여자</p>
             </div>
           </div>
-          <Link to="/Test" className='JoinupForm-next'>다음 단계</Link>
+          <button type="submit" className='JoinupForm-next'>다음 단계</button>
         </form>
       </div>
       <div className='duplicate-check-button'>중복확인</div>

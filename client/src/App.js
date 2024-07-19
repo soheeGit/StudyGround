@@ -4,6 +4,9 @@ import Top from './pages/main/screen/Top';
 import Login from './pages/main/login/Login';
 import JoinupForm2 from './pages/main/join/JoinupForm2';
 import Test from './pages/main/join/Test';
+import LoginAfter from './pages/main/login/LoginAfter';
+import Profile from './pages/main/profile/profile';
+import Sidebar from './pages/work/sidebar/Sidebar';
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
@@ -24,6 +27,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/JoinupForm" element={<JoinupForm2 />} />
           <Route path="/Test" element={<Test />} />
+          <Route path="/LoginAfter" element={<LoginAfter />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/Sidebar" element={<Sidebar />} />
           {/* Wokr페이지 라우팅 */}
           <Route path="/work" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />

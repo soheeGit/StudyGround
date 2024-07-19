@@ -3,9 +3,9 @@
   height: 30px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  margin-left: 200px;
-  margin-top: 20px;
+  float: right;
+  margin-top: -50px; /*수정필요*/
+  margin-right: 80px; /*수정필요*/
 }
 
 .profile-container {

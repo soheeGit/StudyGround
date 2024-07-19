@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './WorkHeader.css';
+import './ProfileHeader.css';
 import Avatar from 'antd/es/avatar/avatar';
 import { BellOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-const WorkHeader = () => {
+const ProfileHeader = () => {
   const [userId, setUserId] = useState('찐감자');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
@@ -38,10 +38,10 @@ const WorkHeader = () => {
     <div className="header-container">
       <div className="profile-container" onClick={toggleDropdown}>
         <div className="profile-img">
-          <Avatar />
+          <Avatar groupBorderColors />
         </div>
         <div className="profile">
-          {/* {userId}님 */}
+          {/* {userName}님 */}
           찐감자님
           <CaretDownOutlined />
         </div>
@@ -62,4 +62,4 @@ const WorkHeader = () => {
   );
 };
 
-export default WorkHeader;
+export default ProfileHeader;

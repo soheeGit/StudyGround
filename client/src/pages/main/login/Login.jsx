@@ -1,9 +1,42 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import kakao from '../../../assets/kakao.png';
-import React from 'react';
-import { Link } from 'react-router-dom';
 
 function Login() {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const requestBody = {
+      uId: userId,
+      uPassword: password,
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Login successful:', data);
+        localStorage.setItem('user', JSON.stringify(data)); // Save user data to local storage
+        console.log('User data saved to localStorage:', data);
+        navigate('/LoginAfter', { state: { uId: data.uId } }); 
+      } else {
+        console.error('Login failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div className="page">
       <div className="titleWrap">
@@ -13,14 +46,26 @@ function Login() {
       </div>
 
       <div className="contentWrap">
-        <input type="text" className="idpw" placeholder="사용자 아이디 또는 이메일" />
+        <input
+          type="text"
+          className="idpw"
+          placeholder="사용자 아이디"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+        />
       </div>
       <div className="contentWrap">
-        <input type="text" className="idpw" placeholder="비밀번호" />
+        <input
+          type="password"
+          className="idpw"
+          placeholder="비밀번호"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
 
       <div>
-        <button className='bottomButton'>로그인</button>
+        <button className='bottomButton' onClick={handleLogin}>로그인</button>
       </div>
 
       <div className="mid">
@@ -35,7 +80,7 @@ function Login() {
 
       <div>
         <button className="kakaoButton">
-          <img src={kakao} width="28px" /> 카카오톡으로 로그인
+          <img src={kakao} width="28px" alt="Kakao" /> 카카오톡으로 로그인
         </button>
       </div>
     </div>
