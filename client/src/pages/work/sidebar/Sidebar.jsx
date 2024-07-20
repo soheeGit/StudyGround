@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Sidebar.css';
 import SidebarItem from './SidebarItem';
 import GroupSelector from './GroupSelector';
-import logo1 from '../../../assets/logo1.png'
+import logo1 from '../../../assets/logo1.png';
 import { AiFillHome } from 'react-icons/ai'; /* dashboard icon */
 import { FaVideo } from 'react-icons/fa';
 import { IoChatboxEllipses } from 'react-icons/io5';
@@ -22,8 +22,7 @@ const Sidebar = (onComponentChange) => {
     <div className="sidebar-container">
       <div className="sidebar-top">
         <div className="logo-container">
-          <Link>
-            {/*  메인페이지 링크 추후 넣기 */}
+          <Link to="/">
             <img src={logo1} />
           </Link>
         </div>

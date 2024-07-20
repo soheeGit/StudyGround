@@ -1,13 +1,22 @@
-.header-container {
+.work-header-container {
   width: auto; /* Change to fit within the available space */
   height: 30px;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
-  margin-left: 200px;
   margin-top: 20px;
 }
-
+.header-left {
+  flex-grow: 1;
+}
+.header-left h1 {
+  margin-top: 20px;
+  margin-left: 30px;
+}
+.header-right {
+  display: flex;
+}
 .profile-container {
   height: 30px;
   display: flex;
@@ -24,7 +33,7 @@
 }
 
 .profile-img {
-  width: 30px; 
+  width: 30px;
   height: 30px;
 }
 
