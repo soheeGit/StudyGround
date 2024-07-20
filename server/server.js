@@ -45,7 +45,10 @@ server.use(session({
         secure: false,  //https 적용할때 true로 바꿔야함
     }
 }));
-server.use(cors());
+server.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 server.use(passport.initialize())
 server.use(passport.session())
