@@ -4,19 +4,21 @@ import Avatar from 'antd/es/avatar/avatar';
 import { BellOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-const WorkHeader = () => {
-  const [userId, setUserId] = useState('찐감자');
+const WorkHeader = ({ title }) => {
+  const [userName, setUserName] = useState('찐감자');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUserId(storedUser.uId); // Retrieve uId from localStorage
-      console.log('User data retrieved from localStorage:', storedUser); 
+      setUserName(storedUser.user.uName); // Retrieve uId from localStorage
+      console.log('User data retrieved from localStorage:', storedUser);
     } else {
-      console.log('회원 정보가 없습니다. 로그인 해주시길 바랍니다.');
-      navigate('/#'); 
+      console.log(
+        'No user data found in localStorage. Redirecting to login page.'
+      );
+      navigate('/#');
     }
   }, [navigate]);
   
@@ -54,27 +56,32 @@ const WorkHeader = () => {
   // };
 
   return (
-    <div className="header-container">
-      <div className="profile-container" onClick={toggleDropdown}>
-        <div className="profile-img">
-          <Avatar />
-        </div>
-        <div className="profile">
-          {userId}님
-          <CaretDownOutlined />
-        </div>
-        {dropdownVisible && (
-          <div className="dropdown-menu">
-            <ul>
-              <li onClick={handleProfileClick}>프로필 보기</li>
-              <li>설정</li>
-              <li onClick={handleLogout}>로그아웃</li>
-            </ul>
-          </div>
-        )}
+    <div className="work-header-container">
+      <div className="header-left">
+        <h1>{title}</h1>
       </div>
-      <div className="alarm-container">
-        <BellOutlined style={{ fontSize: '25px' }} />
+      <div className="header-right">
+        <div className="profile-container" onClick={toggleDropdown}>
+          <div className="profile-img">
+            <Avatar groupBorderColors />
+          </div>
+          <div className="profile">
+            {userName}님
+            <CaretDownOutlined />
+          </div>
+          {dropdownVisible && (
+            <div className="dropdown-menu">
+              <ul>
+                <li onClick={handleProfileClick}>프로필 보기</li>
+                <li>설정</li>
+                <li onClick={handleLogout}>로그아웃</li>
+              </ul>
+            </div>
+          )}
+        </div>
+        <div className="alarm-container">
+          <BellOutlined style={{ fontSize: '25px' }} />
+        </div>
       </div>
     </div>
   );
