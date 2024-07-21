@@ -13,8 +13,10 @@ exports.getBoardData = async (req, res) => {
 };
 
 exports.postBoardData = async (req, res, next) => {
+    console.log('User ID:', req.user);
     const { bName, bDescription, bTotalNumber, bType, bStartDate, bClosingDate } = req.body;
     const userId = req.user.id;
+
     try {
         const exBoard = await Board.findOne({ where: { bName, bDescription, bStartDate } });
         if (exBoard) {
@@ -52,6 +54,7 @@ exports.postBoardData = async (req, res, next) => {
         return next(error);
     }
 };
+
 
 exports.postApplyBoard = async (req, res) => {
     const boardId = req.params.id;

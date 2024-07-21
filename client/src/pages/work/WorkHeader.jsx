@@ -9,17 +9,17 @@ const WorkHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUserId(storedUser.uId); // Retrieve uId from localStorage
-      console.log('User data retrieved from localStorage:', storedUser); 
-    } else {
-      console.log('No user data found in localStorage. Redirecting to login page.');
-      navigate('/#'); 
-    }
-  }, [navigate]);
-
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem('user'));
+  //   if (storedUser) {
+  //     setUserId(storedUser.uId); // Retrieve uId from localStorage
+  //     console.log('User data retrieved from localStorage:', storedUser); 
+  //   } else {
+  //     console.log('No user data found in localStorage. Redirecting to login page.');
+  //     navigate('/#'); 
+  //   }
+  // }, [navigate]);
+  
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -34,6 +34,25 @@ const WorkHeader = () => {
     navigate('/#');
   };
 
+  // const handleLogout = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:5000/auth/logout', { // Ensure this URL is correct
+  //       method: 'GET',
+  //       credentials: 'include', // Include credentials if your backend requires them
+  //     });
+  
+  //     if (response.ok) {
+  //       localStorage.removeItem('user');
+  //       console.log('User logged out.');
+  //       navigate('/#');
+  //     } else {
+  //       console.error('Failed to log out. Status:', response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error('An error occurred during logout:', error);
+  //   }
+  // };
+
   return (
     <div className="header-container">
       <div className="profile-container" onClick={toggleDropdown}>
@@ -41,8 +60,7 @@ const WorkHeader = () => {
           <Avatar />
         </div>
         <div className="profile">
-          {/* {userId}님 */}
-          찐감자님
+          {userId}님
           <CaretDownOutlined />
         </div>
         {dropdownVisible && (

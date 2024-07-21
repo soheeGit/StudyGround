@@ -29,7 +29,6 @@ sequelize.sync({ force: false })    //배포할때 true로 바꾸기
         console.log(err);
     })
 
-server.use(cors());    
 server.use(morgan('dev'));  //현재 개발용. 배포할때 combined로 바꿔야함
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use('/files', express.static(path.join(__dirname, 'uploads')))
@@ -45,7 +44,10 @@ server.use(session({
         secure: false,  //https 적용할때 true로 바꿔야함
     }
 }));
-server.use(cors());
+server.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 server.use(passport.initialize())
 server.use(passport.session())

@@ -1,3 +1,4 @@
+// src/components/Top/Top.js
 import './Top.css';
 import React, { useState } from 'react';
 import logo from '../../../assets/logo.png';
@@ -20,11 +21,11 @@ function Top() {
   };
 
   return (
-    <div>
+    <div className="topContainer">
       <div className="wrap">
         <div className="logo">
-        <Link to="/#" className="logoLink">
-          <img className='logoBox' width="100px" height="85px" src={logo} alt="logo" />
+          <Link to="/#" className="logoLink">
+            <img className='logoBox' width="100px" height="85px" src={logo} alt="logo" />
           </Link>
         </div>
         <div className="menu" style={{ fontFamily: 'Imprima, sans-serif' }}>
@@ -49,7 +50,13 @@ function Top() {
       <Range />
       <Mid />
 
-       <CustomModal isOpen={modalIsOpen} onRequestClose={closeModal} />
+      <CustomModal isOpen={modalIsOpen} onRequestClose={closeModal} />
+
+      <div className='plusButton'>
+        <Link to="/add-study">
+          <button className='studyplus'>스터디 추가</button>
+        </Link>
+      </div>
     </div>
   );
 }
