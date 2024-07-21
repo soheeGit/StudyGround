@@ -96,7 +96,7 @@
     display: flex; /* 이미지와 텍스트를 가로로 배열 */
     align-items: center; 
     justify-content: center; 
-    margin-left: 70px;
+    margin-left: 90px;
     margin-top: 5px;
 }
 

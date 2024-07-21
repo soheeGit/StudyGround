@@ -106,3 +106,9 @@ img{
     color: gray;
 }
 
+.plusButton{
+    float: right;
+    margin-top: 650px;
+    margin-right: 170px;
+    margin-bottom: 30px;
+}

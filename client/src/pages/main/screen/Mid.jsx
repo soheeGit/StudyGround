@@ -1,10 +1,11 @@
 import './Mid.css';
 import CustomModal2 from '../Modal/Modal2'; 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Mid() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedTitle, setSelectedTitle] = useState(""); // 새로운 state 추가
+    const [board, setBoard] = useState(null);
 
     const openModal = (title) => { // title 인자 추가
         setSelectedTitle(title); // 클릭한 title을 상태에 저장
@@ -14,12 +15,37 @@ function Mid() {
     const closeModal = () => {
         setModalIsOpen(false);
     };
+    
+useEffect(() => {
+    // console.log('Fetching data from the API');
+    fetch('http://localhost:5000/api/boards')
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        
+        const selectedBoard = data[0];
+        setBoard(selectedBoard);
+        
+        const interval = setInterval(() => {
+          const today = new Date();
+        }, 1000);
 
+        return () => clearInterval(interval);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  if (!board) {
+    return <div>Loading...</div>;
+  }
     return (
         <div className="recruit">
             <ul className="box-list">
                 <li className='box'>
-                <div className='title' onClick={() => openModal("경찰공무원 스터디방")}><b>경찰공무원 스터디방</b></div>
+                <div className='title' onClick={() => openModal("")}><b>{board.bName}</b></div>
                     <div className='user-info'>        
                         <div className='info'>
                             <div className='count'>10 / 100</div>

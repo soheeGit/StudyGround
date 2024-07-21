@@ -9,18 +9,18 @@ const WorkHeader = ({ title }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUserId(storedUser.uId); // Retrieve uId from localStorage
-      console.log('User data retrieved from localStorage:', storedUser);
-    } else {
-      console.log(
-        'No user data found in localStorage. Redirecting to login page.'
-      );
-      navigate('/#');
-    }
-  }, [navigate]);
+ // localStorage 부분 주석 처리
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem('user'));
+  //   if (storedUser) {
+  //     setUserId(storedUser.uId); // Retrieve uId from localStorage
+  //     console.log('User data retrieved from localStorage:', storedUser); 
+  //   } else {
+  //     console.log('No user data found in localStorage. Redirecting to login page.');
+  //     navigate('/#'); 
+  //   }
+  // }, [navigate]);
+  
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -36,32 +36,52 @@ const WorkHeader = ({ title }) => {
     navigate('/#');
   };
 
+  // const handleLogout = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:5000/auth/logout', { // Ensure this URL is correct
+  //       method: 'GET',
+  //       credentials: 'include', // Include credentials if your backend requires them
+  //     });
+  
+  //     if (response.ok) {
+  //       localStorage.removeItem('user');
+  //       console.log('User logged out.');
+  //       navigate('/#');
+  //     } else {
+  //       console.error('Failed to log out. Status:', response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error('An error occurred during logout:', error);
+  //   }
+  // };
+
   return (
     <div className="work-header-container">
-      <div className="header-left">
-        <h1>{title}</h1>
-      </div>
-      <div className="header-right">
-        <div className="profile-container" onClick={toggleDropdown}>
-          <div className="profile-img">
-            <Avatar groupBorderColors />
-          </div>
-          <div className="profile">
-            찐감자님
-            <CaretDownOutlined />
-          </div>
-          {dropdownVisible && (
-            <div className="dropdown-menu">
-              <ul>
-                <li onClick={handleProfileClick}>프로필 보기</li>
-                <li>설정</li>
-                <li onClick={handleLogout}>로그아웃</li>
-              </ul>
-            </div>
-          )}
+    <div className="header-left">
+      <h1>{title}</h1>
+    </div>
+    <div className="header-right">
+      <div className="profile-container" onClick={toggleDropdown}>
+        <div className="profile-img">
+        <Avatar groupBorderColors />
         </div>
-        <div className="alarm-container">
-          <BellOutlined style={{ fontSize: '25px' }} />
+        <div className="profile">
+          {userId}님
+
+          <CaretDownOutlined />
+        </div>
+        {dropdownVisible && (
+          <div className="dropdown-menu">
+            <ul>
+              <li onClick={handleProfileClick}>프로필 보기</li>
+              <li>설정</li>
+              <li onClick={handleLogout}>로그아웃</li>
+            </ul>
+          </div>
+        )}
+      </div>
+      <div className="alarm-container">
+        <BellOutlined style={{ fontSize: '25px' }} />
         </div>
       </div>
     </div>

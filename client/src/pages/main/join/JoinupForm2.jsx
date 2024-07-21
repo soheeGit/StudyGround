@@ -169,7 +169,7 @@ function JoinupForm2() {
           <button type="submit" className='JoinupForm-next'>다음 단계</button>
         </form>
       </div>
-      <div className='duplicate-check-button'>중복확인</div>
+      {/* <div className='duplicate-check-button'>중복확인</div> */}
     </div>
   );
 }

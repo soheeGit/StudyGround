@@ -7,6 +7,7 @@ import Test from './pages/main/join/Test';
 import LoginAfter from './pages/main/login/LoginAfter';
 import Profile from './pages/main/profile/profile';
 import Sidebar from './pages/work/sidebar/Sidebar';
+import AddStudyForm from './pages/main/screen/AddStudyForm';
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
@@ -30,6 +31,7 @@ function App() {
           <Route path="/LoginAfter" element={<LoginAfter />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/Sidebar" element={<Sidebar />} />
+          <Route path="/add-study" element={<AddStudyForm/>} />
           {/* Wokr페이지 라우팅 */}
           <Route path="/work" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />
