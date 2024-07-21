@@ -26,6 +26,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log('로그인 성공:', data);
+        // localStorage 부분 주석 처리
         // localStorage.setItem('user', JSON.stringify(data)); // Save user data to local storage
         // console.log('User data saved to localStorage:', data);
         navigate('/LoginAfter', { state: { uId: data.uId } }); 

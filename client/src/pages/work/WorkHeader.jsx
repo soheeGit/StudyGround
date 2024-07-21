@@ -9,6 +9,7 @@ const WorkHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
+  // localStorage 부분 주석 처리
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem('user'));
   //   if (storedUser) {

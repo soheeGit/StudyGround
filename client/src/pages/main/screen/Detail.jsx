@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 function Detail() {
   const [board, setBoard] = useState(null);
+   // localStorage 부분 주석 처리
   // const user = localStorage.getItem('user');
   // console.log(user);
 
