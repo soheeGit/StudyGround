@@ -25,7 +25,7 @@ const LoginAfter = () => {
                     </Link>
                 </div>
                 <div className="menu" style={{ fontFamily: 'Imprima, sans-serif' }}>
-                    <Link to="/WhiteBoard" className="navigation">Work</Link>
+                    <Link to="/work" className="navigation">Work</Link>
                     <Link to="/Recruitment" className="navigation">Recruitment</Link>
                     <Link to="/Notice" className="navigation">Notice</Link>
                     <Link to="/About" className="navigation">About</Link>
