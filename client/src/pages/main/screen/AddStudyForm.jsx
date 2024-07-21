@@ -18,14 +18,8 @@ const AddStudyForm = () => {
   });
 
   const navigate = useNavigate();
-  // const userData = JSON.parse(localStorage.getItem('user'));
-  // const userId = userData ? userData.uId : null;
-  // if (userData && userData.success) {
-  //   console.log('User is logged in:', userData.user);
-  // } else {
-  //   console.log('User is not logged in');
-  // }
-  
+  const userData = JSON.parse(localStorage.getItem('user'));
+  const userId = userData ? userData.uId : null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
