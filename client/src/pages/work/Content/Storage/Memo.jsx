@@ -21,7 +21,7 @@ const Memo = () => {
     const fetchMemos = async () => {
       try {
         const memoResponse = await axios.get(`${API.GETMEMO}`, {
-          withCredentials: false,
+          withCredentials: true,
           headers: {
             Accept: 'application/json, text/plain, */*',
           },
