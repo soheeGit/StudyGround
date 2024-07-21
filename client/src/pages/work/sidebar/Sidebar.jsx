@@ -16,7 +16,6 @@ const Sidebar = (onComponentChange) => {
   const [selectedItem, setSelectedItem] = useState('Dashboard');
   const itemSelect = (itemtitle) => {
     setSelectedItem(itemtitle);
-    console.log(selectedItem);
   };
   return (
     <div className="sidebar-container">

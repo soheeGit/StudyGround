@@ -5,14 +5,14 @@ import { BellOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const WorkHeader = ({ title }) => {
-  const [userId, setUserId] = useState('찐감자');
+  const [userName, setUserName] = useState('찐감자');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUserId(storedUser.uId); // Retrieve uId from localStorage
+      setUserName(storedUser.user.uName); // Retrieve uId from localStorage
       console.log('User data retrieved from localStorage:', storedUser);
     } else {
       console.log(
@@ -47,7 +47,7 @@ const WorkHeader = ({ title }) => {
             <Avatar groupBorderColors />
           </div>
           <div className="profile">
-            찐감자님
+            {userName}님
             <CaretDownOutlined />
           </div>
           {dropdownVisible && (
