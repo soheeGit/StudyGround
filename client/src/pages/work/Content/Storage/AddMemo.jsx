@@ -8,11 +8,16 @@ const MemoModal = ({ isOpen, onRequestClose, onSubmit }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const handleSubmit = () => {
-    onSubmit({ title, content });
-    setTitle('');
-    setContent('');
-    onRequestClose();
+  const handleSubmit = (memo) => {
+    if (title && content) {
+      const memo = { title, content };
+      onSubmit(memo);
+      setTitle('');
+      setContent('');
+      onRequestClose();
+    } else {
+      alert('제목과 내용을 입력하세요.');
+    }
   };
 
   return (
