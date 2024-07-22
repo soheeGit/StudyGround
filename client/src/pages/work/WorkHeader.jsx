@@ -5,7 +5,7 @@ import { BellOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const WorkHeader = ({ title }) => {
-  const [userName, setUserName] = useState('찐감자');
+  const [userName, setUserName] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const WorkHeader = ({ title }) => {
       <div className="header-right">
         <div className="profile-container" onClick={toggleDropdown}>
           <div className="profile-img">
-            <Avatar groupBorderColors />
+            <Avatar />
           </div>
           <div className="profile">
             {userName}님

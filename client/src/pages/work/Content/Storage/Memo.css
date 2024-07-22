@@ -10,6 +10,20 @@
   margin-right: 30px;
 }
 
+.add-memo-button-container{
+  display: flex;
+  margin-right: 20px;
+  padding-top: 15px;
+}
+
+.add-memo-button-container button{
+  height: 50px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 10px;
+
+}
+
 .memo-content {
   padding: 0px 30px 10px 30px;
 }
@@ -18,10 +32,10 @@
   margin-bottom: 10px;
 }
 .today-memo-box {
+  display: flex;
   border: 2px solid;
   border-radius: 10px;
   border-color: #c0c0c0;
-
   padding: 10px 10px 10px 10px;
   margin-bottom: 10px;
 }
@@ -37,7 +51,19 @@
 .this-memo-content {
   margin-left: 30px;
 }
-
+.edit-button-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.edit-button-container button {
+  height: 50px;
+  margin-left: 10px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 10px;
+}
 .antd-menu-content {
   border-width: 10px;
   border-radius: 20px;
