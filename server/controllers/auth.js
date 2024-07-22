@@ -49,6 +49,7 @@ exports.login = (req, res, next) => {
                 console.error(loginError)
                 return next(loginError)
             }
+            console.log('Session after login:', req.session);
             console.log('User ID:', req.user.id);
             return res.status(200).json({
                 success: true,
