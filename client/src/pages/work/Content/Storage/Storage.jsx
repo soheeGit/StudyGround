@@ -68,21 +68,22 @@ const Storage = () => {
           </div>
           <div className="memo-content-box"></div>
         </div>
-
         <div className="storage-task-container">
           <div className="tab-header">
             <div className="tab-header-img">
               <img src={storage4} width={'50px'} />
             </div>
             <p>Task</p>
-            <div
-              className="tab-header-button"
-              onClick={() => {
-                tabHandler('task');
-              }}
-            >
-              <FaPlus />
-            </div>
+            <Link to="/work/task">
+              <div
+                className="tab-header-button"
+                onClick={() => {
+                  tabHandler('task');
+                }}
+              >
+                <FaPlus />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
