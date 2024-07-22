@@ -21,7 +21,7 @@ const Storage = () => {
       <WorkHeadr title="Storage" />
       <div className="storage-container">
         {/* img Tab*/}
-        <div className="storage-img-container">
+        <div className="storage-notice-container">
           <div className="tab-header">
             <div className="tab-header-img">
               <img src={storage1} width={'50px'} />
