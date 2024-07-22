@@ -46,20 +46,22 @@ exports.updateSchedule = async (req, res, next) => {
     }
 
     try {
-        const schedule = await Schedule.findOne({ where: {id : scheduleId}})
-        if(!schedule){
+        const schedule = await Schedule.findOne({ where: { id: scheduleId } });
+
+        if (!schedule) {
             return res.status(404).json({ error: '스케줄을 찾을 수 없습니다.' });
         }
 
-        schedule.title = title;
-        schedule.startDate = startDate;
-        schedule.startTime = startTime;
-        schedule.endDate = endDate;
-        schedule.endTime = endTime;
-        schedule.fullTime = fullTime;
-        schedule.color = color;
-        schedule.url = url;
-        schedule.memo = memo;
+        schedule.title = title || schedule.title;
+        schedule.startDate = startDate || schedule.startDate;
+        schedule.startTime = startTime || schedule.startTime;
+        schedule.endDate = endDate || schedule.endDate;
+        schedule.endTime = endTime || schedule.endTime;
+        schedule.fullTime = fullTime || schedule.fullTime;
+        schedule.color = color || schedule.color;
+        schedule.url = url || schedule.url;
+        schedule.memo = memo || schedule.memo;
+
         await schedule.save();
 
         return res.status(200).json({
@@ -69,9 +71,10 @@ exports.updateSchedule = async (req, res, next) => {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: '서버 오류' });
+        return res.status(500).json({ error: '서버 오류' });
     }
 };
+
 
 exports.getAllScheduleData = async(req, res, next) => {
     try {
