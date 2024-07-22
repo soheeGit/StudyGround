@@ -82,7 +82,7 @@ exports.getMemoData = async(req, res, next) => {
             }
         });
         if (memos.length === 0) {
-            return res.status(404).json({ message: '메모가 없습니다.' });
+            return res.status(200).json({ message: '메모가 없습니다.' });
         }
         res.json(memos);
     } catch (error) {
@@ -103,7 +103,7 @@ exports.getCurrentMemoData = async (req, res, next) => {
         });
 
         if (memos.length === 0) {
-            return res.status(404).json({ message: '메모가 없습니다.' });
+            return res.status(200).json({ message: '메모가 없습니다.' });
         }
         res.json(memos);
     } catch (error) {

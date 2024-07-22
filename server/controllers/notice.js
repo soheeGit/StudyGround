@@ -166,7 +166,7 @@ exports.getNoticeData = async (req, res, next) => {
             ]
         });
         if (notices.length === 0) {
-            return res.status(404).json({ message: '해당 스터디의 공지사항이 없습니다.' });
+            return res.status(200).json({ message: '해당 스터디의 공지사항이 없습니다.' });
         }
         res.json(notices);
     } catch (error) {
@@ -192,7 +192,7 @@ exports.getCurrentNoticeData = async (req, res, next) => {
             order: [['createdAt', 'DESC']] 
         });
         if (notices.length === 0) {
-            return res.status(404).json({ message: '해당 스터디의 공지사항이 없습니다.' });
+            return res.status(200).json({ message: '해당 스터디의 공지사항이 없습니다.' });
         }
         res.json(notices);
     } catch (error) {
