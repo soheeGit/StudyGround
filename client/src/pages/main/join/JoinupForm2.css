@@ -74,27 +74,6 @@
 
   .input-group p{
     margin-top:-10px;
-    margin-left: 10px;
-    margin-right: 20px;
-  }
-
-  .duplicate-check-button {
     width: 100px;
-    height: 35px;
-    text-align: center;
-    border-radius: 3px;
-    border: 1px solid rgb(79, 180, 103);
-    color: rgb(79, 180, 103);
-    cursor: pointer;
-    padding-top: 5px;
-    float:right;
-    margin-right: 400px;
-    margin-top: 162px;
+    margin-left: -100px;
   }
-  
-  .duplicate-check-button:hover {
-    background-color: rgb(79, 180, 103);
-    color: white;
-  }
-
- 
