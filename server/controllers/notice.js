@@ -175,6 +175,32 @@ exports.getNoticeData = async (req, res, next) => {
     }
 };
 
+exports.getCurrentNoticeData = async (req, res, next) => {
+    const boardId = req.params.id;
+    try {
+        const notices = await Notice.findAll({
+            where: {
+                boardId: boardId
+            },
+            include: [
+                {
+                    model: File,
+                    as: 'files' 
+                }
+            ],
+            limit: 5, 
+            order: [['createdAt', 'DESC']] 
+        });
+        if (notices.length === 0) {
+            return res.status(404).json({ message: '해당 스터디의 공지사항이 없습니다.' });
+        }
+        res.json(notices);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: '서버 오류' });
+    }
+};
+
 exports.deleteNotice = async(req, res, next) => {
     const noticeId = req.params.id;
     const userId = req.user.id;

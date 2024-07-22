@@ -13,6 +13,7 @@ const reviewRouter = require('./routes/review')
 const pageRouter = require('./routes/page')
 const authRouter = require('./routes/auth')
 const storageRouter = require('./routes/storage')
+const calendarRouter = require('./routes/calendar')
 const { sequelize } = require('./models')
 const passportConfig = require('./passport')
 
@@ -68,6 +69,7 @@ server.use('/api', pageRouter);
 server.use('/auth', authRouter);
 server.use('/reviews', reviewRouter);
 server.use('/storage', storageRouter);
+server.use('/calendar', calendarRouter);
 
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));

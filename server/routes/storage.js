@@ -1,7 +1,7 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
-const { submitMemo, updateMemo, getMemoData, deleteMemo } = require('../controllers/memo')
-const { submitNotice, getNoticeData, updateNotice, deleteNotice } = require('../controllers/notice')
+const { submitMemo, updateMemo, getMemoData, getCurrentMemoData, deleteMemo } = require('../controllers/memo')
+const { submitNotice, getNoticeData, getCurrentNoticeData, updateNotice, deleteNotice } = require('../controllers/notice')
 const { submitStudyMaterial, getStudyMaterialData, updateStudyMaterial, deleteStudyMaterial } = require('../controllers/studyMaterial');
 const { enrollTask, updateTask, getTaskData, deleteTask} = require('../controllers/task');
 const { submitTask, mUpdateTask, getmTaskData, mdeleteTask } =require('../controllers/submitTask')
@@ -38,6 +38,8 @@ router.post('/submitMemo', isLoggedIn, submitMemo);
 router.post('/updateMemo/:id', isLoggedIn, updateMemo);
 // 메모 확인
 router.get('/memo', isLoggedIn, getMemoData);
+// 최근 5개 추출한 메모 확인
+router.get('/currentMemo', isLoggedIn, getCurrentMemoData);
 // 메모 삭제
 router.get('/deleteMemo/:id', isLoggedIn, deleteMemo);
 
@@ -47,6 +49,8 @@ router.post('/submitNotice/:id', isLoggedIn, upload.array('files', maxCount), su
 router.post('/updateNotice/:id', isLoggedIn, upload.array('files', maxCount), updateNotice);
 // 공지사항 확인
 router.get('/notice/:id', isLoggedIn, getNoticeData);
+// 최근 5개 추출한 공지사항 확인
+router.get('/currentNotice/:id', isLoggedIn, getCurrentNoticeData);
 // 공지사항 삭제
 router.get('/deleteNotice/:id', isLoggedIn, deleteNotice);
 
