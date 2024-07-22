@@ -1,0 +1,43 @@
+.detail-container {
+  display: flex;
+  flex-direction: column;
+}
+.detail-date {
+  display: flex;
+  justify-content: center;
+}
+.detail-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.three-buttons-contianer {
+  display: flex;
+  justify-content: flex-end;
+}
+.three-buttons-contianer img {
+  cursor: pointer;
+  padding: 7px;
+}
+
+.three-buttons-contianer img:hover {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.edit-mode-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-mode-container input {
+  height: 40px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.edit-mode-container textarea {
+  height: 290px;
+  font-size: 15px;
+}

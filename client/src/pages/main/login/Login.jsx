@@ -20,6 +20,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(requestBody),
       });
 
@@ -28,7 +29,7 @@ function Login() {
         console.log('로그인 성공:', data);
         localStorage.setItem('user', JSON.stringify(data)); // Save user data to local storage
         console.log('User data saved to localStorage:', data);
-        navigate('/LoginAfter', { state: { uId: data.uId } }); 
+        navigate('/LoginAfter', { state: { uId: data.uId } });
       } else {
         console.error('로그인 실패');
       }
@@ -65,13 +66,17 @@ function Login() {
       </div>
 
       <div>
-        <button className='bottomButton' onClick={handleLogin}>로그인</button>
+        <button className="bottomButton" onClick={handleLogin}>
+          로그인
+        </button>
       </div>
 
       <div className="mid">
         <div className="find">ID / PW 찾기</div>
         <p>|</p>
-        <Link to="/JoinupForm" className="add">회원가입</Link>
+        <Link to="/JoinupForm" className="add">
+          회원가입
+        </Link>
       </div>
 
       <div className="line">
