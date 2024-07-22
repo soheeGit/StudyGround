@@ -45,14 +45,6 @@ const Sidebar = (onComponentChange) => {
               isSelected={selectedItem === 'Video'}
             />
           </Link>
-          <Link to="/work/chat">
-            <SidebarItem
-              title="Chat"
-              icon={<IoChatboxEllipses />}
-              onClick={() => itemSelect('Chat')}
-              isSelected={selectedItem === 'Chat'}
-            />
-          </Link>
           <Link to="/work/calendar">
             <SidebarItem
               title="Calendar"

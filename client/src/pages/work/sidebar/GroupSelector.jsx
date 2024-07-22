@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 const fetchGroups = async () => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts'); // testing server
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
   if (!response.ok) {
     throw new Error('Data fetching Error...');
   }
@@ -41,9 +41,9 @@ function GroupSelector() {
   };
 
   return (
-    <div className='select-container'>
+    <div className="select-container">
       <select value={selectedGroup} onChange={handleSelect}>
-        <option value=''>스터디를 선택하세요</option>
+        <option value="">스터디를 선택하세요</option>
         {groups.map((group) => (
           <option key={group.id} value={group.title}>
             {group.title}
