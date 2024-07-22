@@ -12,14 +12,16 @@ const WorkHeader = ({ title }) => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUserId(storedUser.uId); // Retrieve uId from localStorage
-      console.log('User data retrieved from localStorage:', storedUser); 
+      setUserName(storedUser.user.uName); // Retrieve uId from localStorage
+      console.log('User data retrieved from localStorage:', storedUser);
     } else {
-      console.log('회원 정보가 없습니다. 로그인 해주시길 바랍니다.');
-      navigate('/#'); 
+      console.log(
+        'No user data found in localStorage. Redirecting to login page.'
+      );
+      navigate('/#');
     }
   }, [navigate]);
-  
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -42,7 +44,7 @@ const WorkHeader = ({ title }) => {
       <div className="header-right">
         <div className="profile-container" onClick={toggleDropdown}>
           <div className="profile-img">
-            <Avatar groupBorderColors />
+            <Avatar />
           </div>
           <div className="profile">
             {userName}님

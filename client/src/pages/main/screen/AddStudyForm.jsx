@@ -38,7 +38,7 @@ const AddStudyForm = () => {
         bTotalNumber: parseInt(formData.bTotalNumber),
         bStartDate: new Date(formData.bStartDate).toISOString(),
         bClosingDate: new Date(formData.bClosingDate).toISOString(),
-      
+        withCredentials: true,
       });
       console.log(response.data);
       if (response.data.success) {
