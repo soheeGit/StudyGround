@@ -28,13 +28,16 @@ sequelize.sync({ force: false })    //배포할때 true로 바꾸기
   .catch((err) => {
     console.log(err);
     })
-
 server.use(morgan('dev'));  //현재 개발용. 배포할때 combined로 바꿔야함
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use('/files', express.static(path.join(__dirname, 'uploads')))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(cookieParser(process.env.COOKIE_SECRET));
+server.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 server.use(session({
     resave: false,
     saveUninitialized: false,
@@ -44,13 +47,15 @@ server.use(session({
         secure: false,  //https 적용할때 true로 바꿔야함
     }
 }));
-server.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-}));
 
 server.use(passport.initialize())
 server.use(passport.session())
+
+server.use((req, res, next) => {
+    console.log('Session:', req.session);
+    console.log('User:', req.user);
+    next();
+  });  
 
 server.use('/api', pageRouter);
 server.use('/auth', authRouter);

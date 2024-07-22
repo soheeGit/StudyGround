@@ -12,7 +12,7 @@ const WorkHeader = ({ title }) => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUserId(storedUser.uId); // Retrieve uId from localStorage
+      setUserName(storedUser.user.uName); // Retrieve uId from localStorage
       console.log('User data retrieved from localStorage:', storedUser); 
     } else {
       console.log('회원 정보가 없습니다. 로그인 해주시길 바랍니다.');
