@@ -11,6 +11,14 @@ class Memo extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users', // 연관된 User 모델
+                    key: 'id'
+                }
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -22,7 +30,7 @@ class Memo extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Memo.belongsTo(db.User)
+        db.Memo.belongsTo(db.User, { foreignKey: 'userId' });
     }
 }
 

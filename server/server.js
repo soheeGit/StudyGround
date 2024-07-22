@@ -17,7 +17,12 @@ const { sequelize } = require('./models')
 const passportConfig = require('./passport')
 
 const server = express();
-passportConfig();
+try {
+    console.log('Configuring passport...');
+    passportConfig();
+} catch (error) {
+    console.error('Error configuring passport:', error);
+}
 server.set('port', process.env.PORT || 5000);
 server.set('view engine', 'html');
 server.set('views', path.join(__dirname, 'views'));
@@ -28,29 +33,36 @@ sequelize.sync({ force: false })    //배포할때 true로 바꾸기
   .catch((err) => {
     console.log(err);
     })
-
 server.use(morgan('dev'));  //현재 개발용. 배포할때 combined로 바꿔야함
+server.use(express.json());
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use('/files', express.static(path.join(__dirname, 'uploads')))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(cookieParser(process.env.COOKIE_SECRET));
+server.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 server.use(session({
     resave: false,
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
-      httpOnly: true, //자바스크립트에서 접근못하게
+        httpOnly: true, //자바스크립트에서 접근못하게
         secure: false,  //https 적용할때 true로 바꿔야함
     }
-}));
-server.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
 }));
 
 server.use(passport.initialize())
 server.use(passport.session())
+
+server.use((req, res, next) => {
+    console.log('Session:', req.session);
+    console.log('Session ID:', req.sessionID);
+    console.log('User:', req.user)
+    next();
+  });  
 
 server.use('/api', pageRouter);
 server.use('/auth', authRouter);
