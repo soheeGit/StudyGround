@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './MemoDetail.css';
 import axios from 'axios';
-import { API } from '../../../../config';
 import xicon from '../../../../assets/xicon.png';
 import trashcan from '../../../../assets/trashcan.png';
 import editbutton from '../../../../assets/editbutton.png';
@@ -11,10 +10,12 @@ import editbutton from '../../../../assets/editbutton.png';
 Modal.setAppElement('#root'); // 모달이 열렸을 때 스크린 리더가 읽지 않을 요소 설정
 
 const MemoDetail = ({ isOpen, onRequestClose, data, onUpdate, onDelete }) => {
-  /* update memo */
+  // 메모 수정
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(data.title);
   const [editedContent, setEditedContent] = useState(data.content);
+  const [selectedMemoId, setSelectedMemoId] = useState(data.id);
+  console.log(data.id);
 
   useEffect(() => {
     if (isEditing) {
@@ -29,8 +30,8 @@ const MemoDetail = ({ isOpen, onRequestClose, data, onUpdate, onDelete }) => {
 
   const handleEditSave = async () => {
     try {
-      const response = await axios.put(
-        `${API.UPDATEMEMO}${data.id}`,
+      const response = await axios.post(
+        `/storage/updateMemo/${data.id}`,
         {
           title: editedTitle,
           content: editedContent,
@@ -55,12 +56,13 @@ const MemoDetail = ({ isOpen, onRequestClose, data, onUpdate, onDelete }) => {
     setEditedTitle(data.title);
     setEditedContent(data.content);
   };
-  /* update memo - end*/
 
-  /* delete memo api */
+  // 메모 삭제
   const handleDelete = async () => {
     try {
-      const response = await axios.get(`${API.DELETEMEMO}${data.id}`, {
+      console.log(data.id);
+      console.log(`${data.id}`);
+      const response = await axios.get(`/storage/deleteMemo/${data.id}`, {
         withCredentials: true,
       });
       if (response.status === 200) {
