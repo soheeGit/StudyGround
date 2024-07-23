@@ -30,10 +30,19 @@ const WorkHeader = ({ title }) => {
     navigate('/profile');
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    console.log('User logged out.');
-    navigate('/#');
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/auth/logout', { method: 'GET' });
+      if (response.ok) {
+        localStorage.removeItem('user');
+        console.log('로그아웃');
+        navigate('/#');
+      } else {
+        console.error('로그아웃 실패:', response.statusText);
+      }
+    } catch (error) {
+      console.error('로그아웃하는 중 오류 발생:', error);
+    }
   };
 
   return (

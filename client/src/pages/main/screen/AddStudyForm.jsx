@@ -32,7 +32,7 @@ const AddStudyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/boards', {
+      const response = await axios.post('/api/boards', {
         bId: 1, 
         ...formData,
         bTotalNumber: parseInt(formData.bTotalNumber),

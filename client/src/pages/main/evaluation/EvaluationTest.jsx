@@ -15,18 +15,18 @@ const EvaluationTest = () => {
     sincere: false,
   });
 
-  const [form2Rating, setForm2Rating] = useState(0);
-  const [form2Comments, setForm2Comments] = useState('');
-  const [form2Compliments, setForm2Compliments] = useState({
-    fastResponse: false,
-    proactive: false,
-    leadership: false,
-    creativity: false,
-    diligent: false,
-    punctual: false,
-    detailOriented: false,
-    sincere: false,
-  });
+  // const [form2Rating, setForm2Rating] = useState(0);
+  // const [form2Comments, setForm2Comments] = useState('');
+  // const [form2Compliments, setForm2Compliments] = useState({
+  //   fastResponse: false,
+  //   proactive: false,
+  //   leadership: false,
+  //   creativity: false,
+  //   diligent: false,
+  //   punctual: false,
+  //   detailOriented: false,
+  //   sincere: false,
+  // });
 
   const handleForm1Rating = (rate) => setForm1Rating(rate);
   const handleForm1Comments = (e) => setForm1Comments(e.target.value);
@@ -37,24 +37,24 @@ const EvaluationTest = () => {
     });
   };
 
-  const handleForm2Rating = (rate) => setForm2Rating(rate);
-  const handleForm2Comments = (e) => setForm2Comments(e.target.value);
-  const handleForm2Compliments = (e) => {
-    setForm2Compliments({
-      ...form2Compliments,
-      [e.target.name]: e.target.checked,
-    });
-  };
+  // const handleForm2Rating = (rate) => setForm2Rating(rate);
+  // const handleForm2Comments = (e) => setForm2Comments(e.target.value);
+  // const handleForm2Compliments = (e) => {
+  //   setForm2Compliments({
+  //     ...form2Compliments,
+  //     [e.target.name]: e.target.checked,
+  //   });
+  // };
 
   const handleSubmitForm1 = (e) => {
     e.preventDefault();
     console.log({ rating: form1Rating, comments: form1Comments, compliments: form1Compliments });
   };
 
-  const handleSubmitForm2 = (e) => {
-    e.preventDefault();
-    console.log({ rating: form2Rating, comments: form2Comments, compliments: form2Compliments });
-  };
+  // const handleSubmitForm2 = (e) => {
+  //   e.preventDefault();
+  //   console.log({ rating: form2Rating, comments: form2Comments, compliments: form2Compliments });
+  // };
 
   return (
     <div className="evaluation-container">
@@ -121,8 +121,7 @@ const EvaluationTest = () => {
         </div>
       </form>
 
-      <form onSubmit={handleSubmitForm2}>
-        {/* Form 2 */}
+      {/* <form onSubmit={handleSubmitForm2}>
         <div className="team-select">
           <select id="team">
             <option value="team1">김모씨</option>
@@ -180,7 +179,7 @@ const EvaluationTest = () => {
           ></textarea>
         </div>
         <button type="submit">저장하기</button>
-      </form>
+      </form> */}
     </div>
   );
 };
