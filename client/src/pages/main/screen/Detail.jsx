@@ -3,13 +3,10 @@ import React, { useState, useEffect } from 'react';
 
 function Detail() {
   const [board, setBoard] = useState(null);
-   // localStorage 부분 주석 처리
-  // const user = localStorage.getItem('user');
-  // console.log(user);
 
   useEffect(() => {
-    // console.log('Fetching data from the API');
-    fetch('http://localhost:5000/api/boards')
+
+    fetch('/api/boards')
       .then(response => {
         // if (!response.ok) {
         //   throw new Error('Network response was not ok ' + response.statusText);
@@ -35,40 +32,6 @@ function Detail() {
         console.error('Error fetching data:', error);
       });
   }, []);
-
-  const handleParticipate = () => {
-    if (!board) return; 
-  
-    console.log('Attempting to participate in board with ID:', board.id);
-  
-    fetch(`http://localhost:5000/api/apply-board/${board.id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        console.log('Response Status:', response.status);
-        return response.json().then(data => ({ data, status: response.status }));
-      })
-      .then(({ data, status }) => {
-        console.log('Response Data:', data);
-        if (status >= 200 && status < 300) {
-          if (data.message === '신청 완료되었습니다.') {
-            alert(data.message); // Notify user of success
-          } else {
-            alert('Unexpected response message: ' + data.message); // Notify user of unexpected response
-          }
-        } else {
-          alert('Error: ' + (data.message || 'An unexpected error occurred')); // Notify user of failure
-        }
-      })
-      .catch(error => {
-        console.error('Error applying to board:', error);
-        alert('An error occurred while applying to the board: ' + error.message);
-      });
-  };
-  
 
   if (!board) {
     return <div>Loading...</div>;
@@ -107,7 +70,7 @@ function Detail() {
         </div>
       </div>
 
-      <button className='detail-participate' onClick={handleParticipate}>참여하기</button>
+      <button className='detail-participate' >참여하기</button>
     </div>
   );
 }

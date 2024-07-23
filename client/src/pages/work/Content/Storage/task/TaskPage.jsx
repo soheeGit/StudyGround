@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './TaskPage.css';
 import WorkHeader from '../../../WorkHeader';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import TaskList from './TaskList';
 import TaskDetail from './TaskDetail';
 
 const TaskPage = () => {
+  const { boardId } = useOutletContext();
   // Task 데이터
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -18,24 +19,25 @@ const TaskPage = () => {
   const handleBackToList = () => {
     setSelectedTask(null);
   };
-  //   useEffect(() => {
-  //     const fetchTasks = async () => {
-  //       try {
-  //         const taskResponse = await axios.get(`/storage/task/${.id}`, {
-  //           withCredentials: true,
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //           },
-  //         });
-  //         setTasks(taskResponse.data);
-  //         console.log(taskResponse.data);
-  //       } catch (error) {
-  //         console.error('과제 데이터를 가져오는 중 오류 발생:', error);
-  //       }
-  //     };
 
-  //     fetchTasks();
-  //   }, []);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const taskResponse = await axios.get(`/storage/task/${boardId}`, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setTasks(taskResponse.data);
+        console.log(taskResponse.data);
+      } catch (error) {
+        console.error('과제 데이터를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
   // task dummy data
   const task = [
     {
@@ -71,7 +73,7 @@ const TaskPage = () => {
     <>
       <WorkHeader title="Storage" />
       <div className="task-header-container">Task</div>
-      <hr />
+      <hr id="divider" />
       {!selectedTask ? (
         <TaskList tasks={task} onSelectTask={handleSelectTask} />
       ) : (

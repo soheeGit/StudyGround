@@ -6,6 +6,7 @@ function Mid() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedTitle, setSelectedTitle] = useState(""); // 새로운 state 추가
     const [board, setBoard] = useState(null);
+    const [studyGroups, setStudyGroups] = useState([]); // 새로운 state 추가
 
     const openModal = (title) => { // title 인자 추가
         setSelectedTitle(title); // 클릭한 title을 상태에 저장
@@ -15,32 +16,29 @@ function Mid() {
     const closeModal = () => {
         setModalIsOpen(false);
     };
+
+    useEffect(() => {
+        // Fetch data from the API
+        fetch('/api/boards')
+          .then(response => response.json())
+          .then(data => {
+              const selectedBoard = data[0];
+              setBoard(selectedBoard);
+              setStudyGroups(data); // API에서 받아온 데이터를 studyGroups 상태에 저장
+          })
+          .catch(error => {
+              console.error('Error fetching data:', error);
+          });
+    }, []);
+
+    const addStudyGroup = (newGroup) => {
+        setStudyGroups([...studyGroups, newGroup]);
+    };
+
+    if (!board) {
+        return <div>Loading...</div>;
+    }
     
-useEffect(() => {
-    // console.log('Fetching data from the API');
-    fetch('http://localhost:5000/api/boards')
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        
-        const selectedBoard = data[0];
-        setBoard(selectedBoard);
-        
-        const interval = setInterval(() => {
-          const today = new Date();
-        }, 1000);
-
-        return () => clearInterval(interval);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-
-  if (!board) {
-    return <div>Loading...</div>;
-  }
     return (
         <div className="recruit">
             <ul className="box-list">
@@ -48,7 +46,7 @@ useEffect(() => {
                 <div className='title' onClick={() => openModal("")}><b>{board.bName}</b></div>
                     <div className='user-info'>        
                         <div className='info'>
-                            <div className='count'>10 / 100</div>
+                            <div className='count'>{board.bCurrentNumber} / {board.bTotalNumber}</div>
                         </div>
                         <div className='detail'>
                         </div>
