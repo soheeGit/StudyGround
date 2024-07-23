@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './Sidebar.css';
 import SidebarItem from './SidebarItem';
 import GroupSelector from './GroupSelector';
@@ -12,7 +12,7 @@ import { FaClipboard } from 'react-icons/fa';
 import { TiCloudStorage } from 'react-icons/ti';
 import DashBoard from '../Content/Dashboard/DashBoard';
 
-const Sidebar = (onComponentChange) => {
+const Sidebar = ({ boardId, onComponentChange }) => {
   const [selectedItem, setSelectedItem] = useState('Dashboard');
   const itemSelect = (itemtitle) => {
     setSelectedItem(itemtitle);
@@ -29,7 +29,7 @@ const Sidebar = (onComponentChange) => {
       </div>
       <div className="sidebar-bottom">
         <div className="sidebar-items-container">
-          <Link to="/work/dashboard">
+          <Link to={`/work/${boardId}/dashboard`}>
             <SidebarItem
               title="Dashboard"
               icon={<AiFillHome />}
@@ -37,7 +37,7 @@ const Sidebar = (onComponentChange) => {
               isSelected={selectedItem === 'Dashboard'}
             />
           </Link>
-          <Link to="/work/video">
+          <Link to={`/work/${boardId}/video`}>
             <SidebarItem
               title="Video"
               icon={<FaVideo />}
@@ -45,7 +45,7 @@ const Sidebar = (onComponentChange) => {
               isSelected={selectedItem === 'Video'}
             />
           </Link>
-          <Link to="/work/calendar">
+          <Link to={`/work/${boardId}/calendar`}>
             <SidebarItem
               title="Calendar"
               icon={<FaCalendarAlt />}
@@ -53,7 +53,7 @@ const Sidebar = (onComponentChange) => {
               isSelected={selectedItem === 'Calendar'}
             />
           </Link>
-          <Link to="/work/board">
+          <Link to={`/work/${boardId}/board`}>
             <SidebarItem
               title="Board"
               icon={<FaClipboard />}
@@ -61,7 +61,7 @@ const Sidebar = (onComponentChange) => {
               isSelected={selectedItem === 'Board'}
             />
           </Link>
-          <Link to="/work/storage">
+          <Link to={`/work/${boardId}/storage`}>
             <SidebarItem
               title="Storage"
               icon={<TiCloudStorage />}

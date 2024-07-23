@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import WorkHeadr from '../../WorkHeader';
 import './Storage.css';
 import storage1 from '../../../../assets/storage1.png';
@@ -9,25 +9,26 @@ import storage4 from '../../../../assets/storage4.png';
 import { FaPlus } from 'react-icons/fa6';
 
 const Storage = () => {
-  const [selectedTab, setSelectedTab] = useState('');
-  console.log(selectedTab);
-  const tabHandler = (title) => {
-    setSelectedTab(title);
-    console.log(selectedTab);
-  };
+  const { boardId } = useOutletContext();
+  // const [selectedTab, setSelectedTab] = useState('');
+  // console.log(selectedTab);
+  // const tabHandler = (title) => {
+  //   setSelectedTab(title);
+  //   console.log(selectedTab);
+  // };
 
   return (
     <>
       <WorkHeadr title="Storage" />
       <div className="storage-container">
-        {/* img Tab*/}
+        {/* Notice Tab*/}
         <div className="storage-notice-container">
           <div className="tab-header">
             <div className="tab-header-img">
               <img src={storage1} width={'50px'} />
             </div>
             <p>Notice</p>
-            <Link to="/work/memo" style={{ display: 'flex' }}>
+            <Link to={`/work/${boardId}/notice`} style={{ display: 'flex' }}>
               <div className="tab-header-button">
                 <FaPlus />
               </div>
@@ -55,13 +56,8 @@ const Storage = () => {
               <img src={storage3} width={'50px'} />
             </div>
             <p>Memo</p>
-            <Link to="/work/memo" style={{ display: 'flex' }}>
-              <div
-                className="tab-header-button"
-                onClick={() => {
-                  tabHandler('memo');
-                }}
-              >
+            <Link to={`/work/${boardId}/memo`} style={{ display: 'flex' }}>
+              <div className="tab-header-button">
                 <FaPlus />
               </div>
             </Link>
@@ -74,13 +70,8 @@ const Storage = () => {
               <img src={storage4} width={'50px'} />
             </div>
             <p>Task</p>
-            <Link to="/work/task">
-              <div
-                className="tab-header-button"
-                onClick={() => {
-                  tabHandler('task');
-                }}
-              >
+            <Link to={`/work/${boardId}/task`} style={{ display: 'flex' }}>
+              <div className="tab-header-button">
                 <FaPlus />
               </div>
             </Link>

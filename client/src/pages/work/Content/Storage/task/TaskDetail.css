@@ -2,6 +2,33 @@
   display: flex;
   flex-direction: column;
   width: 95%;
+  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
+}
+.task-detail-container hr {
+  border: none;
+  height: 1px;
+  background-color: #948a8a;
+}
+.task-detail-box {
+  display: flex;
+}
+.task-detail-field {
+  display: flex;
+  justify-content: center;
+  width: 10%;
+  font-weight: 600;
+  color: #4e4949;
+}
+
+.task-submit-textarea textarea {
+  width: 100%;
+  height: 200px;
+  border: none;
+  font-size: 20px;
+  color: #5f5b5b;
+}
+.task-submit-textarea:focus {
+  border: none;
 }
