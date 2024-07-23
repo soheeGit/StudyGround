@@ -58,6 +58,10 @@ class User extends Sequelize.Model {
                 allowNull: false,
                 defaultValue: '하양',
             },
+            profileImage: {
+                type: Sequelize.STRING(255),
+                allowNull: true,
+            },
         }, {
             sequelize,
             timestamps: true,
