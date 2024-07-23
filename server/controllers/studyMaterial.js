@@ -166,7 +166,7 @@ exports.getStudyMaterialData = async (req, res, next) => {
             ]
         });
         if (studyMaterials.length === 0) {
-            return res.status(404).json({ message: '해당 스터디의 자료가 없습니다.' });
+            return res.status(200).json({ message: '해당 스터디의 자료가 없습니다.' });
         }
         res.json(studyMaterials);
     } catch (error) {

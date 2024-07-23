@@ -10,9 +10,11 @@ const cors = require('cors')
 dotenv.config({path: path.join(__dirname, '../.env')});    //process.env 만들어줌
 
 const reviewRouter = require('./routes/review')
+const profileRouter = require('./routes/profile')
 const pageRouter = require('./routes/page')
 const authRouter = require('./routes/auth')
 const storageRouter = require('./routes/storage')
+const calendarRouter = require('./routes/calendar')
 const { sequelize } = require('./models')
 const passportConfig = require('./passport')
 
@@ -68,6 +70,8 @@ server.use('/api', pageRouter);
 server.use('/auth', authRouter);
 server.use('/reviews', reviewRouter);
 server.use('/storage', storageRouter);
+server.use('/calendar', calendarRouter);
+server.use('/profile', profileRouter);
 
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));

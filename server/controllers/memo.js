@@ -82,7 +82,7 @@ exports.getMemoData = async(req, res, next) => {
             }
         });
         if (memos.length === 0) {
-            return res.status(404).json({ message: '메모가 없습니다.' });
+            return res.status(200).json({ message: '메모가 없습니다.' });
         }
         res.json(memos);
     } catch (error) {
@@ -90,6 +90,28 @@ exports.getMemoData = async(req, res, next) => {
         res.status(500).json({ error: '메모 조회 실패' });
     }
 }
+
+exports.getCurrentMemoData = async (req, res, next) => {
+    const userId = req.user.id;
+    try {
+        const memos = await Memo.findAll({
+            where: {
+                userId: userId,
+            },
+            limit: 5, 
+            order: [['createdAt', 'DESC']] 
+        });
+
+        if (memos.length === 0) {
+            return res.status(200).json({ message: '메모가 없습니다.' });
+        }
+        res.json(memos);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: '메모 조회 실패' });
+    }
+}
+
 
 exports.deleteMemo = async(req, res, next) => {
     const memoId = req.params.id;

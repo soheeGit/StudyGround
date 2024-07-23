@@ -1,9 +1,10 @@
-const { Board, Review, User } = require('../models');
+const { Board, Review, User, Praise } = require('../models');
 const { updateUserLevel } = require('../services/userService');
 
 exports.submitReview = async (req, res, next) => {
-    const { boardId, revieweeId, rating, content } = req.body;
+    const { revieweeId, rating, content, praises } = req.body;
     const reviewerId = req.user.id;
+    const boardId = req.params.id;
 
     try {
         const board = await Board.findByPk(boardId);
@@ -19,7 +20,19 @@ exports.submitReview = async (req, res, next) => {
             revieweeId,
             rating,
             content,
+            boardId,
         });
+
+        if (praises && praises.length > 0) {
+            const praiseRecords = await Praise.findAll({
+                where: {
+                    name: praises
+                }
+            });
+
+            await review.addPraises(praiseRecords);
+        }
+
         await updateUserLevel(revieweeId);
         return res.status(201).json({
             success: true,
@@ -41,7 +54,14 @@ exports.getReviewData = async (req, res) => {
         const reviews = await Review.findAll({
             where: {
                 revieweeId: revieweeId
-            }
+            },
+            include: [
+                {
+                    model: Praise,
+                    as: 'praises',
+                    attributes: ['name'] 
+                }
+            ]
         });
         res.json(reviews);
     } catch (error) {

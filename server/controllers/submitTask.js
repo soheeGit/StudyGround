@@ -192,7 +192,7 @@ exports.getmTaskData = async (req, res, next) => {
             ]
         });
         if (!submitTask) {
-            return res.status(404).json({ message: '제출한 과제가 없습니다.' });
+            return res.status(200).json({ message: '제출한 과제가 없습니다.' });
         }
         res.json(submitTask);
     } catch(error) {

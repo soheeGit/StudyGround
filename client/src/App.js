@@ -12,13 +12,15 @@ import AddStudyForm from './pages/main/screen/AddStudyForm';
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
 import Video from './pages/work/Content/Video/Video';
-import Chat from './pages/work/Content/Chat/Chat';
 import BigCalendar from './pages/work/Content/Calendar/Calendar';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
 import Autho from './pages/work/Content/Approve/Autho';
 import Memo from './pages/work/Content/Storage/Memo';
-
+import TaskPage from './pages/work/Content/Storage/task/TaskPage';
+import BoardList from './pages/work/Content/Storage/boardData';
+import NoticePage from './pages/work/Content/Storage/notice/NoticePage';
+import NoticeDetail from './pages/work/Content/Storage/notice/NoticeDetail';
 function App() {
   return (
     <Router>
@@ -31,16 +33,20 @@ function App() {
           <Route path="/LoginAfter" element={<LoginAfter />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/Sidebar" element={<Sidebar />} />
-          <Route path="/add-study" element={<AddStudyForm/>} />
+          <Route path="/add-study" element={<AddStudyForm />} />
+          <Route path="/boardList" element={<BoardList />} />
+
           {/* Wokr페이지 라우팅 */}
-          <Route path="/work" element={<Work />}>
+          <Route path="/work/:boardId" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />
             <Route path="video" element={<Video />} />
-            <Route path="chat" element={<Chat />} />
             <Route path="calendar" element={<BigCalendar />} />
             <Route path="board" element={<Board />} />
             <Route path="storage" element={<Storage />} />
+            <Route path="notice" element={<NoticePage />} />
+            <Route path="notice/:noticeId" element={<NoticeDetail />} />
             <Route path="memo" element={<Memo />} />
+            <Route path="task" element={<TaskPage />} />
             <Route path="autho" element={<Autho />} />
           </Route>
         </Routes>

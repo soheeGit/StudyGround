@@ -12,6 +12,31 @@ exports.getBoardData = async (req, res) => {
     }
 };
 
+exports.getMyBoardData = async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const boards = await Board.findAll({
+            include: [
+                {
+                    model: User,
+                    through: { attributes: [] },
+                    where: { id: userId }
+                }
+            ]
+        });
+
+        if (boards.length === 0) {
+            return res.status(200).json({ message: '소속된 스터디가 없습니다.' });
+        }
+
+        res.json(boards);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: '스터디 리스트 조회 실패' });
+    }
+};
+
 exports.postBoardData = async (req, res, next) => {
     console.log('User ID:', req.user);
     const { bName, bDescription, bTotalNumber, bType, bStartDate, bClosingDate } = req.body;

@@ -1,0 +1,13 @@
+.task-header-container {
+  display: flex;
+  margin-top: 40px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 700;
+}
+#divider {
+  border: none;
+  height: 2px;
+  background-color: #948a8a;
+}

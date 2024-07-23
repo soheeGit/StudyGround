@@ -1,13 +1,16 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
-const { getBoardData, postBoardData, postApplyBoard, postAcceptBoard, postRejectBoard } = require('../controllers/page');
+const { getBoardData, getMyBoardData, postBoardData, postApplyBoard, postAcceptBoard, postRejectBoard } = require('../controllers/page');
 const router = express.Router();
 
 // 스터디 조회
 router.get('/boards', getBoardData);
 
+// 내 스터디 조회
+router.get('/myBoard', isLoggedIn, getMyBoardData);
+
 // 스터디 등록
-router.post('/boards', isLoggedIn, postBoardData);
+router.post('/submitBoard', isLoggedIn, postBoardData);
 
 // 스터디 신청
 router.post('/apply-board/:id', isLoggedIn, postApplyBoard);

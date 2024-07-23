@@ -3,17 +3,53 @@ const Sequelize = require('sequelize');
 class Schedule extends Sequelize.Model {
     static initiate(sequelize) {
         Schedule.init({
-            date: {
+            title: {
+                type: Sequelize.STRING(20),
+                allowNull: false,
+            },
+            startDate: {
                 type: Sequelize.DATEONLY,
                 allowNull: false,
             },
-            time: {
+            startTime: {
                 type: Sequelize.TIME,
                 allowNull: false,
+                defaultValue: Sequelize.literal('\'00:00\''),
             },
-            goal: {
-                type: Sequelize.STRING(100),
-                allowNull:true,
+            endDate: {
+                type: Sequelize.DATEONLY,
+                allowNull: false,
+            },
+            endTime: {
+                type: Sequelize.TIME,
+                allowNull: false,
+                defaultValue: Sequelize.literal('\'00:00\''),
+            },
+            fullTime: {
+                type: Sequelize.ENUM('true', 'false'),
+                allowNull: true,
+                defaultValue: 'false',
+            },
+            color: {
+                type: Sequelize.ENUM('#C2D9F4', '#72D54A', '#FFD235', '#D9D9D9', '#F7323F', '#FFDEAC'),
+                allowNull: false,
+                defaultValue:'#C2D9F4',
+            },
+            url: {
+                type: Sequelize.STRING(50),
+                allowNull: true,
+            },
+            memo: {
+                type: Sequelize.STRING(50),
+                allowNull: true,
+            },
+            boardId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'boards', // 연관된 User 모델
+                    key: 'bid'
+                }
             }
         }, {
             sequelize,
@@ -27,7 +63,7 @@ class Schedule extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Schedule.belongsTo(db.Board);
+        db.Schedule.belongsTo(db.Board, { foreignKey: 'boardId' });
     }
 }
 

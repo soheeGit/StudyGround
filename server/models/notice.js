@@ -30,6 +30,7 @@ class Notice extends Sequelize.Model {
             scope: {
                 fileableType: 'Notice'
             },
+            as: 'files',
             onDelete: 'CASCADE'
         });
     }
