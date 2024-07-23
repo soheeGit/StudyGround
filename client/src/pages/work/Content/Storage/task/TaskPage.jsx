@@ -19,6 +19,7 @@ const TaskPage = () => {
   const handleBackToList = () => {
     setSelectedTask(null);
   };
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -36,7 +37,7 @@ const TaskPage = () => {
     };
 
     fetchTasks();
-  }, [boardId]);
+  }, []);
   // task dummy data
   const task = [
     {

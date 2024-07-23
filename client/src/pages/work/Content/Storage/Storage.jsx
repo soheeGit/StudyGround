@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import WorkHeadr from '../../WorkHeader';
 import './Storage.css';
@@ -7,9 +7,32 @@ import storage2 from '../../../../assets/storage2.png';
 import storage3 from '../../../../assets/storage3.png';
 import storage4 from '../../../../assets/storage4.png';
 import { FaPlus } from 'react-icons/fa6';
+import axios from 'axios';
 
 const Storage = () => {
   const { boardId } = useOutletContext();
+
+  // 상위 5개 데이터 출력
+  const [memo5, setMemo5] = useState([]);
+  useEffect(() => {
+    const fetchMemo5 = async () => {
+      try {
+        const Response = await axios.get(`/storage/currentMemo`, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setMemo5(Response.data);
+        console.log(Response.data);
+      } catch (error) {
+        console.error('메모 데이터를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchMemo5();
+    console.log(memo5);
+  }, []);
   // const [selectedTab, setSelectedTab] = useState('');
   // console.log(selectedTab);
   // const tabHandler = (title) => {
@@ -62,7 +85,11 @@ const Storage = () => {
               </div>
             </Link>
           </div>
-          <div className="memo-content-box"></div>
+          <div className="memo-content-box">
+            {memo5.map((memo, memoId) => (
+              <>{memo.title}</>
+            ))}
+          </div>
         </div>
         <div className="storage-task-container">
           <div className="tab-header">
