@@ -20,6 +20,7 @@ exports.submitReview = async (req, res, next) => {
             revieweeId,
             rating,
             content,
+            boardId,
         });
 
         if (praises && praises.length > 0) {

@@ -30,6 +30,7 @@ class StudyMaterial extends Sequelize.Model {
             scope: {
                 fileableType: 'StudyMaterial'
             },
+            as: 'files',
             onDelete: 'CASCADE'
         });
     }

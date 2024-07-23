@@ -34,6 +34,7 @@ class Task extends Sequelize.Model {
             scope: {
                 fileableType: 'Task'
             },
+            as: 'files',
             onDelete: 'CASCADE'
         });
         db.Task.hasMany(db.SubmitTask);
