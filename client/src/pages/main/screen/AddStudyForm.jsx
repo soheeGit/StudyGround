@@ -18,8 +18,6 @@ const AddStudyForm = () => {
   });
 
   const navigate = useNavigate();
-  const userData = JSON.parse(localStorage.getItem('user'));
-  const userName = userData ? userData.uId : null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,11 +35,12 @@ const AddStudyForm = () => {
         bTotalNumber: parseInt(formData.bTotalNumber),
         bStartDate: new Date(formData.bStartDate).toISOString(),
         bClosingDate: new Date(formData.bClosingDate).toISOString(),
+        withCredentials: true,
       });
       console.log(response.data);
       if (response.data.success) {
         alert('스터디 추가 성공');
-        navigate('/#');
+        navigate('/LoginAfter');
       }
     } catch (error) {
       console.error('스터디 추가하는 중 오류:', error);
