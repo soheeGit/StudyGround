@@ -45,7 +45,7 @@ function JoinupForm2() {
   
       console.log('API response:', response.data);
 
-      navigate('/test');
+      navigate('/test');  // Navigate to /test after successful form submission
 
       setFormData({
         id: '',
@@ -63,7 +63,6 @@ function JoinupForm2() {
   };
   
   return (
-    
     <div className='Joinup-form-wrap'>
       <Top1 />
       <div className="joinup-form-container">
@@ -166,10 +165,9 @@ function JoinupForm2() {
               </label><p>여자</p>
             </div>
           </div>
-          <button type="submit" className='JoinupForm-next'>다음 단계</button>
+          <button type="submit" className='JoinupForm-next'>다음단계</button>
         </form>
       </div>
-      {/* <div className='duplicate-check-button'>중복확인</div> */}
     </div>
   );
 }

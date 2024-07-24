@@ -11,6 +11,11 @@ class Notice extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
+            importance: {
+                type: Sequelize.ENUM('Low', 'High'),
+                allowNull: false,
+                defaultValue: 'Low',
+            },
         }, {
             sequelize,
             timestamps: true,

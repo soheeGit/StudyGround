@@ -19,7 +19,7 @@ const AddStudyForm = () => {
 
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem('user'));
-  const userId = userData ? userData.uId : null;
+  const userName = userData ? userData.uId : null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,7 +44,7 @@ const AddStudyForm = () => {
         navigate('/#');
       }
     } catch (error) {
-      console.error('Error adding study group:', error);
+      console.error('스터디 추가하는 중 오류:', error);
       alert('스터디 추가 실패');
     }
   };

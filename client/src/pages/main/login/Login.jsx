@@ -22,6 +22,7 @@ function Login() {
         },
         credentials: 'include',
         body: JSON.stringify(requestBody),
+        credentials: 'include',
       });
 
       if (response.ok) {

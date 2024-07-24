@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Test.css';
-import Top1 from '../screen/Top1'
+import Top1 from '../screen/Top1';
 import data from '../join/data';
 
 function Test() {
     const [selectedRows, setSelectedRows] = useState([]);
+    const navigate = useNavigate();
 
     const handleCheckboxChange = (event, title) => {
         if (event.target.checked) {
@@ -12,6 +14,10 @@ function Test() {
         } else {
             setSelectedRows(selectedRows.filter(rowTitle => rowTitle !== title));
         }
+    };
+
+    const handleNextStep = () => {
+        navigate('/LoginAfter');
     };
 
     return (
@@ -46,7 +52,7 @@ function Test() {
                 </table>
             </div>
             <div className='Test-button'>
-                <button type='submit'>완료</button>
+                <button type='button' onClick={handleNextStep}>완료</button>
             </div>
         </div>
     );
