@@ -111,7 +111,7 @@ const NoticePage = () => {
             </div>
             <div className="buttonsArea">
               <Button
-                name="등록하기"
+                name="등록"
                 color="#E86161"
                 onClick={() => navigate('addnotice')}
               />
