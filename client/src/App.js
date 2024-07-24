@@ -21,6 +21,8 @@ import TaskPage from './pages/work/Content/Storage/task/TaskPage';
 import BoardList from './pages/work/Content/Storage/boardData';
 import NoticePage from './pages/work/Content/Storage/notice/NoticePage';
 import NoticeDetail from './pages/work/Content/Storage/notice/NoticeDetail';
+import AddNotice from './pages/work/Content/Storage/notice/AddNotice';
+
 function App() {
   return (
     <Router>
@@ -43,8 +45,10 @@ function App() {
             <Route path="calendar" element={<BigCalendar />} />
             <Route path="board" element={<Board />} />
             <Route path="storage" element={<Storage />} />
-            <Route path="notice" element={<NoticePage />} />
-            <Route path="notice/:noticeId" element={<NoticeDetail />} />
+            <Route path="notice" element={<NoticePage />}>
+              <Route path="addnotice" element={<AddNotice />} />
+              <Route path=":noticeId" element={<NoticeDetail />} />
+            </Route>
             <Route path="memo" element={<Memo />} />
             <Route path="task" element={<TaskPage />} />
             <Route path="autho" element={<Autho />} />

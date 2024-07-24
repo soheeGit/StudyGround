@@ -1,3 +1,25 @@
+.input-field {
+  width: 100%;
+}
+
+.input-field input {
+  width: 90%;
+}
+
+.attachments-container {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #948a8a;
+}
+.enroll-button {
+  display: flex;
+  justify-content: flex-end;
+}
 .detail-container {
   display: flex;
   margin-left: 50px;
@@ -38,4 +60,19 @@
 .detail-contentType {
   height: 400px;
   padding-top: 20px;
+}
+
+.inputType {
+  flex-grow: 1;
+}
+
+.attachArea-row {
+  display: flex;
+  padding: 10px;
+}
+
+.checkboxArea {
+  display: flex;
+  margin-left: 30px;
+  margin-right: 30px;
 }
