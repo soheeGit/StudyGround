@@ -59,13 +59,6 @@ server.use(session({
 server.use(passport.initialize())
 server.use(passport.session())
 
-server.use((req, res, next) => {
-    console.log('Session:', req.session);
-    console.log('Session ID:', req.sessionID);
-    console.log('User:', req.user)
-    next();
-  });  
-
 server.use('/api', pageRouter);
 server.use('/auth', authRouter);
 server.use('/reviews', reviewRouter);
