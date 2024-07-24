@@ -1,6 +1,6 @@
 const express = require('express')
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares')
-const { myUserData, myReviewData,updateProfile, afterUploadImage, deleteUser } = require('../controllers/profile')
+const { myUserData, myReviewData, otherUserData, otherReviewData, updateProfile, afterUploadImage, deleteUser } = require('../controllers/profile')
 
 const router = express.Router();
 const fs = require('fs');
@@ -30,6 +30,10 @@ const upload = multer({
 router.get('/myUserData', isLoggedIn, myUserData)
 // 내가 받은 칭찬리뷰, 리뷰내용 분리해서 출력
 router.get('/myReviewData', isLoggedIn, myReviewData)
+// 다른 사람 정보
+router.get('/otherUserData/:id', isLoggedIn, otherUserData)
+// 다른사람이 받은 칭찬리뷰, 리뷰내용 분리해서 출력
+router.get('/otherReviewData/:id', isLoggedIn, otherReviewData)
 // 내 정보 수정
 router.post('/updateProfile', isLoggedIn, upload.none(), updateProfile)
 // 프로필 이미지 업로드 후 미리보기
