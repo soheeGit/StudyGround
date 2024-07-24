@@ -7,6 +7,14 @@ class SubmitTask extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'id'
+                }
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -24,7 +32,7 @@ class SubmitTask extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.SubmitTask.belongsTo(db.User);
+        db.SubmitTask.belongsTo(db.User, { foreignKey: 'userId' });
         db.SubmitTask.belongsTo(db.Task);
         db.SubmitTask.hasMany(db.File, {
             foreignKey: 'fileableId',

@@ -16,6 +16,14 @@ class Notice extends Sequelize.Model {
                 allowNull: false,
                 defaultValue: 'Low',
             },
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users', // 연관된 User 모델
+                    key: 'id'
+                }
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -27,7 +35,7 @@ class Notice extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Notice.belongsTo(db.User);
+        db.Notice.belongsTo(db.User, { foreignKey: 'userId' });
         db.Notice.belongsTo(db.Board);
         db.Notice.hasMany(db.File, {
             foreignKey: 'fileableId',

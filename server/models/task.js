@@ -15,6 +15,14 @@ class Task extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'id'
+                }
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -26,7 +34,7 @@ class Task extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Task.belongsTo(db.User);
+        db.Task.belongsTo(db.User, { foreignKey: 'userId' });
         db.Task.belongsTo(db.Board);
         db.Task.hasMany(db.File, {
             foreignKey: 'fileableId',
