@@ -11,6 +11,14 @@ class StudyMaterial extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'id'
+                }
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -22,7 +30,7 @@ class StudyMaterial extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.StudyMaterial.belongsTo(db.User);
+        db.StudyMaterial.belongsTo(db.User, { foreignKey: 'userId' });
         db.StudyMaterial.belongsTo(db.Board);
         db.StudyMaterial.hasMany(db.File, {
             foreignKey: 'fileableId',

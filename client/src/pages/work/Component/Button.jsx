@@ -7,8 +7,10 @@ export function Button({ name, onClick, color }) {
     color: 'white',
     'padding-top': '5px',
     'padding-bottom': '5px',
-    'padding-left': '10px',
-    'padding-right': '10px',
+    'padding-left': '30px',
+    'padding-right': '30px',
+    'margin-left': '20px',
+    cursor: 'pointer',
   };
   console.log(buttonStyle);
   return (

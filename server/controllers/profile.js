@@ -35,6 +35,113 @@ exports.myUserData = async(req, res) => {
     }
 }
 
+exports.otherReviewData = async (req, res) => {
+    const otherUserId = req.params.id;
+
+    try {
+        const otherUser = await User.findOne({ where: { id: otherUserId } });
+        if (!otherUser) {
+            return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+        }
+
+        const reviews = await Review.findAll({
+            where: {
+                revieweeId: otherUserId
+            },
+            include: [
+                {
+                    model: Board,
+                    attributes: ['bName'],
+                    as: 'Board',
+                },
+                {
+                    model: Praise,
+                    attributes: ['name'],
+                    through: { attributes: [] }
+                }
+            ]
+        });
+
+        const boardReviews = {};
+        reviews.forEach(review => {
+            if (!boardReviews[review.boardId]) {
+                boardReviews[review.boardId] = {
+                    reviews: [],
+                    praises: new Set(),
+                    totalRating: 0,
+                    count: 0,
+                    boardName: review.Board ? review.Board.bName : 'Unknown'
+                };
+            }
+            boardReviews[review.boardId].reviews.push({
+                rating: review.rating,
+                content: review.content
+            });
+            boardReviews[review.boardId].totalRating += review.rating;
+            boardReviews[review.boardId].count += 1;
+            review.Praises.forEach(praise => boardReviews[review.boardId].praises.add(praise.name));
+        });
+
+        const reviewResult = Object.keys(boardReviews).map(boardId => {
+            const board = boardReviews[boardId];
+            const averageRating = board.count > 0 ? board.totalRating / board.count : 0;
+            return {
+                boardId,
+                boardName: board.boardName,
+                averageRating,
+                reviews: board.reviews,
+                praises: Array.from(board.praises)
+            };
+        });
+
+        return res.status(200).json({
+            success: true,
+            reviewResult
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            error: '내 리뷰 확인 오류',
+            details: error.message,
+        });
+    }
+}
+
+exports.otherUserData = async(req, res) => {
+    const otherUserId = req.params.id;
+    
+    try{
+        const otherUser = await User.findOne({ where: { id: otherUserId }})
+        if(!otherUser){
+            return res.status(404).json({message: '사용자를 찾을 수 없습니다.'})
+        }
+        return res.status(200).json({
+            success: true,
+            message: '사용자 정보',
+            user: {
+                uId: otherUser.uId,
+                uEmail: otherUser.uEmail,
+                uName: otherUser.uName,
+                uNumber: otherUser.uNumber,
+                uBirth: otherUser.uBirth,
+                uSex: otherUser.uSex,
+                provider: otherUser.provider,
+                snsId: otherUser.snsId,
+                uType: otherUser.uType,
+                uLevel: otherUser.uLevel,
+                createdAt: otherUser.createdAt,
+                updatedAt: otherUser.updatedAt,
+            },
+        })
+    }catch(error) {
+        console.error(error);
+        return res.status(500).json({
+            error: '프로필 오류',
+            details: error.message,
+        });
+    }
+}
+
 exports.myReviewData = async (req, res) => {
     const userId = req.user.id;
 

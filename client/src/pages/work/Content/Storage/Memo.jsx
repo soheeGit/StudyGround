@@ -106,21 +106,25 @@ const Memo = () => {
         <div className="memo-content">
           <h2>오늘</h2>
           {/* map postion */}
-          {memos.map((memo, memoId) => (
-            <div className="today-memo-box" key={memo.id}>
-              <div className="today-memo-box-left">
-                <div className="today-memo-title">{memo.title}</div>
-                <div className="today-memo-content">
-                  <div className="edit-time"></div>
-                  <div className="this-memo-content">{memo.content}</div>
+          {memos && memos.length > 0 ? (
+            memos.map((memo, memoId) => (
+              <div className="today-memo-box" key={memo.id}>
+                <div className="today-memo-box-left">
+                  <div className="today-memo-title">{memo.title}</div>
+                  <div className="today-memo-content">
+                    <div className="edit-time"></div>
+                    <div className="this-memo-content">{memo.content}</div>
+                  </div>
+                </div>
+                <div className="edit-button-container">
+                  <button>수정</button>
+                  <button onClick={() => handleOpenModal(memo)}>상세</button>
                 </div>
               </div>
-              <div className="edit-button-container">
-                <button>수정</button>
-                <button onClick={() => handleOpenModal(memo)}>상세</button>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <AddMemoModal

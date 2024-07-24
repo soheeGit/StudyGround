@@ -79,49 +79,53 @@ const NoticePage = () => {
               <div className="notice-content-header-4">날짜</div>
             </div>
             <div className="notice-content-list">
-              {notices.map((notice, noticeKey) => (
-                <div className="table-list-container">
-                  <div className="notice-content-header-1">
-                    <img src={star} style={{ width: '30px' }} />
-                  </div>
-                  <div id="notice-content-header-2">
-                    {/* <Link
-                      to={`${notice.id}`}
-                      onClick={() => handleClickNotice(notice)}
-                    >
-                      {notice.title}
-                      {notice.id}
-                    </Link> */}
-                    <div
-                      className="notice-content-title"
-                      onClick={() => handleClickNotice(notice)}
-                    >
-                      {notice.title}
+              {notices && notices.length > 0 ? (
+                notices.map((notice, noticeKey) => (
+                  <div className="table-list-container">
+                    <div className="notice-content-header-1">
+                      {notice.importance == 'High' ? (
+                        <img src={star} style={{ width: '30px' }} />
+                      ) : (
+                        <img src={nostar} style={{ width: '30px' }} />
+                      )}
                     </div>
+                    <div id="notice-content-header-2">
+                      <div
+                        className="notice-content-title"
+                        onClick={() => handleClickNotice(notice)}
+                      >
+                        {notice.title}
+                      </div>
+                    </div>
+                    <div className="lnotice-content-header-3">
+                      {notice.files.length > 0 ? (
+                        <>
+                          <img src={clip} style={{ width: '30px' }} />
+                        </>
+                      ) : (
+                        <>-</>
+                      )}
+                    </div>
+                    <div className="notice-content-header-4">2024-03-30</div>
                   </div>
-                  <div className="lnotice-content-header-3">
-                    {notice.files.length > 0 ? (
-                      <>
-                        <img src={clip} style={{ width: '30px' }} />
-                      </>
-                    ) : (
-                      <>-</>
-                    )}
-                  </div>
-                  <div className="notice-content-header-4">2024-03-30</div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="buttonsArea">
+              <Button
+                name="등록"
+                color="#E86161"
+                onClick={() => navigate('addnotice')}
+              />
             </div>
           </div>
         </>
       )}
 
       <Outlet context={{ boardId, fetchNoticesRef }} />
-      <Button
-        name="등록하기"
-        color="#E86161"
-        onClick={() => navigate('addnotice')}
-      />
+
       {/* {!selectedTask ? (
         <TaskList tasks={task} onSelectTask={handleSelectTask} />
       ) : (
