@@ -9,6 +9,7 @@ export function Button({ name, onClick, color }) {
     'padding-bottom': '5px',
     'padding-left': '10px',
     'padding-right': '10px',
+    cursor: 'pointer',
   };
   console.log(buttonStyle);
   return (

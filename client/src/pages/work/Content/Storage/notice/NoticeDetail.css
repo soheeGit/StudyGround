@@ -39,3 +39,13 @@
   height: 400px;
   padding-top: 20px;
 }
+
+.attachment-box {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+.buttonsArea {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}

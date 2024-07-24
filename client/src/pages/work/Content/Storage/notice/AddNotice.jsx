@@ -12,7 +12,7 @@ const AddNotice = () => {
   const [content, setContent] = useState('');
   const [files, setFiles] = useState([]);
   const [isImportant, setIsImportant] = useState(false);
-
+  console.log(isImportant);
   const handleFileChange = (event) => {
     setFiles(event.target.files);
   };
@@ -25,10 +25,11 @@ const AddNotice = () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    form;
+    formData.append('importance', isImportant ? 'High' : 'Low');
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
+    console.log(formData);
 
     try {
       const response = await axios.post(
@@ -65,6 +66,7 @@ const AddNotice = () => {
           <input
             type="text"
             className="inputType"
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력해 주세요"
           />
           <div className="checkboxArea">
@@ -72,8 +74,8 @@ const AddNotice = () => {
             <input
               type="checkbox"
               id="checkbox"
-              checked={isChecked}
-              onChange={(e) => setIsChecked(e.target.checked)}
+              checked={isImportant}
+              onChange={(e) => setIsImportant(e.target.checked)}
             />
           </div>
         </div>
