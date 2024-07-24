@@ -86,9 +86,13 @@ const Storage = () => {
             </Link>
           </div>
           <div className="memo-content-box">
-            {memo5.map((memo, memoId) => (
-              <div className="memo-content">{memo.title}</div>
-            ))}
+            {memo5 && memo5.length > 0 ? (
+              memo5.map((memo, memoId) => (
+                <div className="memo-content">{memo.title}</div>
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <div className="storage-task-container">
