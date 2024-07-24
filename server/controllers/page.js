@@ -37,6 +37,20 @@ exports.getMyBoardData = async (req, res) => {
     }
 };
 
+exports.partBoardsData = async (req, res, next) => {
+    const boardId = req.params.id;
+    try{
+        const board = await Board.findOne( {where: {id: boardId } } )
+        if(!board){
+            return res.status(200).json({ message: '스터디가 없습니다.' });
+        }
+        res.json(board);
+    }catch(error) {
+        console.error(error);
+        return next(error);
+    }
+}
+
 exports.postBoardData = async (req, res, next) => {
     console.log('User ID:', req.user);
     const { bName, bDescription, bTotalNumber, bType, bStartDate, bClosingDate } = req.body;
