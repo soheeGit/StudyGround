@@ -1,46 +1,55 @@
-  /* Form Container Styling */
-  .aformContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 100px); /* Adjust height as needed */
-    margin-top: 80px;
+.aformContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+  margin-top: 80px;
 }
-  
-  .addstudyform {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  .studylabel, .studyinput, label {
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  
-  .studyinput {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .studybutton {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #5CAD73;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
 
-  }
+.addstudyform {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.studylabel,
+.studyinput,
+label {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.studyinput {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.studybutton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #5cad73;
+  color: #fff;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 30%;
+}
+
+.addf {
+  text-align: center;
+  font-size: 25px;
+  margin-top: 30px;
+}

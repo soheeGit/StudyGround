@@ -1,4 +1,3 @@
-// src/components/Top/Top.js
 import './Top.css';
 import React, { useState } from 'react';
 import logo from '../../../assets/logo.png';

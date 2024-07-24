@@ -1,4 +1,4 @@
-.recruit {
+.mid_recruit {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -9,58 +9,78 @@
   margin-left: 10px;
 }
 
-.box {
+.mid_box-list {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 92%;
+  list-style: none;
+}
+
+.mid_box,
+.new-study-box {
   display: flex;
   flex-direction: column;
-  width: 95px;
+  width: 87px;
   height: 130px;
   border-radius: 20px;
   background-color: #f0f0f0;
   margin-right: 35px;
   position: relative;
   margin-bottom: 55px;
-  flex: 0 0 calc(20% - 70px);
+  flex: 0 0 calc(20% - 10px);
 }
 
-.box-list {
-  display: flex;
-  flex-wrap: wrap; /* 요소들이 한 줄에 모두 표시되고 넘칠 경우 다음 줄로 이동 */
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-}
-
-.title {
-  text-align: center;
+.mid_title {
   margin-top: 50px;
   cursor: pointer;
+  text-align: center;
 }
 
-.user-info {
+.mid_user-info {
   display: flex;
   align-items: center;
 }
 
-.info {
+.mid_info {
   margin-left: auto;
   margin-top: 25px;
   margin-right: 20px;
 }
 
-.count {
+.mid_count {
   font-size: 14px;
   margin: 2px 0;
 }
 
-.detail button {
-  font-size: 12px;
-  border-radius: 20px;
-  background-color: #abcef8;
-  color: black;
-  width: 60px;
-  text-align: center;
-  margin-left: 34px;
-  margin-top: 15px;
+.mid_detail {
+  font-size: 0.8em;
+  color: #777;
+}
+
+.new-study-box {
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  border: none;
+  background-color: white;
+  border: 2px solid rgb(155, 155, 155);
+  width: 200px;
+}
+
+.new-study-link {
+  text-decoration: none;
+}
+.new-study-content {
+  text-align: center;
+}
+
+.plus-sign {
+  font-size: 2em;
+  color: #888;
+}
+
+.new-study-text {
+  font-size: 0.9em;
+  color: #888;
 }

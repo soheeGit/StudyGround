@@ -7,6 +7,15 @@ import logo from '../../../assets/logo.png';
 import '../screen/AddStudyForm.css';
 import WorkHeader from '../../work/WorkHeader';
 
+const categoryOptions = [
+  '어학',
+  '취업',
+  '고시/공무원',
+  '프로그래밍',
+  '취미/교양',
+  '기타',
+];
+
 const AddStudyForm = () => {
   const [formData, setFormData] = useState({
     bName: '',
@@ -20,11 +29,18 @@ const AddStudyForm = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, value, type } = e.target;
+    if (type === 'radio') {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -62,28 +78,18 @@ const AddStudyForm = () => {
             />
           </Link>
         </div>
-        <div className="menu" style={{ fontFamily: 'Imprima, sans-serif' }}>
-          <Link to="/Work" className="navigation">
-            Work
-          </Link>
-          <Link to="/Recruitment" className="navigation">
-            Recruitment
-          </Link>
-          <Link to="/Notice" className="navigation">
-            Notice
-          </Link>
-          <Link to="/About" className="navigation">
-            About
-          </Link>
-        </div>
         <WorkHeader />
       </div>
       <div className="divider"></div>
 
+      <div className="addf">
+        <b>스터디 생성</b>
+      </div>
+
       <div className="aformContainer">
         <form className="addstudyform" onSubmit={handleSubmit}>
           <label className="studylabel">
-            스터디 이름:
+            스터디 이름*
             <input
               className="studyinput"
               type="text"
@@ -95,7 +101,7 @@ const AddStudyForm = () => {
           </label>
           <br />
           <label>
-            설명:
+            스터디 간단소개*
             <input
               className="studyinput"
               type="text"
@@ -107,31 +113,43 @@ const AddStudyForm = () => {
           </label>
           <br />
           <label>
-            총 인원:
-            <input
+            총 인원*
+            <select
               className="studyinput"
-              type="number"
               name="bTotalNumber"
               value={formData.bTotalNumber}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="" disabled>
+                인원 수 선택
+              </option>
+              {[...Array(10)].map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
           </label>
           <br />
-          <label>
-            타입:
-            <input
-              className="studyinput"
-              type="text"
-              name="bType"
-              value={formData.bType}
-              onChange={handleChange}
-              required
-            />
-          </label>
+          <div>
+            카테고리*
+            {categoryOptions.map((category) => (
+              <label key={category} className="radio-label">
+                <input
+                  type="radio"
+                  name="bType"
+                  value={category}
+                  checked={formData.bType === category}
+                  onChange={handleChange}
+                />
+                {category}
+              </label>
+            ))}
+          </div>
           <br />
           <label>
-            시작 날짜:
+            스터디 시작일*
             <input
               className="studyinput"
               type="date"
@@ -143,7 +161,7 @@ const AddStudyForm = () => {
           </label>
           <br />
           <label>
-            종료 날짜:
+            스터디 마감일*
             <input
               className="studyinput"
               type="date"
@@ -154,7 +172,7 @@ const AddStudyForm = () => {
             />
           </label>
           <button className="studybutton" type="submit">
-            추가
+            생성하기
           </button>
         </form>
       </div>

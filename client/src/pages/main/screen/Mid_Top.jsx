@@ -1,4 +1,4 @@
-import './Mid.css';
+import './Mid_Top.css';
 import CustomModal2 from '../Modal/Modal2';
 import React, { useState } from 'react';
 
@@ -7,7 +7,6 @@ function Mid_Top() {
   const [selectedTitle, setSelectedTitle] = useState(''); // 새로운 state 추가
 
   const openModal = (title) => {
-    // title 인자 추가
     setSelectedTitle(title); // 클릭한 title을 상태에 저장
     setModalIsOpen(true);
   };
