@@ -1,7 +1,7 @@
 const { Board, Review, User, Memo, Notice, File, StudyMaterial } = require('../models');
 
 exports.submitNotice = async(req, res, next) => {
-    const {title, content} = req.body;
+    const {title, content, importance} = req.body;
     const userId = req.user.id;
     const boardId = req.params.id;
     if (!title || !content) {
@@ -18,6 +18,7 @@ exports.submitNotice = async(req, res, next) => {
         const notice = await Notice.create({
             title,
             content,
+            importance,
             userId: userId,
             boardId: boardId
         })
@@ -41,14 +42,7 @@ exports.submitNotice = async(req, res, next) => {
         return res.status(201).json({
             success: true,
             message: '공지사항 추가 성공',
-            notice: {
-                title: notice.title,
-                content: notice.content,
-                userId: notice.userId,
-                boardId: notice.boardId,
-                createdAt: notice.createdAt,
-                updatedAt: notice.updatedAt,
-            },
+            notice,
             files: uploadedFiles
         });
     }catch (error){
@@ -59,7 +53,7 @@ exports.submitNotice = async(req, res, next) => {
 
 exports.updateNotice = async (req, res, next) => {
     const noticeId = req.params.id;
-    const { title, content, filesToDelete = [] } = req.body;
+    const { title, content, importance, filesToDelete = [] } = req.body;
     const userId = req.user.id;
 
     if (!title || !content) {
@@ -85,6 +79,7 @@ exports.updateNotice = async (req, res, next) => {
 
         notice.title = title;
         notice.content = content;
+        notice.importance = importance;
         await notice.save();
 
         if (filesToDelete.length > 0) {
@@ -136,13 +131,7 @@ exports.updateNotice = async (req, res, next) => {
         return res.status(200).json({
             success: true,
             message: '공지사항 수정 성공',
-            notice: {
-                title: notice.title,
-                content: notice.content,
-                userId: notice.userId,
-                createdAt: notice.createdAt,
-                updatedAt: notice.updatedAt,
-            },
+            notice,
             files: uploadedFiles
         });
     } catch (error) {

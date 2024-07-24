@@ -33,12 +33,12 @@ const Storage = () => {
     fetchMemo5();
     console.log(memo5);
   }, []);
-  // const [selectedTab, setSelectedTab] = useState('');
-  // console.log(selectedTab);
-  // const tabHandler = (title) => {
-  //   setSelectedTab(title);
-  //   console.log(selectedTab);
-  // };
+  const [selectedTab, setSelectedTab] = useState('');
+  console.log(selectedTab);
+  const tabHandler = (title) => {
+    setSelectedTab(title);
+    console.log(selectedTab);
+  };
 
   return (
     <>
@@ -87,7 +87,7 @@ const Storage = () => {
           </div>
           <div className="memo-content-box">
             {memo5.map((memo, memoId) => (
-              <>{memo.title}</>
+              <div className="memo-content">{memo.title}</div>
             ))}
           </div>
         </div>

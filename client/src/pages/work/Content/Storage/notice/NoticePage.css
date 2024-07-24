@@ -1,0 +1,68 @@
+.notice-content-container {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.notice-content-header {
+  display: flex;
+  width: 100%;
+  background-color: #d9d9d9;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 17px;
+  font-weight: 700;
+  align-items: center; /* 추가된 부분 */
+  text-align: center; /* 추가된 부분 */
+}
+.notice-content-header-1,
+.notice-content-header-2,
+.notice-content-header-3,
+.notice-content-header-4 {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 추가된 부분 */
+  text-align: center; /* 추가된 부분 */
+}
+.notice-content-header-1 {
+  display: flex;
+  justify-content: center;
+  width: 8%;
+}
+.notice-content-header-2 {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+#notice-content-header-2 {
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+}
+.notice-content-title {
+  cursor: pointer;
+}
+.notice-content-header-3 {
+  display: flex;
+  justify-content: center;
+  width: 20%;
+}
+.notice-content-header-4 {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+}
+.notice-content-list {
+  width: 100%;
+}
+.table-list-container {
+  display: flex;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-bottom: solid 1px;
+  align-items: center; /* 추가된 부분 */
+  text-align: center; /* 추가된 부분 */
+}
