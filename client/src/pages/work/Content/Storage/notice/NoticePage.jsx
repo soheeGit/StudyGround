@@ -1,80 +1,127 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './NoticePage.css';
 import WorkHeader from '../../../WorkHeader';
 import axios from 'axios';
-import { Link, useOutletContext } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useOutletContext,
+} from 'react-router-dom';
+import clip from '../../../../../assets/clip.png';
+import star from '../../../../../assets/star.png';
+import nostar from '../../../../../assets/nostar.png';
+import { Button } from '../../../Component/Button';
 
 const NoticePage = () => {
   const { boardId } = useOutletContext();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isOutletVisible, setIsOutletVisible] = useState(false); // Outlet 활성화 상태
 
   // Notice 데이터
   const [notices, setNotices] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
+  const fetchNoticesRef = useRef(null);
 
-  //   const handleSelectTask = (task) => {
-  //     setSelectedTask(task);
-  //   };
-
-  //   const handleBackToList = () => {
-  //     setSelectedTask(null);
-  //   };
+  // 현재 URL이 /notice/addnotice인 경우 Outlet 활성화
+  useEffect(() => {
+    if (
+      location.pathname.includes('/notice/addnotice') ||
+      /\/notice\/\d+/.test(location.pathname)
+    ) {
+      setIsOutletVisible(true);
+    } else {
+      setIsOutletVisible(false);
+    }
+  }, [location]);
 
   // fetch Notice data
-  useEffect(() => {
-    const fetchNotice = async () => {
-      try {
-        const noticeResponse = await axios.get(`/storage/notice/${boardId}`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setNotices(noticeResponse.data);
-        console.log(noticeResponse.data);
-      } catch (error) {
-        console.error('공지사항 데이터를 가져오는 중 오류 발생:', error);
-      }
-    };
+  const fetchNotices = async () => {
+    try {
+      const noticeResponse = await axios.get(`/storage/notice/${boardId}`, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setNotices(noticeResponse.data);
+      console.log(noticeResponse.data);
+    } catch (error) {
+      console.error('공지사항 데이터를 가져오는 중 오류 발생:', error);
+    }
+  };
 
-    fetchNotice();
+  useEffect(() => {
+    fetchNotices();
+    fetchNoticesRef.current = fetchNotices;
   }, [boardId]);
 
-  // task dummy data
-  //   const task = [
-  //     {
-  //       id: 4,
-  //       title: '스크립트나 롤플레잉 관련 연습 후 녹음하여 올리기',
-  //       status: '진행중',
-  //       submitStatus: '-',
-  //       dueDate: '2024.04.01 오후 11:59',
-  //     },
-  //     {
-  //       id: 3,
-  //       title: '일주일동안 매일 하나씩 영어 일기 써온 후 업로드하기',
-  //       status: '종료',
-  //       submitStatus: 'x',
-  //       dueDate: '2024.03.18 오후 11:59',
-  //     },
-  //     {
-  //       id: 2,
-  //       title: '3월 19일 스터디 할 주제 2개씩 찾아 온 후 스크립트 써오기',
-  //       status: '종료',
-  //       submitStatus: '-',
-  //       dueDate: '2024.03.18 오후 11:59',
-  //     },
-  //     {
-  //       id: 1,
-  //       title: '많이 쓰이는 일상속 대화 표현 찾아오기 각 30개',
-  //       status: '종료',
-  //       submitStatus: '-',
-  //       dueDate: '2024.03.11 오후 11:59',
-  //     },
-  //   ];
+  // 공지사항 상세확인 : NopticeDetail로 notice데이터 넘겨준다
+  const handleClickNotice = (notice) => {
+    navigate(`/work/${boardId}/notice/${notice.id}`, { state: { notice } });
+  };
+
   return (
     <>
       <WorkHeader title="Storage" />
       <div className="task-header-container">Notice</div>
       <hr id="divider" />
+      {!isOutletVisible && (
+        <>
+          <div className="notice-content-container">
+            <div className="notice-content-header">
+              <div className="notice-content-header-1">중요</div>
+              <div className="notice-content-header-2"></div>
+              <div className="notice-content-header-3">첨부파일</div>
+              <div className="notice-content-header-4">날짜</div>
+            </div>
+            <div className="notice-content-list">
+              {notices.map((notice, noticeKey) => (
+                <div className="table-list-container">
+                  <div className="notice-content-header-1">
+                    <img src={star} style={{ width: '30px' }} />
+                  </div>
+                  <div id="notice-content-header-2">
+                    {/* <Link
+                      to={`${notice.id}`}
+                      onClick={() => handleClickNotice(notice)}
+                    >
+                      {notice.title}
+                      {notice.id}
+                    </Link> */}
+                    <div
+                      className="notice-content-title"
+                      onClick={() => handleClickNotice(notice)}
+                    >
+                      {notice.title}
+                    </div>
+                  </div>
+                  <div className="lnotice-content-header-3">
+                    {notice.files.length > 0 ? (
+                      <>
+                        <img src={clip} style={{ width: '30px' }} />
+                      </>
+                    ) : (
+                      <>-</>
+                    )}
+                  </div>
+                  <div className="notice-content-header-4">2024-03-30</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      <Outlet context={{ boardId, fetchNoticesRef }} />
+      <Button
+        name="등록하기"
+        color="#E86161"
+        onClick={() => navigate('addnotice')}
+      />
       {/* {!selectedTask ? (
         <TaskList tasks={task} onSelectTask={handleSelectTask} />
       ) : (

@@ -8,6 +8,8 @@ import LoginAfter from './pages/main/login/LoginAfter';
 import Profile from './pages/main/profile/profile';
 import Sidebar from './pages/work/sidebar/Sidebar';
 import AddStudyForm from './pages/main/screen/AddStudyForm';
+import EvaluationTest from './pages/main/evaluation/EvaluationTest';
+import Detail from './pages/main/screen/Detail';
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
@@ -21,6 +23,8 @@ import TaskPage from './pages/work/Content/Storage/task/TaskPage';
 import BoardList from './pages/work/Content/Storage/boardData';
 import NoticePage from './pages/work/Content/Storage/notice/NoticePage';
 import NoticeDetail from './pages/work/Content/Storage/notice/NoticeDetail';
+import AddNotice from './pages/work/Content/Storage/notice/AddNotice';
+
 function App() {
   return (
     <Router>
@@ -31,11 +35,12 @@ function App() {
           <Route path="/JoinupForm" element={<JoinupForm2 />} />
           <Route path="/Test" element={<Test />} />
           <Route path="/LoginAfter" element={<LoginAfter />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<EvaluationTest />} />
           <Route path="/Sidebar" element={<Sidebar />} />
           <Route path="/add-study" element={<AddStudyForm />} />
           <Route path="/boardList" element={<BoardList />} />
-
+          <Route path="/" element={<Detail />} />
+          <Route path="/evaluation/:boardId" element={<EvaluationTest />} />
           {/* Wokr페이지 라우팅 */}
           <Route path="/work/:boardId" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />
@@ -43,8 +48,10 @@ function App() {
             <Route path="calendar" element={<BigCalendar />} />
             <Route path="board" element={<Board />} />
             <Route path="storage" element={<Storage />} />
-            <Route path="notice" element={<NoticePage />} />
-            <Route path="notice/:noticeId" element={<NoticeDetail />} />
+            <Route path="notice" element={<NoticePage />}>
+              <Route path="addnotice" element={<AddNotice />} />
+              <Route path=":noticeId" element={<NoticeDetail />} />
+            </Route>
             <Route path="memo" element={<Memo />} />
             <Route path="task" element={<TaskPage />} />
             <Route path="autho" element={<Autho />} />

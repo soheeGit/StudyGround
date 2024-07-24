@@ -29,6 +29,19 @@ const Memo = () => {
     setAddModalIsOpen(false);
   };
 
+  const handleAddMemo = async (memo) => {
+    try {
+      const response = await axios.post('/storage/submitMemo', memo, {
+        withCredentials: true,
+      });
+      setMemos([...memos, response.data.memo]);
+      setTitle('');
+      setContent('');
+    } catch (error) {
+      console.error('메모를 추가하는 중 오류 발생:', error);
+    }
+  };
+
   // 메모 상세보기
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const handleOpenModal = (memo) => {
@@ -41,6 +54,7 @@ const Memo = () => {
     setModalIsOpen(null);
   };
 
+  // 메모 fetch
   useEffect(() => {
     const fetchMemos = async () => {
       try {
@@ -59,19 +73,6 @@ const Memo = () => {
 
     fetchMemos();
   }, []);
-
-  const handleAddMemo = async (memo) => {
-    try {
-      const response = await axios.post('/storage/submitMemo', memo, {
-        withCredentials: true,
-      });
-      setMemos([...memos, response.data.memo]);
-      setTitle('');
-      setContent('');
-    } catch (error) {
-      console.error('메모를 추가하는 중 오류 발생:', error);
-    }
-  };
 
   /* 메모 수정 */
   const handleUpdateMemo = (id, newTitle, newContent) => {

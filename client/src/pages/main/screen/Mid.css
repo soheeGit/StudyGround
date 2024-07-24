@@ -1,67 +1,66 @@
 .recruit {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    /* z-index: 1; */
-    overflow-x: auto;
-    margin-top: 45px;
-    margin-left: 10px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* z-index: 1; */
+  overflow-x: auto;
+  margin-top: 45px;
+  margin-left: 10px;
 }
 
 .box {
-    display: flex;
-    flex-direction: column;
-    width: 84px;
-    height: 130px;
-    border-radius: 20px;
-    background-color: #f0f0f0;
-    margin-right: 35px;
-    position: relative;
-    margin-bottom: 55px;
-    flex: 0 0 calc(20% - 70px);
+  display: flex;
+  flex-direction: column;
+  width: 95px;
+  height: 130px;
+  border-radius: 20px;
+  background-color: #f0f0f0;
+  margin-right: 35px;
+  position: relative;
+  margin-bottom: 55px;
+  flex: 0 0 calc(20% - 70px);
 }
 
 .box-list {
-    display: flex;
-    flex-wrap: wrap; /* 요소들이 한 줄에 모두 표시되고 넘칠 경우 다음 줄로 이동 */
-    justify-content: center; 
-    list-style: none;
-    padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* 요소들이 한 줄에 모두 표시되고 넘칠 경우 다음 줄로 이동 */
+  justify-content: center;
+  list-style: none;
+  padding: 0;
 }
 
 .title {
-    text-align: center;
-    margin-top: 50px;
-    cursor: pointer;
+  text-align: center;
+  margin-top: 50px;
+  cursor: pointer;
 }
 
 .user-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .info {
-    margin-left: auto;
-    margin-top: 25px;
-    margin-right: 20px;
+  margin-left: auto;
+  margin-top: 25px;
+  margin-right: 20px;
 }
 
 .count {
-    font-size: 14px;
-    margin: 2px 0;
+  font-size: 14px;
+  margin: 2px 0;
 }
 
-.detail button{
-    font-size: 12px;
-    border-radius: 20px;
-    background-color: #ABCEF8;
-    color: black;
-    width: 60px;
-    text-align: center;
-    margin-left: 34px;
-    margin-top: 15px;
-    cursor: pointer;
-    border: none;
+.detail button {
+  font-size: 12px;
+  border-radius: 20px;
+  background-color: #abcef8;
+  color: black;
+  width: 60px;
+  text-align: center;
+  margin-left: 34px;
+  margin-top: 15px;
+  cursor: pointer;
+  border: none;
 }
-
