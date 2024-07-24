@@ -1,10 +1,49 @@
+import axios from 'axios';
+import { Button } from '../../../Component/Button';
 import './NoticeDetail.css';
-import { useLocation } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from 'react-router-dom';
 
 const NoticeDetail = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { notice } = location.state || {}; //location.state로 부터 notice 데이터를 가져옴
-  console.log(notice);
+  const { boardId, fetchNoticesRef } = useOutletContext();
+  const noticeId = useParams();
+  console.log(noticeId.noticeId);
+
+  // 공지사항 삭제
+  const handleDeleteNotice = async () => {
+    try {
+      const response = await axios.get(
+        `/storage/deleteNotice/${noticeId.noticeId}`,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      if (response.data.success) {
+        alert('공지사항이 성공적으로 삭제되었습니다.');
+        if (fetchNoticesRef.current) {
+          fetchNoticesRef.current();
+        }
+        navigate(`../`);
+      } else {
+        alert('공지사항 삭제 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('공지사항 삭제 중 오류 발생:', error);
+      alert('공지사항 삭제 중 오류가 발생했습니다.');
+    }
+  };
+
   return (
     <div className="detail-container">
       <div className="detail-field">
@@ -13,17 +52,7 @@ const NoticeDetail = () => {
         <div className="detail-field-content">{notice.title}</div>
       </div>
       <div className="detail-field">
-        <div className="detail-field-title">작성자</div>
-        <div className="divider-column"></div>
-        <div className="detail-field-content"></div>
-      </div>
-      <div className="detail-field">
         <div className="detail-field-title">개재일시</div>
-        <div className="divider-column"></div>
-        <div className="detail-field-content">ㅂㅈㄷㅂㅂㄷㅈ</div>
-      </div>
-      <div className="detail-field">
-        <div className="detail-field-title">조회수</div>
         <div className="divider-column"></div>
         <div className="detail-field-content">ㅂㅈㄷㅂㅂㄷㅈ</div>
       </div>
@@ -31,8 +60,16 @@ const NoticeDetail = () => {
       <div className="detail-contentType">{notice.content}</div>
       <div className="attachmentType">첨부파일 ({notice.files.length}개)</div>
       {notice.files.map((file, fileKey) => (
-        <div>{file.fileName}</div>
+        <div className="attachment-box">
+          <Link to={file.fileUrl}>{file.fileName}</Link>
+        </div>
       ))}
+      <div className="divider-row"></div>
+      <div className="buttonsArea">
+        <Button name="수정" color="#3D9BF3" onClick={() => navigate('../')} />
+        <Button name="삭제" color="#F19595" onClick={handleDeleteNotice} />
+        <Button name="목록" color="#D9D9D9" onClick={() => navigate('../')} />
+      </div>
     </div>
   );
 };

@@ -82,16 +82,13 @@ const NoticePage = () => {
               {notices.map((notice, noticeKey) => (
                 <div className="table-list-container">
                   <div className="notice-content-header-1">
-                    <img src={star} style={{ width: '30px' }} />
+                    {notice.importance == 'High' ? (
+                      <img src={star} style={{ width: '30px' }} />
+                    ) : (
+                      <img src={nostar} style={{ width: '30px' }} />
+                    )}
                   </div>
                   <div id="notice-content-header-2">
-                    {/* <Link
-                      to={`${notice.id}`}
-                      onClick={() => handleClickNotice(notice)}
-                    >
-                      {notice.title}
-                      {notice.id}
-                    </Link> */}
                     <div
                       className="notice-content-title"
                       onClick={() => handleClickNotice(notice)}
@@ -112,16 +109,19 @@ const NoticePage = () => {
                 </div>
               ))}
             </div>
+            <div className="buttonsArea">
+              <Button
+                name="등록"
+                color="#E86161"
+                onClick={() => navigate('addnotice')}
+              />
+            </div>
           </div>
         </>
       )}
 
       <Outlet context={{ boardId, fetchNoticesRef }} />
-      <Button
-        name="등록하기"
-        color="#E86161"
-        onClick={() => navigate('addnotice')}
-      />
+
       {/* {!selectedTask ? (
         <TaskList tasks={task} onSelectTask={handleSelectTask} />
       ) : (
