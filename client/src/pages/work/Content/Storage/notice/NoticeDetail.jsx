@@ -64,7 +64,7 @@ const NoticeDetail = () => {
       {notice.files.map((file, fileKey) => (
         <div className="attachment-box">
           <a
-            href={`${host}/files/${file.fileName}`}
+            href={`/files/${file.fileName}`}
             target="_blank"
             rel="noopener noreferrer"
           >

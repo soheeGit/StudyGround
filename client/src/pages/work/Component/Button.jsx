@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function Button({ name, type, onClick, color, hoverColor }) {
+export function Button({ name, type, size, onClick, color, hoverColor }) {
   const [isHovered, setIsHovered] = useState(false);
   const buttonStyle = {
     backgroundColor: isHovered ? hoverColor : color,

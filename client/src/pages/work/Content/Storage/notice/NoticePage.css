@@ -1,11 +1,3 @@
-.notice-content-container {
-  display: flex;
-  flex-direction: column;
-  width: 95%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .notice-content-header {
   display: flex;
   width: 100%;
@@ -18,51 +10,74 @@
   align-items: center; /* 추가된 부분 */
   text-align: center; /* 추가된 부분 */
 }
-.notice-content-header-1,
-.notice-content-header-2,
-.notice-content-header-3,
-.notice-content-header-4 {
+
+/* table header 영역*/
+.notice-header-1,
+.notice-header-2,
+.notice-header-3,
+.notice-header-4 {
   display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.notice-header-1 {
+  width: 10%;
+}
+.notice-header-2 {
+  width: 50%;
+}
+.notice-header-3 {
+  width: 20%;
+}
+.notice-header-4 {
+  width: 20%;
+}
+
+/* table content 영역 */
+.notice-content-container {
+  height: 60vh;
+  overflow-y: auto; /* 내용이 고정 높이를 초과할 경우 세로 스크롤 추가 */
+}
+.notice-content-box {
+  display: flex;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-bottom: solid 1px;
   align-items: center; /* 추가된 부분 */
   text-align: center; /* 추가된 부분 */
-}
-.notice-content-header-1 {
-  display: flex;
-  justify-content: center;
-  width: 8%;
-}
-.notice-content-header-2 {
-  display: flex;
-  justify-content: center;
-  width: 50%;
-}
-#notice-content-header-2 {
-  display: flex;
-  justify-content: flex-start;
-  width: 50%;
 }
 .notice-content-title {
   cursor: pointer;
 }
-.notice-content-header-3 {
+
+.notice-content-1,
+.notice-content-2,
+.notice-content-3,
+.notice-content-4 {
   display: flex;
   justify-content: center;
+}
+
+.notice-content-1 {
+  width: 10%;
+}
+.notice-content-2 {
+  width: 50%;
+}
+.notice-content-3 {
   width: 20%;
 }
-.notice-content-header-4 {
+.notice-content-4 {
+  width: 20%;
+}
+
+.table-footer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.pagination {
   display: flex;
   justify-content: center;
-  width: 40%;
-}
-.notice-content-list {
-  width: 100%;
-}
-.table-list-container {
-  display: flex;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  border-bottom: solid 1px;
-  align-items: center; /* 추가된 부분 */
-  text-align: center; /* 추가된 부분 */
 }

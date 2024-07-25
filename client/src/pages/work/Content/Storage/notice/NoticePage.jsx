@@ -47,8 +47,10 @@ const NoticePage = () => {
           'Content-Type': 'application/json',
         },
       });
-      setNotices(noticeResponse.data);
-      console.log(noticeResponse.data);
+      const sortedNotices = noticeResponse.data.sort((a, b) =>
+        b.importance === 'High' ? 1 : -1
+      );
+      setNotices(sortedNotices);
     } catch (error) {
       console.error('공지사항 데이터를 가져오는 중 오류 발생:', error);
     }
@@ -64,6 +66,27 @@ const NoticePage = () => {
     navigate(`/work/${boardId}/notice/${notice.id}`, { state: { notice } });
   };
 
+  /* 페이지네이션 */
+  // 페이지네이션 상태
+  const [currentPage, setCurrentPage] = useState(1);
+  const datasPerPage = 7;
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 현재 페이지의 공지사항 가져오기
+  const indexOfLastData = currentPage * datasPerPage;
+  const indexOfFirstData = indexOfLastData - datasPerPage;
+  const currentDatas = notices.slice(indexOfFirstData, indexOfLastData);
+
+  // 페이지 번호 계산
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(notices.length / datasPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <>
       {/* header */}
@@ -74,25 +97,25 @@ const NoticePage = () => {
       {/* body */}
       {!isOutletVisible && (
         <>
-          <div className="notice-content-container">
+          <div className="my-container">
             <div className="notice-content-header">
-              <div className="notice-content-header-1">중요</div>
-              <div className="notice-content-header-2"></div>
-              <div className="notice-content-header-3">첨부파일</div>
-              <div className="notice-content-header-4">날짜</div>
+              <div className="notice-header-1">중요</div>
+              <div className="notice-header-2"></div>
+              <div className="notice-header-3">첨부파일</div>
+              <div className="notice-header-4">날짜</div>
             </div>
-            <div className="notice-content-list">
-              {notices && notices.length > 0 ? (
-                notices.map((notice, noticeKey) => (
-                  <div className="table-list-container">
-                    <div className="notice-content-header-1">
+            <div className="notice-content-container">
+              {currentDatas && currentDatas.length > 0 ? (
+                currentDatas.map((notice, noticeKey) => (
+                  <div className="notice-content-box">
+                    <div className="notice-content-1">
                       {notice.importance == 'High' ? (
                         <img src={star} style={{ width: '30px' }} />
                       ) : (
                         <img src={nostar} style={{ width: '30px' }} />
                       )}
                     </div>
-                    <div id="notice-content-header-2">
+                    <div className="notice-content-2">
                       <div
                         className="notice-content-title"
                         onClick={() => handleClickNotice(notice)}
@@ -100,7 +123,7 @@ const NoticePage = () => {
                         {notice.title}
                       </div>
                     </div>
-                    <div className="lnotice-content-header-3">
+                    <div className="notice-content-3">
                       {notice.files.length > 0 ? (
                         <>
                           <img src={clip} style={{ width: '30px' }} />
@@ -109,20 +132,33 @@ const NoticePage = () => {
                         <>-</>
                       )}
                     </div>
-                    <div className="notice-content-header-4">2024-03-30</div>
+                    <div className="notice-content-4">2024-03-30</div>
                   </div>
                 ))
               ) : (
                 <></>
               )}
             </div>
-            <div className="buttonsArea">
-              <Button
-                name="등록"
-                color="#E86161"
-                onClick={() => navigate('addnotice')}
-                hoverColor="#D2625D"
-              />
+            <div className="table-footer">
+              <div className="pagination">
+                {pageNumbers.map((number) => (
+                  <Button
+                    key={number}
+                    name={number}
+                    onClick={() => handlePageChange(number)}
+                    color="#D9D9D9"
+                    hoverColor="#E0E0E0"
+                  />
+                ))}
+              </div>
+              <div className="buttonsArea">
+                <Button
+                  name="등록"
+                  color="#E86161"
+                  onClick={() => navigate('addnotice')}
+                  hoverColor="#D2625D"
+                />
+              </div>
             </div>
           </div>
         </>

@@ -9,7 +9,6 @@ import {
   useNavigate,
   useOutletContext,
 } from 'react-router-dom';
-import TaskList from './TaskList';
 import TaskDetail from './TaskDetail';
 import { Button } from '../../../Component/Button';
 import { format } from 'date-fns'; // date-fns import
@@ -81,6 +80,27 @@ const TaskPage = () => {
     navigate(`/work/${boardId}/task/${task.id}`, { state: { task } });
   };
 
+  /* 페이지네이션 */
+  // 페이지네이션 상태
+  const [currentPage, setCurrentPage] = useState(1);
+  const datasPerPage = 8;
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 현재 페이지의 공지사항 가져오기
+  const indexOfLastData = currentPage * datasPerPage;
+  const indexOfFirstData = indexOfLastData - datasPerPage;
+  const currentDatas = tasks.slice(indexOfFirstData, indexOfLastData);
+
+  // 페이지 번호 계산
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(tasks.length / datasPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
   // 날짜 포맷 함수
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -107,34 +127,47 @@ const TaskPage = () => {
               <div className="isSubmit-status">제출</div>
               <div className="duedate">마감일</div>
             </div>
-            {tasks && tasks.length > 0 ? (
-              tasks.map((task) => (
-                <>
-                  <div className="task-data-container" key={task.id}>
-                    <div className="number-of-contents">{task.id}</div>
-                    <div
-                      className="title-of-contents"
-                      onClick={() => handleClickTask(task)}
-                      // onClick={() => onSelectTask(task)}
-                    >
-                      {task.title}
+            <div className="task-content-box">
+              {currentDatas && currentDatas.length > 0 ? (
+                currentDatas.map((task, taskKey) => (
+                  <>
+                    <div className="task-data-container" key={task.id}>
+                      <div className="number-of-contents">{task.id}</div>
+                      <div
+                        className="title-of-contents"
+                        onClick={() => handleClickTask(task)}
+                        // onClick={() => onSelectTask(task)}
+                      >
+                        {task.title}
+                      </div>
+                      <div
+                        className={`status-of-contents ${
+                          task.status === '진행중' ? 'ongoing' : 'completed'
+                        }`}
+                      >
+                        {task.status}
+                      </div>
+                      <div className="isSubmit-status">{task.submitStatus}</div>
+                      <div className="duedate">{formatDate(task.deadline)}</div>
                     </div>
-                    <div
-                      className={`status-of-contents ${
-                        task.status === '진행중' ? 'ongoing' : 'completed'
-                      }`}
-                    >
-                      {task.status}
-                    </div>
-                    <div className="isSubmit-status">{task.submitStatus}</div>
-                    <div className="duedate">{formatDate(task.deadline)}</div>
-                  </div>
-                  <div className="task-divider"></div>
-                </>
-              ))
-            ) : (
-              <></>
-            )}
+                  </>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
+
+            <div className="pagination">
+              {pageNumbers.map((number) => (
+                <Button
+                  key={number}
+                  name={number}
+                  onClick={() => handlePageChange(number)}
+                  color="#D9D9D9"
+                  hoverColor="#E0E0E0"
+                />
+              ))}
+            </div>
             <div className="buttonsArea">
               <Button
                 name="등록"
