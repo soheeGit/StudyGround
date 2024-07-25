@@ -1,3 +1,7 @@
+const path = require('path')
+const dotenv = require('dotenv')
+dotenv.config({path: path.join(__dirname, '../../.env')});
+
 const {
   Board,
   Review,
@@ -37,7 +41,7 @@ exports.submitNotice = async (req, res, next) => {
     if (req.files && req.files.length > 0) {
       uploadedFiles = req.files.map((file) => ({
         fileName: file.filename,
-        fileUrl: `${req.protocol}://${req.get('host')}/files/${file.filename}`, // 파일 URL 생성
+        fileUrl: `${process.env.CLIENT_URL}/files/${file.filename}`, // 파일 URL 생성
       }));
 
       const fileRecords = req.files.map((file) => ({
@@ -130,7 +134,7 @@ exports.updateNotice = async (req, res, next) => {
       });
       uploadedFiles = req.files.map((file) => ({
         fileName: file.filename,
-        fileUrl: `${req.protocol}://${req.get('host')}/files/${file.filename}`, // 파일 URL 생성
+        fileUrl: `${process.env.CLIENT_URL}/files/${file.filename}`, // 파일 URL 생성
       }));
 
       const fileRecords = req.files.map((file) => ({

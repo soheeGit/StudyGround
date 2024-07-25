@@ -1,3 +1,6 @@
+const path = require('path')
+const dotenv = require('dotenv')
+dotenv.config({path: path.join(__dirname, '../../.env')});
 const { Board, Review, User, Memo, Notice, File, StudyMaterial } = require('../models');
 
 exports.submitStudyMaterial = async(req, res, next) => {
@@ -26,7 +29,7 @@ exports.submitStudyMaterial = async(req, res, next) => {
         if (req.files && req.files.length > 0) {
             uploadedFiles = req.files.map(file => ({
                 fileName: file.filename,
-                fileUrl: `${req.protocol}://${req.get('host')}/files/${file.filename}`
+                fileUrl: `${process.env.CLIENT_URL}/files/${file.filename}`
             }));
 
             const fileRecords = req.files.map(file => ({
@@ -121,7 +124,7 @@ exports.updateStudyMaterial = async (req, res, next) => {
             await File.destroy({ where: { fileableType: 'StudyMaterial', fileableId: studyMaterial.id } });
             uploadedFiles = req.files.map(file => ({
                 fileName: file.filename,
-                fileUrl: `${req.protocol}://${req.get('host')}/files/${file.filename}` // 파일 URL 생성
+                fileUrl: `${process.env.CLIENT_URL}/files/${file.filename}` // 파일 URL 생성
             }));
 
             const fileRecords = req.files.map(file => ({

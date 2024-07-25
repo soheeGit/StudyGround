@@ -1,6 +1,8 @@
 const { Board, Review, User, Memo, Notice, File, StudyMaterial, Task, SubmitTask } = require('../models');
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv')
+dotenv.config({path: path.join(__dirname, '../../.env')});
 
 exports.submitTask = async (req, res, next) => {
     const userId = req.user.id;
@@ -39,7 +41,7 @@ exports.submitTask = async (req, res, next) => {
         if (req.files && req.files.length > 0) {
             uploadedFiles = req.files.map(file => ({
                 fileName: file.filename,
-                fileUrl: `${req.protocol}://${req.get('host')}/files/${file.filename}`
+                fileUrl: `${process.env.CLIENT_URL}/files/${file.filename}`
             }));
 
             const fileRecords = req.files.map(file => ({
@@ -131,7 +133,7 @@ exports.mUpdateTask = async (req, res, next) => {
         if (req.files && req.files.length > 0) {
             uploadedFiles = req.files.map(file => ({
                 fileName: file.filename,
-                fileUrl: `${req.protocol}://${req.get('host')}/files/${file.filename}`
+                fileUrl: `${process.env.CLIENT_URL}/files/${file.filename}`
             }));
 
             const fileRecords = req.files.map(file => ({

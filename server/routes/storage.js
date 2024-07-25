@@ -22,10 +22,11 @@ const upload = multer({
         destination(req, file, cb){
             cb(null, 'uploads/')
         },
-        filename(req, file, cb){
-            const ext = path.extname(file.originalname)
-            cb(null, path.basename(file.originalname, ext) + Date.now() + ext)
-        }
+        filename(req, file, cb) {
+            const ext = path.extname(file.originalname);
+            const baseName = Buffer.from(path.basename(file.originalname, ext), 'utf-8').toString('utf-8');
+            cb(null, `${baseName}_${Date.now()}${ext}`);
+        },
     }),
     limits: { fileSize: 5 * 1024 * 1024 },     //5MB
 });
