@@ -46,16 +46,8 @@ exports.enrollTask = async(req, res, next) => {
         return res.status(201).json({
             success: true,
             message: '과제 추가 성공',
-            task: {
-                title: task.title,
-                deadline: task.deadline,
-                content: task.content,
-                userId: task.userId,
-                boardId: task.boardId,
-                createdAt: task.createdAt,
-                updatedAt: task.updatedAt,
-            },
-            files: uploadedFiles
+            task,
+            files: uploadedFiles,
         });
     }catch (error){
         console.error(error);
