@@ -166,19 +166,30 @@ exports.getTaskData = async (req, res, next) => {
             include: [
                 {
                     model: File,
-                    as: 'files' 
+                    as: 'files'
+                },
+                {
+                    model: SubmitTask,
+                    include: [
+                        {
+                            model: File,
+                            as: 'files'
+                        }
+                    ]
                 }
             ]
         });
+
         if (tasks.length === 0) {
             return res.status(200).json({ message: '해당 스터디의 자료가 없습니다.' });
         }
+        
         res.json(tasks);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: '서버 오류' });
     }
-}
+};
 
 exports.deleteTask= async(req, res, next) => {
     const taskId = req.params.id;

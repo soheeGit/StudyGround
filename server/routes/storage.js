@@ -67,7 +67,7 @@ router.get('/deleteStudyMaterial/:id', isLoggedIn, deleteStudyMaterial);
 router.post('/enrollTask/:id', isLoggedIn, upload.array('files', maxCount), enrollTask);
 // 과제 수정
 router.post('/updateTask/:id', isLoggedIn, upload.array('files', maxCount), updateTask);
-// 과제 확인
+// 과제 확인(팀장이 올린 과제+팀원이 제출한 과제들 한번에)
 router.get('/task/:id', isLoggedIn, getTaskData);
 // 과제 삭제
 router.get('/deleteTask/:id', isLoggedIn, deleteTask);
