@@ -82,4 +82,12 @@ router.get('/mTask/:id', isLoggedIn, getmTaskData);
 // 팀원 과제 삭제
 router.get('/mDeleteTask/:id', isLoggedIn, mdeleteTask)
 
+// 파일 스토리지 추가
+//router.post('/submitFile/:id', isLoggedIn, upload.array('files', maxCount), su)
+// 파일 스토리지 수정
+
+// 파일 스토리지 확인
+
+// 파일 스토리지 삭제
+
 module.exports = router;

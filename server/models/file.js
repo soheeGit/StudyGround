@@ -30,6 +30,7 @@ class File extends Sequelize.Model {
         db.File.belongsTo(db.StudyMaterial, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
         db.File.belongsTo(db.Task, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
         db.File.belongsTo(db.SubmitTask, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
+        db.File.belongsTo(db.FileStorage, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
     }
 }
 
