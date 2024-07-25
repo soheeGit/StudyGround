@@ -27,7 +27,6 @@ hr {
 }
 .detail-field {
   display: flex;
-  justify-content: center;
   border-top: solid 2px;
   border-color: #948a8a;
   padding-top: 10px;

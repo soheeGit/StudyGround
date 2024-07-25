@@ -32,3 +32,9 @@
 .task-submit-textarea:focus {
   border: none;
 }
+
+.submit-container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px, 30px, 30px, 30px;
+}

@@ -1,15 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './TaskPage.css';
 import WorkHeader from '../../../WorkHeader';
 import axios from 'axios';
-import { Link, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useOutletContext,
+} from 'react-router-dom';
 import TaskList from './TaskList';
 import TaskDetail from './TaskDetail';
 import { Button } from '../../../Component/Button';
+import { format } from 'date-fns'; // date-fns import
 
 const TaskPage = () => {
   const { boardId } = useOutletContext();
+  const location = useLocation();
   const navigate = useNavigate();
+  const fetchTasksRef = useRef(null);
+
+  const [isOutletVisible, setIsOutletVisible] = useState(false);
+
   // Task 데이터
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -22,74 +34,124 @@ const TaskPage = () => {
     setSelectedTask(null);
   };
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const taskResponse = await axios.get(`/storage/task/${boardId}`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setTasks(taskResponse.data);
-        console.log(taskResponse.data);
-      } catch (error) {
-        console.error('과제 데이터를 가져오는 중 오류 발생:', error);
-      }
-    };
+  // 과제 데이터 get
+  const fetchTasks = async () => {
+    try {
+      const taskResponse = await axios.get(`/storage/task/${boardId}`, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      // taskResponse에 Status를 추가
+      const taskWithStatus = taskResponse.data.map((task) => {
+        const current_time = new Date();
+        const deadline = task.deadline;
+        return {
+          ...task,
+          status: current_time > deadline ? '종료' : '진행중',
+        };
+      });
+      setTasks(taskWithStatus);
+      console.log(taskWithStatus);
+    } catch (error) {
+      console.error('과제 데이터를 가져오는 중 오류 발생:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchTasks();
-  }, []);
-  // task dummy data
-  const task = [
-    {
-      id: 4,
-      title: '스크립트나 롤플레잉 관련 연습 후 녹음하여 올리기',
-      status: '진행중',
-      submitStatus: '-',
-      dueDate: '2024.04.01 오후 11:59',
-    },
-    {
-      id: 3,
-      title: '일주일동안 매일 하나씩 영어 일기 써온 후 업로드하기',
-      status: '종료',
-      submitStatus: 'x',
-      dueDate: '2024.03.18 오후 11:59',
-    },
-    {
-      id: 2,
-      title: '3월 19일 스터디 할 주제 2개씩 찾아 온 후 스크립트 써오기',
-      status: '종료',
-      submitStatus: '-',
-      dueDate: '2024.03.18 오후 11:59',
-    },
-    {
-      id: 1,
-      title: '많이 쓰이는 일상속 대화 표현 찾아오기 각 30개',
-      status: '종료',
-      submitStatus: '-',
-      dueDate: '2024.03.11 오후 11:59',
-    },
-  ];
+    fetchTasksRef.current = fetchTasks;
+  }, [boardId]);
+
+  // 현재 URL이 /task/addtask 경우 Outlet 활성화
+  useEffect(() => {
+    if (
+      location.pathname.includes('/task/addtask') ||
+      /\/task\/\d+/.test(location.pathname)
+    ) {
+      setIsOutletVisible(true);
+    } else {
+      setIsOutletVisible(false);
+    }
+  }, [location]);
+
+  // 과제 상세확인 : TaskDetail Task데이터 넘기기
+  const handleClickTask = (task) => {
+    navigate(`/work/${boardId}/task/${task.id}`, { state: { task } });
+  };
+
+  // 날짜 포맷 함수
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    let formattedDate = format(date, 'yyyy.MM.dd a hh:mm ');
+    formattedDate = formattedDate.replace('AM', '오전').replace('PM', '오후');
+    return formattedDate;
+  };
+
   return (
     <>
+      {/* header */}
       <WorkHeader title="Storage" />
       <div className="task-header-container">Task</div>
       <hr id="divider" />
-      {!selectedTask ? (
-        <TaskList tasks={task} onSelectTask={handleSelectTask} />
+
+      {/* body */}
+      {!isOutletVisible && (
+        <>
+          <div className="task-content-container">
+            <div className="task-content-header">
+              <div className="number-of-contents">순번</div>
+              <div className="title-of-contents"></div>
+              <div className="status-of-contents">진행</div>
+              <div className="isSubmit-status">제출</div>
+              <div className="duedate">마감일</div>
+            </div>
+            {tasks && tasks.length > 0 ? (
+              tasks.map((task) => (
+                <>
+                  <div className="task-data-container" key={task.id}>
+                    <div className="number-of-contents">{task.id}</div>
+                    <div
+                      className="title-of-contents"
+                      onClick={() => handleClickTask(task)}
+                      // onClick={() => onSelectTask(task)}
+                    >
+                      {task.title}
+                    </div>
+                    <div
+                      className={`status-of-contents ${
+                        task.status === '진행중' ? 'ongoing' : 'completed'
+                      }`}
+                    >
+                      {task.status}
+                    </div>
+                    <div className="isSubmit-status">{task.submitStatus}</div>
+                    <div className="duedate">{formatDate(task.deadline)}</div>
+                  </div>
+                  <div className="task-divider"></div>
+                </>
+              ))
+            ) : (
+              <></>
+            )}
+            <div className="buttonsArea">
+              <Button
+                name="등록"
+                color="#E86161"
+                onClick={() => navigate('addtask')}
+                hoverColor="#D2625D"
+              />
+            </div>
+          </div>
+        </>
+      )}
+      {/* {!selectedTask ? (
+        <TaskList tasks={tasks} onSelectTask={handleSelectTask} />
       ) : (
         <TaskDetail task={selectedTask} onBack={handleBackToList} />
-      )}
-      <Outlet context={{ boardId }} />
-      <div className="buttonsArea">
-        <Button
-          name="등록"
-          color="#E86161"
-          onClick={() => navigate('addtask')}
-          hoverColor="#D2625D"
-        />
-      </div>
+      )} */}
+      <Outlet context={{ boardId, fetchTasksRef }} />
     </>
   );
 };

@@ -12,7 +12,7 @@ const AddNotice = () => {
   const [content, setContent] = useState('');
   const [files, setFiles] = useState([]);
   const [isImportant, setIsImportant] = useState(false);
-  console.log(isImportant);
+
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]); // 수정한 내용
   };
@@ -21,7 +21,6 @@ const AddNotice = () => {
   const handleAddNotice = async (event) => {
     event.preventDefault();
 
-    // ??
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
@@ -129,79 +128,6 @@ const AddNotice = () => {
         </div>
       </form>
     </div>
-    // <div className="task-detail-container">
-    //   <form onSubmit={handleAddNotice}>
-    //     <div className="task-detail-header">
-    //       <hr />
-
-    //       <div className="task-detail-box">
-    //         <div className="task-detail-field">제목</div>
-    //         <div className="input-field">
-    //           <input
-    //             type="text"
-    //             id="title"
-    //             value={title}
-    //             onChange={(e) => setTitle(e.target.value)}
-    //           />
-    //         </div>
-    //       </div>
-    //       <hr />
-    //       <div className="task-detail-box">
-    //         <div className="task-detail-field">작성자</div>
-    //       </div>
-    //       <hr />
-    //       <div className="task-detail-box">
-    //         <div className="task-detail-field">게시일</div>
-    //         <div className="input-field">
-    //           <input />
-    //         </div>
-    //       </div>
-    //       <hr />
-    //     </div>
-    //     <div className="task-submit-textarea">
-    //       <textarea
-    //         id="content"
-    //         value={content}
-    //         onChange={(e) => setContent(e.target.value)}
-    //         placeholder="내용을 입력해 주세요"
-    //       />
-    //     </div>
-    //     <hr id="divider" />
-    //     <div className="attachments-container">
-    //       <div>
-    //         첨부파일1:
-    //         <input
-    //           type="file"
-    //           id="files"
-    //           multiple
-    //           onChange={handleFileChange}
-    //         />
-    //       </div>
-    //       <div>
-    //         첨부파일2:
-    //         <input
-    //           type="file"
-    //           id="files"
-    //           multiple
-    //           onChange={handleFileChange}
-    //         />
-    //       </div>
-    //       <div>
-    //         첨부파일3:
-    //         <input
-    //           type="file"
-    //           id="files"
-    //           multiple
-    //           onChange={handleFileChange}
-    //         />
-    //       </div>
-    //     </div>
-    //     <hr />
-    //     <div className="enroll-button">
-    //       <Button type="submit" name="등록하기" color="#E86161" />
-    //     </div>
-    //   </form>
-    // </div>
   );
 };
 export default AddNotice;

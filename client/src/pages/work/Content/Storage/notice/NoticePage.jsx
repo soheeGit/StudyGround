@@ -26,7 +26,7 @@ const NoticePage = () => {
   const [selectedNotice, setSelectedNotice] = useState(null);
   const fetchNoticesRef = useRef(null);
 
-  // 현재 URL이 /notice/addnotice인 경우 Outlet 활성화
+  // 현재 URL이 /addnotice인 경우 Outlet 활성화
   useEffect(() => {
     if (
       location.pathname.includes('/notice/addnotice') ||
@@ -38,7 +38,7 @@ const NoticePage = () => {
     }
   }, [location]);
 
-  // fetch Notice data
+  // 공지사항 데이터 get
   const fetchNotices = async () => {
     try {
       const noticeResponse = await axios.get(`/storage/notice/${boardId}`, {
@@ -66,9 +66,12 @@ const NoticePage = () => {
 
   return (
     <>
+      {/* header */}
       <WorkHeader title="Storage" />
       <div className="task-header-container">Notice</div>
       <hr id="divider" />
+
+      {/* body */}
       {!isOutletVisible && (
         <>
           <div className="notice-content-container">

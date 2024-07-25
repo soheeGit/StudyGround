@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Button } from '../../../Component/Button';
 
-const AddNotice = () => {
-  const { boardId } = useOutletContext();
+const AddTask = () => {
+  const { boardId, fetchTasksRef } = useOutletContext();
   const navigate = useNavigate();
 
   // 과제 추가 State
@@ -22,10 +22,14 @@ const AddNotice = () => {
   const handleAddTask = async (event) => {
     event.preventDefault();
 
+    // Date 객체를 ISO 형식으로 변환
+    const deadlineDate = new Date(deadline);
+    const deadlineISOString = deadlineDate.toISOString();
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('deadline', deadline);
+    formData.append('deadline', deadlineISOString);
     files.forEach((file) => {
       formData.append('files', file);
     });
@@ -43,7 +47,9 @@ const AddNotice = () => {
       );
       if (response.data.success) {
         alert('과제가 성공적으로 추가되었습니다.');
-
+        if (fetchTasksRef.current) {
+          fetchTasksRef.current();
+        }
         navigate(`/work/${boardId}/task`);
       } else {
         alert('과제 추가에 실패했습니다.');
@@ -73,18 +79,17 @@ const AddNotice = () => {
           <input
             type="datetime-local"
             className="inputType"
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="제목을 입력해 주세요"
+            onChange={(e) => setDeadline(e.target.value)}
           />
-          <div className="checkboxArea">
+          {/* <div className="checkboxArea">
             지각제출 허용
             <input
               type="checkbox"
               id="checkbox"
-              // checked={isImportant}
-              // onChange={(e) => setIsImportant(e.target.checked)}
+              checked={isImportant}
+              onChange={(e) => setIsImportant(e.target.checked)}
             />
-          </div>
+          </div> */}
         </div>
         <div className="detail-field">
           <textarea
@@ -137,79 +142,6 @@ const AddNotice = () => {
         </div>
       </form>
     </div>
-    // <div className="task-detail-container">
-    //   <form onSubmit={handleAddNotice}>
-    //     <div className="task-detail-header">
-    //       <hr />
-
-    //       <div className="task-detail-box">
-    //         <div className="task-detail-field">제목</div>
-    //         <div className="input-field">
-    //           <input
-    //             type="text"
-    //             id="title"
-    //             value={title}
-    //             onChange={(e) => setTitle(e.target.value)}
-    //           />
-    //         </div>
-    //       </div>
-    //       <hr />
-    //       <div className="task-detail-box">
-    //         <div className="task-detail-field">작성자</div>
-    //       </div>
-    //       <hr />
-    //       <div className="task-detail-box">
-    //         <div className="task-detail-field">게시일</div>
-    //         <div className="input-field">
-    //           <input />
-    //         </div>
-    //       </div>
-    //       <hr />
-    //     </div>
-    //     <div className="task-submit-textarea">
-    //       <textarea
-    //         id="content"
-    //         value={content}
-    //         onChange={(e) => setContent(e.target.value)}
-    //         placeholder="내용을 입력해 주세요"
-    //       />
-    //     </div>
-    //     <hr id="divider" />
-    //     <div className="attachments-container">
-    //       <div>
-    //         첨부파일1:
-    //         <input
-    //           type="file"
-    //           id="files"
-    //           multiple
-    //           onChange={handleFileChange}
-    //         />
-    //       </div>
-    //       <div>
-    //         첨부파일2:
-    //         <input
-    //           type="file"
-    //           id="files"
-    //           multiple
-    //           onChange={handleFileChange}
-    //         />
-    //       </div>
-    //       <div>
-    //         첨부파일3:
-    //         <input
-    //           type="file"
-    //           id="files"
-    //           multiple
-    //           onChange={handleFileChange}
-    //         />
-    //       </div>
-    //     </div>
-    //     <hr />
-    //     <div className="enroll-button">
-    //       <Button type="submit" name="등록하기" color="#E86161" />
-    //     </div>
-    //   </form>
-    // </div>
   );
 };
-export default AddNotice;
+export default AddTask;

@@ -18,14 +18,18 @@ import BigCalendar from './pages/work/Content/Calendar/Calendar';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
 import Autho from './pages/work/Content/Approve/Autho';
+// Storage
 import Memo from './pages/work/Content/Storage/Memo';
 import TaskPage from './pages/work/Content/Storage/task/TaskPage';
-import BoardList from './pages/work/Content/Storage/boardData';
+import TaskDetail from './pages/work/Content/Storage/task/TaskDetail';
+import AddTask from './pages/work/Content/Storage/task/AddTask';
+import UpdateTask from './pages/work/Content/Storage/task/UpdateTask';
 import NoticePage from './pages/work/Content/Storage/notice/NoticePage';
 import NoticeDetail from './pages/work/Content/Storage/notice/NoticeDetail';
 import AddNotice from './pages/work/Content/Storage/notice/AddNotice';
 import UpdateNotice from './pages/work/Content/Storage/notice/UpdateNotice';
-import AddTask from './pages/work/Content/Storage/task/AddTask';
+import BoardList from './pages/work/Content/Storage/boardData';
+import FilePage from './pages/work/Content/Storage/file/FilePage';
 function App() {
   return (
     <Router>
@@ -54,9 +58,12 @@ function App() {
               <Route path=":noticeId" element={<NoticeDetail />} />
               <Route path=":noticeId/update" element={<UpdateNotice />} />
             </Route>
+            <Route path="file" element={<FilePage />}></Route>
             <Route path="memo" element={<Memo />} />
             <Route path="task" element={<TaskPage />}>
               <Route path="addtask" element={<AddTask />} />
+              <Route path=":taskId" element={<TaskDetail />} />
+              <Route path=":taskId/update" element={<UpdateTask />} />
             </Route>
             <Route path="autho" element={<Autho />} />
           </Route>

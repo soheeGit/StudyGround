@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 
 const NoticeDetail = () => {
+  const host = 'http://localhost:3000';
   const location = useLocation();
   const navigate = useNavigate();
   const { notice } = location.state || {}; //location.state로 부터 notice 데이터를 가져옴
@@ -62,7 +63,13 @@ const NoticeDetail = () => {
       <div className="attachmentType">첨부파일 ({notice.files.length}개)</div>
       {notice.files.map((file, fileKey) => (
         <div className="attachment-box">
-          <Link to={`/files/${file.fileName}`}>{file.fileName}</Link>
+          <a
+            href={`${host}/files/${file.fileName}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {file.fileName}
+          </a>
         </div>
       ))}
       <div className="divider-row"></div>

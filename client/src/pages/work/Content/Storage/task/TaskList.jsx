@@ -30,7 +30,7 @@ const TaskList = ({ tasks, onSelectTask }) => {
               {task.status}
             </div>
             <div className="isSubmit-status">{task.submitStatus}</div>
-            <div className="duedate">{task.dueDate}</div>
+            <div className="duedate">{task.deadline}</div>
           </div>
           <div className="task-divider"></div>
         </>

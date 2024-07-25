@@ -107,7 +107,7 @@ const Storage = () => {
               <img src={storage2} width={'50px'} />
             </div>
             <p>File</p>
-            <Link to="memo" style={{ display: 'flex' }}>
+            <Link to={`/work/${boardId}/file`} style={{ display: 'flex' }}>
               <div className="tab-header-button">
                 <FaPlus />
               </div>
