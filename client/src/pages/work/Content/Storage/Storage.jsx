@@ -12,7 +12,31 @@ import axios from 'axios';
 const Storage = () => {
   const { boardId } = useOutletContext();
 
-  // 상위 5개 데이터 출력
+  // 상위 5개 공지사항 데이터 fetch
+  const [notice5, setNotice5] = useState([]);
+  useEffect(() => {
+    const fetchNotice5 = async () => {
+      try {
+        const Response = await axios.get(`/storage/currentNotice/${boardId}`, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setNotice5(Response.data);
+        console.log(Response.data);
+      } catch (error) {
+        console.error(
+          '상위 5개 공지사항 데이터를 가져오는 중 오류 발생:',
+          error
+        );
+      }
+    };
+
+    fetchNotice5();
+  }, []);
+
+  // 상위 5개 메모 데이터 fetch
   const [memo5, setMemo5] = useState([]);
   useEffect(() => {
     const fetchMemo5 = async () => {
@@ -26,13 +50,14 @@ const Storage = () => {
         setMemo5(Response.data);
         console.log(Response.data);
       } catch (error) {
-        console.error('메모 데이터를 가져오는 중 오류 발생:', error);
+        console.error('상위 5개 메모 데이터를 가져오는 중 오류 발생:', error);
       }
     };
 
     fetchMemo5();
     console.log(memo5);
   }, []);
+
   const [selectedTab, setSelectedTab] = useState('');
   console.log(selectedTab);
   const tabHandler = (title) => {
@@ -56,6 +81,23 @@ const Storage = () => {
                 <FaPlus />
               </div>
             </Link>
+          </div>
+          <div className="storage-notice-content-container">
+            {notice5 && notice5.length > 0 ? (
+              notice5.map((notice5, notice5Key) => (
+                <div className="storage-notice-content-row">
+                  <div className="storage-notice-content-number">
+                    {notice5.id}
+                  </div>
+                  <div className="storage-notice-content-title">
+                    {notice5.title}
+                  </div>
+                  <div className="storage-notice-content-date">6/24</div>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         {/* File Tab*/}

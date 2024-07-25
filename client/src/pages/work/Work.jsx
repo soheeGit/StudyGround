@@ -12,7 +12,6 @@ const Work = (props) => {
     <div className="work-container">
       <Sidebar boardId={boardId} />
       <div className="content-container">
-        현재 파라미터 값은 {boardId}입니다
         <Outlet context={{ boardId }} />
       </div>
     </div>

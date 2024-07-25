@@ -1,6 +1,9 @@
-export function Button({ name, onClick, color }) {
-  const containerStyle = {};
+import { useState } from 'react';
+
+export function Button({ name, type, onClick, color, hoverColor }) {
+  const [isHovered, setIsHovered] = useState(false);
   const buttonStyle = {
+    backgroundColor: isHovered ? hoverColor : color,
     'background-color': `${color}`,
     border: 'none',
     'border-radius': '10px',
@@ -12,10 +15,15 @@ export function Button({ name, onClick, color }) {
     'margin-left': '20px',
     cursor: 'pointer',
   };
-  console.log(buttonStyle);
   return (
-    <div className="button-container" style={containerStyle}>
-      <button onClick={onClick} style={buttonStyle}>
+    <div className="button-container">
+      <button
+        type={type}
+        onClick={onClick}
+        style={buttonStyle}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         {name}
       </button>
     </div>

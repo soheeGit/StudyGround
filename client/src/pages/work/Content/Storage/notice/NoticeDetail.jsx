@@ -15,6 +15,7 @@ const NoticeDetail = () => {
   const { notice } = location.state || {}; //location.state로 부터 notice 데이터를 가져옴
   const { boardId, fetchNoticesRef } = useOutletContext();
   const noticeId = useParams();
+  console.log(notice);
   console.log(noticeId.noticeId);
 
   // 공지사항 삭제
@@ -61,14 +62,31 @@ const NoticeDetail = () => {
       <div className="attachmentType">첨부파일 ({notice.files.length}개)</div>
       {notice.files.map((file, fileKey) => (
         <div className="attachment-box">
-          <Link to={file.fileUrl}>{file.fileName}</Link>
+          <Link to={`/files/${file.fileName}`}>{file.fileName}</Link>
         </div>
       ))}
       <div className="divider-row"></div>
       <div className="buttonsArea">
-        <Button name="수정" color="#3D9BF3" onClick={() => navigate('../')} />
-        <Button name="삭제" color="#F19595" onClick={handleDeleteNotice} />
-        <Button name="목록" color="#D9D9D9" onClick={() => navigate('../')} />
+        <Button
+          name="수정"
+          color="#3D9BF3"
+          onClick={() =>
+            navigate(`../${noticeId.noticeId}/update`, { state: { notice } })
+          }
+          hoverColor="#5AA7F6"
+        />
+        <Button
+          name="삭제"
+          color="#E86161"
+          onClick={handleDeleteNotice}
+          hoverColor="#D2625D"
+        />
+        <Button
+          name="목록"
+          color="#D9D9D9"
+          onClick={() => navigate('../')}
+          hoverColor="#E0E0E0"
+        />
       </div>
     </div>
   );

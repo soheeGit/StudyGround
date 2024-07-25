@@ -24,7 +24,8 @@ import BoardList from './pages/work/Content/Storage/boardData';
 import NoticePage from './pages/work/Content/Storage/notice/NoticePage';
 import NoticeDetail from './pages/work/Content/Storage/notice/NoticeDetail';
 import AddNotice from './pages/work/Content/Storage/notice/AddNotice';
-
+import UpdateNotice from './pages/work/Content/Storage/notice/UpdateNotice';
+import AddTask from './pages/work/Content/Storage/task/AddTask';
 function App() {
   return (
     <Router>
@@ -51,9 +52,12 @@ function App() {
             <Route path="notice" element={<NoticePage />}>
               <Route path="addnotice" element={<AddNotice />} />
               <Route path=":noticeId" element={<NoticeDetail />} />
+              <Route path=":noticeId/update" element={<UpdateNotice />} />
             </Route>
             <Route path="memo" element={<Memo />} />
-            <Route path="task" element={<TaskPage />} />
+            <Route path="task" element={<TaskPage />}>
+              <Route path="addtask" element={<AddTask />} />
+            </Route>
             <Route path="autho" element={<Autho />} />
           </Route>
         </Routes>

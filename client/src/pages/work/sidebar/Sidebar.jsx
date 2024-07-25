@@ -21,7 +21,7 @@ const Sidebar = ({ boardId, onComponentChange }) => {
     <div className="sidebar-container">
       <div className="sidebar-top">
         <div className="logo-container">
-          <Link to="/">
+          <Link to="/LoginAfter">
             <img src={logo1} />
           </Link>
         </div>

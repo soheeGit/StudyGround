@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import './AddNotice.css';
+import './AddTask.css';
 import axios from 'axios';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Button } from '../../../Component/Button';
 
 const AddNotice = () => {
-  const { boardId, fetchNoticesRef } = useOutletContext();
+  const { boardId } = useOutletContext();
   const navigate = useNavigate();
 
+  // 과제 추가 State
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [deadline, setDeadline] = useState('');
   const [files, setFiles] = useState([]);
-  const [isImportant, setIsImportant] = useState(false);
-  console.log(isImportant);
+
   const handleFileChange = (event) => {
-    setFiles([...files, ...event.target.files]); // 수정한 내용
+    setFiles([...files, ...event.target.files]);
   };
 
-  // 공지사항 추가
-  const handleAddNotice = async (event) => {
+  // 과제 추가
+  const handleAddTask = async (event) => {
     event.preventDefault();
 
-    // ??
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('importance', isImportant ? 'High' : 'Low');
+    formData.append('deadline', deadline);
     files.forEach((file) => {
       formData.append('files', file);
     });
     console.log(formData);
     try {
       const response = await axios.post(
-        `/storage/submitNotice/${boardId}`,
+        `/storage/enrollTask/${boardId}`,
         formData,
         {
           withCredentials: true,
@@ -42,23 +42,21 @@ const AddNotice = () => {
         }
       );
       if (response.data.success) {
-        alert('공지사항이 성공적으로 추가되었습니다.');
-        if (fetchNoticesRef.current) {
-          fetchNoticesRef.current();
-        }
-        navigate(`/work/${boardId}/notice`);
+        alert('과제가 성공적으로 추가되었습니다.');
+
+        navigate(`/work/${boardId}/task`);
       } else {
-        alert('공지사항 추가에 실패했습니다.');
+        alert('과제 추가에 실패했습니다.');
       }
     } catch (error) {
-      console.error('공지사항 추가 중 오류 발생:', error);
-      alert('공지사항 추가 중 오류가 발생했습니다.');
+      console.error('과제 추가 중 오류 발생:', error);
+      alert('과제 추가 중 오류가 발생했습니다.');
     }
   };
 
   return (
     <div className="detail-container">
-      <form onSubmit={handleAddNotice}>
+      <form onSubmit={handleAddTask}>
         <div className="detail-field">
           <div className="detail-field-title">제목</div>
           <div className="divider-column"></div>
@@ -68,13 +66,23 @@ const AddNotice = () => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력해 주세요"
           />
+        </div>
+        <div className="detail-field">
+          <div className="detail-field-title">마감일</div>
+          <div className="divider-column"></div>
+          <input
+            type="datetime-local"
+            className="inputType"
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목을 입력해 주세요"
+          />
           <div className="checkboxArea">
-            중요
+            지각제출 허용
             <input
               type="checkbox"
               id="checkbox"
-              checked={isImportant}
-              onChange={(e) => setIsImportant(e.target.checked)}
+              // checked={isImportant}
+              // onChange={(e) => setIsImportant(e.target.checked)}
             />
           </div>
         </div>

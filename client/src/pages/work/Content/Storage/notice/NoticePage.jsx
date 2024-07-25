@@ -118,6 +118,7 @@ const NoticePage = () => {
                 name="등록"
                 color="#E86161"
                 onClick={() => navigate('addnotice')}
+                hoverColor="#D2625D"
               />
             </div>
           </div>

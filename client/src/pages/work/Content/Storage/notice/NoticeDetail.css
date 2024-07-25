@@ -40,8 +40,10 @@
   padding-top: 20px;
 }
 
+.attachmentType {
+  margin-bottom: 20px;
+}
 .attachment-box {
-  margin-top: 15px;
   margin-bottom: 20px;
 }
 .buttonsArea {

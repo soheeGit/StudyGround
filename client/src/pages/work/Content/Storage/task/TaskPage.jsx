@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './TaskPage.css';
 import WorkHeader from '../../../WorkHeader';
 import axios from 'axios';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import TaskList from './TaskList';
 import TaskDetail from './TaskDetail';
+import { Button } from '../../../Component/Button';
 
 const TaskPage = () => {
   const { boardId } = useOutletContext();
+  const navigate = useNavigate();
   // Task 데이터
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -79,6 +81,15 @@ const TaskPage = () => {
       ) : (
         <TaskDetail task={selectedTask} onBack={handleBackToList} />
       )}
+      <Outlet context={{ boardId }} />
+      <div className="buttonsArea">
+        <Button
+          name="등록"
+          color="#E86161"
+          onClick={() => navigate('addtask')}
+          hoverColor="#D2625D"
+        />
+      </div>
     </>
   );
 };
