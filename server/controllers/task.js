@@ -46,7 +46,7 @@ exports.enrollTask = async(req, res, next) => {
         return res.status(201).json({
             success: true,
             message: '과제 추가 성공',
-            studyMaterial: {
+            task: {
                 title: task.title,
                 deadline: task.deadline,
                 content: task.content,

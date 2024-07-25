@@ -5,6 +5,7 @@ const { submitNotice, getNoticeData, getCurrentNoticeData, updateNotice, deleteN
 const { submitStudyMaterial, getStudyMaterialData, updateStudyMaterial, deleteStudyMaterial } = require('../controllers/studyMaterial');
 const { enrollTask, updateTask, getTaskData, deleteTask} = require('../controllers/task');
 const { submitTask, mUpdateTask, getmTaskData, mdeleteTask } =require('../controllers/submitTask')
+const { submitFiles } = require('../controllers/fileStorage')
 
 const router = express.Router();
 const fs = require('fs');
@@ -83,7 +84,7 @@ router.get('/mTask/:id', isLoggedIn, getmTaskData);
 router.get('/mDeleteTask/:id', isLoggedIn, mdeleteTask)
 
 // 파일 스토리지 추가
-//router.post('/submitFile/:id', isLoggedIn, upload.array('files', maxCount), su)
+router.post('/submitFiles/:id', isLoggedIn, upload.array('files', maxCount), submitFiles)
 // 파일 스토리지 수정
 
 // 파일 스토리지 확인
