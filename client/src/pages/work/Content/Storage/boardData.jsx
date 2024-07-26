@@ -29,7 +29,7 @@ const BoardList = () => {
       {studies && studies.length > 0 ? (
         studies.map((study) => (
           <div key={study.bId}>
-            <Link to={`/work/${board.bId}/dashboard`}>링크 입니다</Link>
+            <Link to={`/work/${study.bId}/dashboard`}>링크 입니다</Link>
           </div>
         ))
       ) : (
