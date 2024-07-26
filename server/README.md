@@ -10,9 +10,9 @@
 
 <div align="center">
 
-|**심재혁**|**윤지원**|**오영은**|**진소희**|
+|**심재혁**|**윤지원**|**진소희**|
 |:---:|:---:|:---:|:--:|
 |front-end|front-end|back-end|back-end|
-|[@EOK00](https://github.com/eok00)|[@yoonjiwon1](https://github.com/yoonjiwon1)|[@Xoduddms](https://github.com/Xoduddms)|[@soheeGit](https://github.com/soheeGit)|
+|[@EOK00](https://github.com/eok00)|[@yoonjiwon1](https://github.com/yoonjiwon1)|[@soheeGit](https://github.com/soheeGit)|
   
 </div>

@@ -33,7 +33,7 @@ class SubmitTask extends Sequelize.Model {
     }
     static associate(db) {
         db.SubmitTask.belongsTo(db.User, { foreignKey: 'userId' });
-        db.SubmitTask.belongsTo(db.Task);
+        db.SubmitTask.belongsTo(db.Task, { foreignKey: 'taskId' });
         db.SubmitTask.hasMany(db.File, {
             foreignKey: 'fileableId',
             constraints: false,

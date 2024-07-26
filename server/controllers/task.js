@@ -135,13 +135,7 @@ exports.updateTask = async (req, res, next) => {
         return res.status(200).json({
             success: true,
             message: '과제 수정 성공',
-            notice: {
-                title: task.title,
-                content: task.content,
-                userId: task.userId,
-                createdAt: task.createdAt,
-                updatedAt: task.updatedAt,
-            },
+            task,
             files: uploadedFiles
         });
     } catch (error) {
