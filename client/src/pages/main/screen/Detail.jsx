@@ -1,24 +1,10 @@
+import React from 'react';
 import './Detail.css';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
-function Detail() {
-  const [board, setBoard] = useState(null);
-  const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
-
-  useEffect(() => {
-    fetch('/api/boards')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('스터디 조회 api 불러옴:', data);
-        const selectedBoard = data[0];
-        setBoard(selectedBoard);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+function Detail({ board }) {
+  const [message, setMessage] = React.useState('');
+  const navigate = useNavigate();
 
   const handleParticipateClick = () => {
     if (!board || !board.bId) {
@@ -51,7 +37,7 @@ function Detail() {
       return;
     }
 
-    navigate(`/evaluation/${board.bId}`); // Navigate to EvaluationTest with boardId
+    navigate(`/evaluation/${board.bId}`);
   };
 
   if (!board) {

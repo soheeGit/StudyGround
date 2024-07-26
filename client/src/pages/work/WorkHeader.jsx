@@ -30,6 +30,10 @@ const WorkHeader = ({ title }) => {
     navigate('/profile');
   };
 
+  const handleMypageClick = () => {
+    navigate('/Mypage');
+  };
+
   const handleLogout = async () => {
     try {
       const response = await fetch('/auth/logout', { method: 'GET' });
@@ -63,7 +67,7 @@ const WorkHeader = ({ title }) => {
             <div className="dropdown-menu">
               <ul>
                 <li onClick={handleProfileClick}>프로필 보기</li>
-                <li>설정</li>
+                <li onClick={handleMypageClick}>설정</li>
                 <li onClick={handleLogout}>로그아웃</li>
               </ul>
             </div>

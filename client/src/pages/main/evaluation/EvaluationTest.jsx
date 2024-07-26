@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './EvaluationTest.css';
 import WorkHeader from '../../work/WorkHeader';
+import { Link } from 'react-router-dom';
+import logo from '../../../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const EvaluationTest = () => {
   const { boardId } = useParams(); // Get boardId from URL parameters
@@ -19,6 +22,7 @@ const EvaluationTest = () => {
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleForm1Rating = (rate) => setForm1Rating(rate);
   const handleForm1Comments = (e) => setForm1Comments(e.target.value);
@@ -56,7 +60,7 @@ const EvaluationTest = () => {
         },
         credentials: 'include',
         body: JSON.stringify({
-          revieweeId: 2, // 예시 revieweeId, 필요에 따라 업데이트
+          revieweeId: 1,
           rating: form1Rating,
           content: form1Comments,
           praises: praises,
@@ -65,19 +69,33 @@ const EvaluationTest = () => {
       const result = await response.json();
 
       if (response.ok) {
-        setSuccessMessage(result.message);
+        setSuccessMessage('리뷰가 성공적으로 저장되었습니다.'); // Set success message
         setErrorMessage('');
+        alert('리뷰가 성공적으로 저장되었습니다.');
+        navigate('/LoginAfter');
       } else {
         throw new Error(result.error);
       }
     } catch (error) {
-      setSuccessMessage('');
+      setSuccessMessage(''); // Clear success message on error
       setErrorMessage(error.message);
     }
   };
 
   return (
     <>
+      <div className="reviewpglogo">
+        <Link to="/LoginAfter" className="reviewlogoLink">
+          <img
+            className="logoBox"
+            width="100px"
+            height="85px"
+            src={logo}
+            alt="logo"
+          />
+        </Link>
+      </div>
+      <div className="divider"></div>
       <WorkHeader />
       <div className="evaluation-container">
         <h1>OPIC study for AL</h1>
@@ -115,10 +133,10 @@ const EvaluationTest = () => {
                 { name: 'fastResponse', label: '답장이 빨라요.' },
                 { name: 'proactive', label: '열정적이에요.' },
                 { name: 'leadership', label: '주도적이에요.' },
-                { name: 'creativity', label: '시간약속을 잘 지켜요.' },
+                { name: 'creativity', label: '창의적이에요.' },
                 { name: 'diligent', label: '리더십이 있어요.' },
-                { name: 'punctual', label: '꼼꼼한 성격을 가졌어요.' },
-                { name: 'detailOriented', label: '창의적이에요.' },
+                { name: 'punctual', label: '시간약속을 잘 지켜요.' },
+                { name: 'detailOriented', label: '꼼꼼한 성격을 가졌어요.' },
                 { name: 'sincere', label: '성실해요.' },
               ].map((compliment) => (
                 <div key={compliment.name} className="compliment-option">
@@ -149,8 +167,6 @@ const EvaluationTest = () => {
             저장하기
           </button>
         </form>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        {successMessage && <p className="success-message">{successMessage}</p>}
       </div>
     </>
   );

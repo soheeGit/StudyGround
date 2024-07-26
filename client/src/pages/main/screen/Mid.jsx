@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 
 const Mid = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedBoard, setSelectedBoard] = useState(null);
   const [boards, setBoards] = useState([]);
 
-  const openModal = (title) => {
-    setSelectedTitle(title);
+  const openModal = (board) => {
+    setSelectedBoard(board);
     setModalIsOpen(true);
   };
 
@@ -104,17 +104,17 @@ const Mid = () => {
         </li>
 
         {boards.map((board) => (
-          <li key={board.bId} className="mid_box">
-            <div className="mid_title" onClick={() => openModal(board.bName)}>
+          <li key={board.bId} className="box">
+            <div className="title" onClick={() => openModal(board)}>
               <b>{board.bName}</b>
             </div>
-            <div className="mid_user-info">
-              <div className="mid_info">
-                <div className="mid_count">
+            <div className="user-info">
+              <div className="info">
+                <div className="count">
                   {board.currentCount} / {board.bTotalNumber}
                 </div>
               </div>
-              <div className="mid_detail"></div>
+              <div className="detail"></div>
             </div>
           </li>
         ))}
@@ -132,7 +132,7 @@ const Mid = () => {
       <CustomModal2
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        selectedTitle={selectedTitle}
+        selectedBoard={selectedBoard}
       />
     </div>
   );

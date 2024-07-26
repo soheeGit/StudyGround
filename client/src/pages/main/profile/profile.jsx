@@ -50,7 +50,7 @@ const Profile = () => {
   return (
     <>
       <div className="logo">
-        <Link to="/#" className="logoLink">
+        <Link to="/LoginAfter" className="logoLink">
           <img
             className="logoBox"
             width="100px"
