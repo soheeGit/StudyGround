@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Mid.css';
 import CustomModal2 from '../Modal/Modal2';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Mid = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [boards, setBoards] = useState([]);
-  const navigate = useNavigate();
 
   const openModal = (board) => {
     setSelectedBoard(board);

@@ -1,36 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../../work/sidebar/Sidebar';
 import './Mypage.css';
 import { useNavigate } from 'react-router-dom';
-import WorkHeader from '../../work/WorkHeader';
+import useUserData from './useUserData';
+
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-CA', options);
+};
 
 const Mypage = () => {
   const navigate = useNavigate();
+  const userData = useUserData();
+  const [boardData, setBoardData] = useState([]);
+
+  useEffect(() => {
+    const fetchBoardData = async () => {
+      try {
+        const response = await fetch('/api/myBoard', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setBoardData(result);
+        } else {
+          alert('활동 데이터 불러오기 오류');
+        }
+      } catch (error) {
+        alert('활동 데이터 불러오기 오류: ' + error.message);
+      }
+    };
+
+    fetchBoardData();
+  }, []);
 
   const handleEditProfileClick = () => {
     navigate('/Mypagemodify');
-  };
-
-  const handleDeleteAccountClick = async () => {
-    try {
-      const response = await fetch('/profile/deleteUser', {
-        method: 'GET',
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        // Handle success response
-        alert(result.message);
-        navigate('/'); // Navigate to home or login page after account deletion
-      } else {
-        // Handle error response
-        alert(result.message || '회원 탈퇴 오류');
-      }
-    } catch (error) {
-      // Handle network or other errors
-      alert('회원 탈퇴 오류: ' + error.message);
-    }
   };
 
   return (
@@ -41,13 +50,13 @@ const Mypage = () => {
         <div className="mypage_info">
           <div className="profile">
             <img
-              src="profile_image_url"
+              src={userData.profileImage}
               alt="Profile"
               className="profile_image"
             />
             <div className="profile_details">
-              이름 <br />
-              성격유형
+              {userData.uName} ({userData.uId}) <br />
+              {userData.uLevel} · {userData.uType}
             </div>
             <button
               className="edit_profile_button"
@@ -59,34 +68,27 @@ const Mypage = () => {
         </div>
 
         <div className="mypage_activities">진행중인 활동</div>
-        <div className="activity">
-          <img
-            src="lg_project_image_url"
-            alt="LG 프로젝트"
-            className="activity_image"
-          />
-          <p>
-            LG 프로젝트 <br />
-            D-16
-          </p>
-        </div>
-        <div className="activity">
-          <img
-            src="saemaul_image_url"
-            alt="새마을운동 SNS 숏폼 공모전"
-            className="activity_image"
-          />
-          <p>
-            새마을운동 SNS 숏폼 공모전
-            <br />
-            D-9
-          </p>
-        </div>
+        {boardData.length > 0 ? (
+          boardData.map((board) => (
+            <div className="activity" key={board.bId}>
+              <img
+                src="activity_image_url"
+                alt={board.bName}
+                className="activity_image"
+              />
+              <p>
+                {board.bName} <br /> {formatDate(board.bStartDate)} ~{' '}
+                {formatDate(board.bClosingDate)}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>진행중인 활동이 없습니다.</p>
+        )}
 
         <div className="mypage_activities">내 활동</div>
         <div className="activity">
           <div className="review-left">
-            <p>활동기간</p>
             <img
               src="{review.image}"
               className="review-profile-image"
@@ -102,10 +104,6 @@ const Mypage = () => {
             </div>
           </div>
         </div>
-
-        <button className="cancel_account" onClick={handleDeleteAccountClick}>
-          탈퇴하기
-        </button>
       </div>
     </>
   );

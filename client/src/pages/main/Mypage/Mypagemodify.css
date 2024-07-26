@@ -1,0 +1,78 @@
+.mypage_wrap {
+  margin-left: 220px;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: calc(100% - 250px);
+}
+
+.mypage_title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.mpm_info {
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #cfcfcf;
+  width: 700px;
+  border-radius: 15px;
+  padding: 10px;
+  height: 400px;
+}
+
+.mpm_profile {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.mpm_profile_image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid black;
+}
+
+.mpm_profile_details {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.profile_nickname_edit {
+  margin-left: 115px;
+  margin-top: 30px;
+}
+
+.nickname_edit {
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #cfcfcf;
+  margin-left: 20px;
+  width: 50%;
+}
+
+.mypage_edit {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #cfcfcf;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+  display: block;
+  margin-top: 50px;
+}
+
+.myprofile_edit,
+.myprofile_delete {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #cfcfcf;
+  margin-right: 20px;
+}
