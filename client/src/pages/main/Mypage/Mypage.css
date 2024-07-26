@@ -1,0 +1,78 @@
+.mypage_wrap {
+  margin-left: 200px;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: calc(100% - 250px);
+}
+.mypage_title,
+.mypage_activities {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.mypage_info,
+.activity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #cfcfcf;
+  width: 700px;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.profile_image,
+.activity_image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid black;
+}
+
+.profile_details {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.edit_profile_button {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #cfcfcf;
+  margin-left: 350px;
+}
+
+.mypage_activities {
+  margin-top: 20px;
+}
+
+.activity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid #cfcfcf;
+  padding-left: 40px;
+}
+
+.activity p {
+  margin-left: 16px;
+}
+
+/* 수정 */
+.review-profile-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid black;
+}

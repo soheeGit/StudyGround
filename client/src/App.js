@@ -10,6 +10,8 @@ import Sidebar from './pages/work/sidebar/Sidebar';
 import AddStudyForm from './pages/main/screen/AddStudyForm';
 import EvaluationTest from './pages/main/evaluation/EvaluationTest';
 import Detail from './pages/main/screen/Detail';
+import Mypage from './pages/main/Mypage/Mypage';
+import Mypagemodify from './pages/main/Mypage/Mypagemodify';
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
@@ -40,12 +42,14 @@ function App() {
           <Route path="/JoinupForm" element={<JoinupForm2 />} />
           <Route path="/Test" element={<Test />} />
           <Route path="/LoginAfter" element={<LoginAfter />} />
-          <Route path="/profile" element={<EvaluationTest />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/Sidebar" element={<Sidebar />} />
           <Route path="/add-study" element={<AddStudyForm />} />
           <Route path="/boardList" element={<BoardList />} />
           <Route path="/" element={<Detail />} />
           <Route path="/evaluation/:boardId" element={<EvaluationTest />} />
+          <Route path="Mypage" element={<Mypage />} />
+          <Route path="Mypagemodify" element={<Mypagemodify />} />
           {/* Wokr페이지 라우팅 */}
           <Route path="/work/:boardId" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />
@@ -59,7 +63,7 @@ function App() {
               <Route path=":noticeId/update" element={<UpdateNotice />} />
             </Route>
             <Route path="file" element={<FilePage />}></Route>
-            <Route path="memo" element={<Memo />} />
+            <Route path="memo" element={<Memo />} />/{' '}
             <Route path="task" element={<TaskPage />}>
               <Route path="addtask" element={<AddTask />} />
               <Route path=":taskId" element={<TaskDetail />} />
