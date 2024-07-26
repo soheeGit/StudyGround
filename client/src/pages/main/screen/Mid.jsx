@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Mid.css';
 import CustomModal2 from '../Modal/Modal2';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Mid = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [boards, setBoards] = useState([]);
+  const navigate = useNavigate();
 
   const openModal = (board) => {
     setSelectedBoard(board);
@@ -16,6 +17,10 @@ const Mid = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const handleAddStudyClick = () => {
+    navigate('/add-study');
   };
 
   useEffect(() => {
@@ -120,6 +125,11 @@ const Mid = () => {
         ))}
 
         <Link to="/add-study" className="new-study-link">
+          <div className="plusButton">
+            <button className="studyplus" onClick={handleAddStudyClick}>
+              스터디 추가
+            </button>
+          </div>
           <li className="new-study-box">
             <div className="new-study-content">
               <div className="plus-sign">+</div>
