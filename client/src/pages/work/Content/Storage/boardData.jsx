@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const BoardList = () => {
-  const [boards, setBoards] = useState([]);
+  const [studies, setStudies] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState();
 
   useEffect(() => {
@@ -15,8 +15,7 @@ const BoardList = () => {
             'Content-Type': 'application/json',
           },
         });
-        setBoards(groupResponse.data);
-        console.log(groupResponse.data);
+        setStudies(groupResponse.data);
       } catch (error) {
         console.error('스터디리스트를 가져오는 중 오류 발생:', error);
       }
@@ -26,12 +25,16 @@ const BoardList = () => {
 
   return (
     <div>
-      qwewqe
-      {boards.map((board) => (
-        <div key={board.bId}>
-          <Link to={`/work/${board.bId}/dashboard`}>링크 입니다</Link>
-        </div>
-      ))}
+      내 스터디 목록입니다.
+      {studies && studies.length > 0 ? (
+        studies.map((study) => (
+          <div key={study.bId}>
+            <Link to={`/work/${study.bId}/dashboard`}>링크 입니다</Link>
+          </div>
+        ))
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
