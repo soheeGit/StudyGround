@@ -19,10 +19,6 @@ const Mid = () => {
     setModalIsOpen(false);
   };
 
-  const handleAddStudyClick = () => {
-    navigate('/add-study');
-  };
-
   useEffect(() => {
     fetchBoards();
   }, []);
@@ -37,10 +33,6 @@ const Mid = () => {
       console.error('Error fetching data:', error);
     }
   };
-
-  if (boards.length === 0) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="mid_recruit">
@@ -125,11 +117,6 @@ const Mid = () => {
         ))}
 
         <Link to="/add-study" className="new-study-link">
-          <div className="plusButton">
-            <button className="studyplus" onClick={handleAddStudyClick}>
-              스터디 추가
-            </button>
-          </div>
           <li className="new-study-box">
             <div className="new-study-content">
               <div className="plus-sign">+</div>
