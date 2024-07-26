@@ -8,16 +8,17 @@ const AddNotice = () => {
   const { boardId, fetchNoticesRef } = useOutletContext();
   const navigate = useNavigate();
 
+  // 공지사항 추가 state
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [files, setFiles] = useState([]);
   const [isImportant, setIsImportant] = useState(false);
 
   const handleFileChange = (event) => {
-    setFiles([...files, ...event.target.files]); // 수정한 내용
+    setFiles([...files, ...event.target.files]);
   };
 
-  // 공지사항 추가
+  // 공지사항 추가 post
   const handleAddNotice = async (event) => {
     event.preventDefault();
 
@@ -28,7 +29,7 @@ const AddNotice = () => {
     files.forEach((file) => {
       formData.append('files', file);
     });
-    console.log(formData);
+    console.log(files);
     try {
       const response = await axios.post(
         `/storage/submitNotice/${boardId}`,

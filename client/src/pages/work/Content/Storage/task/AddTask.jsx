@@ -18,22 +18,22 @@ const AddTask = () => {
     setFiles([...files, ...event.target.files]);
   };
 
-  // 과제 추가
+  // 과제 추가 post
   const handleAddTask = async (event) => {
     event.preventDefault();
-
-    // Date 객체를 ISO 형식으로 변환
-    const deadlineDate = new Date(deadline);
-    const deadlineISOString = deadlineDate.toISOString();
 
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('deadline', deadlineISOString);
+    formData.append('deadline', deadline);
     files.forEach((file) => {
       formData.append('files', file);
     });
-    console.log(formData);
+    // FormData 내용을 콘솔에 출력
+    console.log(files);
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
     try {
       const response = await axios.post(
         `/storage/enrollTask/${boardId}`,

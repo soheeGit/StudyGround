@@ -53,11 +53,15 @@ function GroupSelector() {
     <div className="select-container">
       <select value={selectedGroup} onChange={handleSelect}>
         <option value="">스터디를 선택하세요</option>
-        {groups.map((group) => (
-          <option key={group.id} value={group.bId}>
-            {group.bName}
-          </option>
-        ))}
+        {groups && groups.length > 0 ? (
+          groups.map((group) => (
+            <option key={group.id} value={group.bId}>
+              {group.bName}
+            </option>
+          ))
+        ) : (
+          <></>
+        )}
       </select>
     </div>
   );

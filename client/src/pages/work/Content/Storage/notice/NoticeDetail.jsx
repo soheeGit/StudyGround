@@ -8,6 +8,7 @@ import {
   useOutletContext,
   useParams,
 } from 'react-router-dom';
+import FormattedDate from '../../../Component/FormattedDate';
 
 const NoticeDetail = () => {
   const host = 'http://localhost:5000';
@@ -54,9 +55,11 @@ const NoticeDetail = () => {
         <div className="detail-field-content">{notice.title}</div>
       </div>
       <div className="detail-field">
-        <div className="detail-field-title">개재일시</div>
+        <div className="detail-field-title">게시일</div>
         <div className="divider-column"></div>
-        <div className="detail-field-content">ㅂㅈㄷㅂㅂㄷㅈ</div>
+        <div className="detail-field-content">
+          <FormattedDate dateString={notice.updatedAt} />
+        </div>
       </div>
       <div className="divider-row"></div>
       <div className="detail-contentType">{notice.content}</div>

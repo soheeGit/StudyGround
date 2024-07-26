@@ -32,9 +32,26 @@
 .task-submit-textarea:focus {
   border: none;
 }
+.attachment-box {
+  border-bottom: solid 2px;
+  border-color: #0000;
+}
 
 .submit-container {
+  width: 95%;
   display: flex;
   flex-direction: column;
-  margin: 30px, 30px, 30px, 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-title {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 30px;
+  font-weight: 700;
+  border-top: solid 2px;
 }
