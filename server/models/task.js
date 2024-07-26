@@ -45,7 +45,7 @@ class Task extends Sequelize.Model {
             as: 'files',
             onDelete: 'CASCADE'
         });
-        db.Task.hasMany(db.SubmitTask);
+        db.Task.hasMany(db.SubmitTask, { foreignKey: 'taskId' });
     }
 }
 

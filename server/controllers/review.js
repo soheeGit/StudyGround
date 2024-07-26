@@ -22,14 +22,12 @@ exports.submitReview = async (req, res, next) => {
             content,
             boardId,
         });
-
         if (praises && praises.length > 0) {
             const praiseRecords = await Praise.findAll({
                 where: {
                     name: praises
                 }
             });
-
             await review.addPraises(praiseRecords);
         }
 

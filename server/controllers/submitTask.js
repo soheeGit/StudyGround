@@ -56,14 +56,7 @@ exports.submitTask = async (req, res, next) => {
         return res.status(201).json({
             success: true,
             message: '과제 제출 성공',
-            submitTask: {
-                id: submitTask.id,
-                content: submitTask.content,
-                userId: submitTask.userId,
-                taskId: submitTask.taskId,
-                createdAt: submitTask.createdAt,
-                updatedAt: submitTask.updatedAt,
-            },
+            submitTask,
             files: uploadedFiles
         });
     } catch (error) {
@@ -155,14 +148,7 @@ exports.mUpdateTask = async (req, res, next) => {
         return res.status(200).json({
             success: true,
             message: '과제 제출 수정 성공',
-            submitTask: {
-                id: submitTask.id,
-                content: submitTask.content,
-                userId: submitTask.userId,
-                taskId: submitTask.taskId,
-                createdAt: submitTask.createdAt,
-                updatedAt: submitTask.updatedAt,
-            },
+            submitTask,
             files: updatedFiles
         });
 
