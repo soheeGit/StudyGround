@@ -1,5 +1,6 @@
 .work-container {
   display: flex;
+  font-family: 'Imprima', sans-serif;
 }
 
 .content-container {

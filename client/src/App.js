@@ -14,7 +14,6 @@ import Detail from './pages/main/screen/Detail';
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
 import Video from './pages/work/Content/Video/Video';
-import BigCalendar from './pages/work/Content/Calendar/Calendar';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
 import Autho from './pages/work/Content/Approve/Autho';
@@ -30,6 +29,7 @@ import AddNotice from './pages/work/Content/Storage/notice/AddNotice';
 import UpdateNotice from './pages/work/Content/Storage/notice/UpdateNotice';
 import BoardList from './pages/work/Content/Storage/boardData';
 import FilePage from './pages/work/Content/Storage/file/FilePage';
+import CalendarPage from './pages/work/Content/Calendar/CalendarPage';
 function App() {
   return (
     <Router>
@@ -50,7 +50,7 @@ function App() {
           <Route path="/work/:boardId" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />
             <Route path="video" element={<Video />} />
-            <Route path="calendar" element={<BigCalendar />} />
+            <Route path="calendar" element={<CalendarPage />} />
             <Route path="board" element={<Board />} />
             <Route path="storage" element={<Storage />} />
             <Route path="notice" element={<NoticePage />}>

@@ -9,6 +9,9 @@ import {
   useOutletContext,
   useParams,
 } from 'react-router-dom';
+import FormattedDate from '../../../Component/FormattedDate';
+import SubmitTask from './SubmitTask';
+import Divider from '../../../Component/Divider';
 
 const NoticeDetail = () => {
   const host = 'http://localhost:3000';
@@ -22,17 +25,22 @@ const NoticeDetail = () => {
   const [submitTask, setSubmitTask] = useState(null); // 제출 내역 상태
   const [content, setContent] = useState(''); // 제출 내용 상태
   const [files, setFiles] = useState([]); // 제출 파일 상태
-
+  const handleFileChange = (event) => {
+    setFiles([...files, ...event.target.files]);
+  };
   // 과제 제출상태 확인 및 get
   useEffect(() => {
     const fetchSubmitTask = async () => {
       try {
-        const response = await axios.get(`/storage/submitTask/${taskId}`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await axios.get(
+          `/storage/submitTask/${taskId.taskId}`,
+          {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
         if (response.data.success) {
           setSubmitTask(response.data.submitTask);
         }
@@ -77,12 +85,16 @@ const NoticeDetail = () => {
       <div className="detail-field">
         <div className="detail-field-title">게시일</div>
         <div className="divider-column"></div>
-        <div className="detail-field-content"></div>
+        <div className="detail-field-content">
+          <FormattedDate dateString={task.createdAt} />
+        </div>
       </div>
       <div className="detail-field">
         <div className="detail-field-title">마감일</div>
         <div className="divider-column"></div>
-        <div className="detail-field-content">{task.deadline}</div>
+        <div className="detail-field-content">
+          <FormattedDate dateString={task.deadline} />
+        </div>
       </div>
       <div className="divider-row"></div>
       <div className="detail-contentType">{task.content}</div>
@@ -98,32 +110,6 @@ const NoticeDetail = () => {
           </a>
         </div>
       ))}
-      <div className="divider-row"></div>
-      {/* 과제 제출 영역 */}
-      <div className="submit-title">과제 제출</div>
-      <div className="submit-container">
-        <div className="detail-field">
-          <div className="detail-field-title">제출 일시</div>
-          <div className="divider-column"></div>
-          <div className="detail-field-content">{task.title}</div>
-        </div>
-        <div className="divider-row"></div>
-        <div className="detail-contentType">{task.content}</div>
-        <div className="attachmentType">첨부파일 ({task.files.length}개)</div>
-        {task.files.map((file, fileKey) => (
-          <div className="attachment-box">
-            <a
-              href={`${host}/files/${file.fileName}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {file.fileName}
-            </a>
-          </div>
-        ))}
-        <div className="divider-row"></div>
-      </div>
-
       <div className="buttonsArea">
         <Button
           name="수정"
@@ -139,6 +125,15 @@ const NoticeDetail = () => {
           onClick={handleDeleteTask}
           hoverColor="#D2625D"
         />
+      </div>
+
+      {/* 과제 제출 영역 */}
+      <div className="submit-title">Submit</div>
+      <Divider color="#000000" height={'2px'} margin={'10px'} />
+      <div className="submit-container">
+        <SubmitTask />
+      </div>
+      <div className="buttonsArea">
         <Button
           name="제출"
           color="#E86161"

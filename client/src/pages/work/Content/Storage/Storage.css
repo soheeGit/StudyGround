@@ -43,13 +43,14 @@
 
 .storage-notice-content-row {
   display: flex;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   border-bottom: solid 2px;
   border-color: #948a8a;
+  font-weight: 600;
 }
 .storage-notice-content-number {
-  width: 20%;
+  width: 15%;
   display: flex;
   justify-content: center;
   align-items: center;
