@@ -68,6 +68,7 @@ function App() {
               <Route path="addtask" element={<AddTask />} />
               <Route path=":taskId" element={<TaskDetail />} />
               <Route path=":taskId/update" element={<UpdateTask />} />
+              <Route path=":taskId/edit" element={<UpdateTask />} />
             </Route>
             <Route path="autho" element={<Autho />} />
           </Route>

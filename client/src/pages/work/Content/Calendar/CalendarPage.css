@@ -4,6 +4,9 @@
   margin-top: 10px;
   font-size: 40px;
 }
+.calendar-wrap {
+  display: flex;
+}
 .calendar-container {
   width: 50%;
   height: 80vh;
@@ -44,4 +47,25 @@
 }
 .prevMonthDay,
 .prevDay {
+}
+
+.calendar-body td {
+  position: relative;
+  width: 14.28%; /* 7 columns, each column is 1/7 of the table width */
+  height: 100px; /* You can adjust the height as needed */
+  vertical-align: top;
+}
+.calendar-body td div {
+  overflow-y: auto;
+  max-height: 100px; /* Same as the height of td */
+}
+.schedule {
+  margin-top: 2px;
+  padding: 2px;
+  font-size: 0.8em;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 5px;
 }

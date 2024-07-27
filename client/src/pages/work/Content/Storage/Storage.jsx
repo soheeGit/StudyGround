@@ -113,6 +113,7 @@ const Storage = () => {
               </div>
             </Link>
           </div>
+          <div></div>
         </div>
         {/* Memo Tab*/}
         <div className="storage-memo-container">
@@ -149,6 +150,7 @@ const Storage = () => {
               </div>
             </Link>
           </div>
+          <div></div>
         </div>
       </div>
     </>

@@ -1,6 +1,11 @@
+.dashboard-container {
+  width: 95%;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .dday-container {
   display: flex;
-  margin-left: 30px;
 }
 
 .dday1 {
@@ -14,4 +19,69 @@
   padding-left: 10px;
   padding-bottom: 10px;
   align-content: end;
+}
+
+.dashboard-content-container {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard-content-1 {
+  height: 30vh;
+  border: 2px solid #000000;
+}
+.dashboard-content-1-title {
+  width: 97%;
+  font-size: 35px;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dashboard-content-1-content {
+  width: 97%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 600;
+}
+
+.dashboard-content-2 {
+  display: flex;
+  justify-content: space-between;
+  height: 30vh;
+  margin-top: 70px;
+}
+
+.dashboard-content-2-1 {
+  width: 45%;
+  border: 2px solid #000000;
+}
+
+.dashboard-content-2-1-title {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 25px;
+  font-weight: 700;
+  gap: 10px;
+}
+.dashboard-content-2-1-content {
+  width: 95%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dashboard-content-2-1-content-row {
+  font-weight: 600;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }

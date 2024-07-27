@@ -61,7 +61,7 @@ const NoticePage = () => {
     fetchNoticesRef.current = fetchNotices;
   }, [boardId]);
 
-  // 공지사항 상세확인 : NopticeDetail로 notice데이터 넘겨준다
+  // 공지사항 상세확인 : NoticeDetail로 notice데이터 넘겨준다
   const handleClickNotice = (notice) => {
     navigate(`/work/${boardId}/notice/${notice.id}`, { state: { notice } });
   };

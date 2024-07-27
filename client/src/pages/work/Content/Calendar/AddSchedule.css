@@ -32,3 +32,34 @@
 .modal-content {
   margin-top: 20px;
 }
+
+.addschedule-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.addschedule-title input {
+  font-size: 30px;
+  border: none;
+}
+
+.addschedule-color {
+  display: flex;
+  margin-top: 20px;
+}
+.addschedule-color-title {
+  width: 20%;
+}
+
+.addschedule-startD {
+  display: flex;
+}
+.addschedule-startD-date {
+  width: 50%;
+}
+.addschedule-startD-time {
+  width: 50%;
+}
