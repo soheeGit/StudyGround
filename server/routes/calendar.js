@@ -9,9 +9,9 @@ router.post('/submitSchedule/:id', isLoggedIn, submitSchedule);
 // 캘린더 수정
 router.post('/updateSchedule/:id', isLoggedIn, updateSchedule);
 // 전체 캘린더 확인
-router.get('/allSchedule', isLoggedIn, getAllScheduleData);
+router.get('/allSchedule/:id', isLoggedIn, getAllScheduleData);
 // 캘린더 확인
-router.get('/schedule', isLoggedIn, getScheduleData);
+router.get('/schedule/:id', isLoggedIn, getScheduleData);
 // 캘린더 삭제
 router.get('/deleteSchedule/:id', isLoggedIn, deleteSchedule);
 
