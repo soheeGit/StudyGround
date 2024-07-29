@@ -203,7 +203,7 @@ exports.acceptBoardEnter = async(req, res, next) => {
         if(request.status !== accepted){
             return res.status(400).json({ message: '스터디에 입장하실 수 없습니다.' });
         }
-        const board = await Board.findOne({ where: {id: boardId} })
+        const board = await Board.findOne({ where: {bId: boardId} })
         if(!board){
             return res.status(404).json({ message: '스터디를 찾을 수 없습니다.' });
         }
