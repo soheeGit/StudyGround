@@ -52,7 +52,6 @@ exports.partBoardsData = async (req, res, next) => {
 }
 
 exports.postBoardData = async (req, res, next) => {
-    console.log('User ID:', req.user);
     const { bName, bDescription, bTotalNumber, bType, bStartDate, bClosingDate } = req.body;
     const userId = req.user.id;
 
@@ -111,6 +110,31 @@ exports.postApplyBoard = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+exports.applyList = async(req, res, next) => {
+    const userId = req.user.id;
+    
+    try{
+        const boards = await Board.findAll({where: {leaderId: userId}})
+        if(boards.length === 0){
+            return res.status(404).json({ message: '스터디 방장이 아닙니다.'});
+        }
+        const requestsPromises = boards.map(async(board) => {
+            const requests = await BoardRequest.findAll({where: {boardId: board.bId}})
+            return {
+                board: {
+                    bName: board.bName
+                },
+                requests: requests
+            };
+        });
+        const results = await Promise.all(requestsPromises);
+        res.status(200).json({ results })
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ message: '서버오류' });
+    }
+}
 
 exports.postAcceptBoard = async (req, res) => {
     const requestId = req.params.requestId;
