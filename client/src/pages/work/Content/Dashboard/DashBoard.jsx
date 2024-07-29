@@ -10,8 +10,7 @@ import FormattedDate from '../../Component/FormattedDate';
 
 const DashBoard = () => {
   const { boardId } = useOutletContext();
-  const { myStudy } = useOutletContext();
-  console.log(myStudy);
+  const { myBoard } = useOutletContext();
 
   // 상위 5개 공지사항 데이터 fetch
   const [notice5, setNotice5] = useState([]);
