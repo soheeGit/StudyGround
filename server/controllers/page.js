@@ -120,7 +120,15 @@ exports.applyList = async(req, res, next) => {
             return res.status(404).json({ message: '스터디 방장이 아닙니다.'});
         }
         const requestsPromises = boards.map(async(board) => {
-            const requests = await BoardRequest.findAll({where: {boardId: board.bId}})
+            const requests = await BoardRequest.findAll({
+                where: {boardId: board.bId},
+                include: [
+                    {
+                        model: User,
+                        attributes: ['uName', 'uType', 'uLevel']
+                    },
+                ]
+            })
             return {
                 board: {
                     bName: board.bName
