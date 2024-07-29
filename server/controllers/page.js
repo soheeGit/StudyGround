@@ -190,3 +190,29 @@ exports.postRejectBoard = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+exports.acceptBoardEnter = async(req, res, next) => {
+    const boardId = req.params.id;
+    const userId = req.user.id;
+
+    try{
+        const request = await BoardRequest.findOne({ where: { boardId: boardId, userId: userId } });
+        if(!request){
+            return res.status(404).json({ message: '요청을 찾을 수 없습니다.' });
+        }
+        if(request.status !== accepted){
+            return res.status(400).json({ message: '스터디에 입장하실 수 없습니다.' });
+        }
+        const board = await Board.findOne({ where: {bId: boardId} })
+        if(!board){
+            return res.status(404).json({ message: '스터디를 찾을 수 없습니다.' });
+        }
+        res.status(200).json({ 
+            message: '스터디 입장',
+            board
+        });
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ message: '서버오류' });
+    }
+}

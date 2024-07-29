@@ -12,9 +12,10 @@ import {
 import FormattedDate from '../../../Component/FormattedDate';
 import SubmitTask from './SubmitTask';
 import Divider from '../../../Component/Divider';
+import SubmitTaskDetail from './SubmitTaskDetail';
 
 const NoticeDetail = () => {
-  const host = 'http://localhost:3000';
+  const host = 'http://localhost:5000';
   const location = useLocation();
   const navigate = useNavigate();
   const { task } = location.state || {}; //location.state로 부터 task 데이터를 가져옴
@@ -28,30 +29,8 @@ const NoticeDetail = () => {
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
   };
-  // 과제 제출상태 확인 및 get
-  useEffect(() => {
-    const fetchSubmitTask = async () => {
-      try {
-        const response = await axios.get(
-          `/storage/submitTask/${taskId.taskId}`,
-          {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        if (response.data.success) {
-          setSubmitTask(response.data.submitTask);
-        }
-      } catch (error) {
-        console.error('과제 제출 내역을 가져오는 중 오류 발생:', error);
-      }
-    };
-    fetchSubmitTask();
-  }, [taskId]);
 
-  // 과제 삭제
+  // 과제 삭제(방장)
   const handleDeleteTask = async () => {
     try {
       const response = await axios.get(`/storage/deleteTask/${taskId.taskId}`, {
@@ -126,20 +105,15 @@ const NoticeDetail = () => {
           hoverColor="#D2625D"
         />
       </div>
-
       {/* 과제 제출 영역 */}
       <div className="submit-title">Submit</div>
       <Divider color="#000000" height={'2px'} margin={'10px'} />
       <div className="submit-container">
-        <SubmitTask />
+        <SubmitTask submitTasks={task.SubmitTasks} />
+        <SubmitTaskDetail submitTasks={task.SubmitTasks} />
       </div>
+
       <div className="buttonsArea">
-        <Button
-          name="제출"
-          color="#E86161"
-          // onClick={handleDeleteTask}
-          hoverColor="#D2625D"
-        />
         <Button
           name="목록"
           color="#D9D9D9"

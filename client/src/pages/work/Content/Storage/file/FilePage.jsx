@@ -91,6 +91,7 @@ const FilePage = () => {
         ) : (
           <></>
         )}
+        <Button name={'파일추가'} />
       </div>
     </>
   );

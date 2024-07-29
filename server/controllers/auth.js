@@ -54,7 +54,23 @@ exports.login = (req, res, next) => {
             return res.status(200).json({
                 success: true,
                 message: '로그인 성공',
-                user
+                user: {
+                    id: user.id,
+                    uId: user.uId,
+                    uEmail: user.uEmail,
+                    uName: user.uName,
+                    uNumber: user.uNumber,
+                    uBirth: user.uBirth,
+                    uSex: user.uSex,
+                    provider: user.provider,
+                    snsId: user.snsId,
+                    uType: user.uType,
+                    uLevel: user.uLevel,
+                    profileImage: user.profileImage,
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt,
+                    deletedAt: user.deletedAt
+                },
             });
         })
     })(req, res, next);

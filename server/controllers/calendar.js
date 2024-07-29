@@ -77,8 +77,9 @@ exports.updateSchedule = async (req, res, next) => {
 
 
 exports.getAllScheduleData = async(req, res, next) => {
+    const boardId = req.params.id;
     try {
-        const schedules = await Schedule.findAll({ where: { userId: userId }});
+        const schedules = await Schedule.findAll({ where: { boardId: boardId }});
         if (schedules.length === 0) {
             return res.status(200).json({ message: '스케줄 없습니다.' });
         }
@@ -91,12 +92,14 @@ exports.getAllScheduleData = async(req, res, next) => {
 
 exports.getScheduleData = async(req, res, next) => {
     const { date } = req.query;
+    const boardId = req.params.id;
     if (!date) {
         return res.status(400).json({ error: '날짜를 입력해주세요.' });
     }
     try {
         const schedules = await Schedule.findAll({
             where: {
+                boardId: boardId,
                 [Op.or]: [
                     {
                         startDate: date

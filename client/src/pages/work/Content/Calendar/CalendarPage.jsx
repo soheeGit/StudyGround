@@ -1,40 +1,78 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import WorkHeader from '../../WorkHeader';
 import './CalendarPage.css';
 import { Button } from '../../Component/Button';
 import axios from 'axios';
 import AddSchedule from './AddSchedule';
-import { useOutletContext } from 'react-router-dom';
+import { Outlet, useOutletContext } from 'react-router-dom';
+import ScheduleDetail from './ScheduleDetail';
 
-const CalendarPage = ({
-  selectedDay,
-  setSelectedDay,
-  isPrevMonth,
-  isNextMonth,
-}) => {
+const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
   const { boardId } = useOutletContext();
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat'];
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  console.log({ boardId });
+
+  // 선택된 스케줄 data
+  const [selectedDay, setSelectedDay] = useState();
+  const onClickDay = (day) => {
+    if (isSameDay(day, selectedDay)) {
+      setSelectedDay(null);
+    } else {
+      setSelectedDay(day);
+    }
+  };
+
+  // 스케줄 데이터 get
+  const [schedules, setSchedules] = useState([]);
+  const fetchSchedules = async () => {
+    try {
+      const response = await axios.get(`/calendar/allSchedule/${boardId}`, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setSchedules(response.data);
+    } catch (error) {
+      console.error('스케줄 데이터를 가져오는 중 오류 발생:', error);
+    }
+    console.log(schedules);
+  };
+  useEffect(() => {
+    fetchSchedules();
+  }, []);
 
   // 일정 추가 모달 state
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({
-    title: '',
-    startDate: '',
-    endDate: '',
-    startTime: '',
-    endTime: '',
-    fullTime: false,
-    color: '',
-    url: '',
-    memo: '',
-  });
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // 선택한 날짜와 오
+  // 특정 날짜에 해당하는 스케줄을 반환
+  const getScheduleForDay = (day) => {
+    if (schedules.length > 0) {
+      return schedules.filter((schedule) => {
+        const scheduleDate = new Date(schedule.startDate);
+        return isSameDay(scheduleDate, day);
+      });
+    }
+    return [];
+  };
+
   const isSameDay = (toDay, compareDay) => {
     if (
       toDay.getFullYear() === compareDay?.getFullYear() &&
@@ -44,13 +82,6 @@ const CalendarPage = ({
       return true;
     }
     return false;
-  };
-  const onClickDay = (day) => {
-    if (isSameDay(day, selectedDay)) {
-      setSelectedDay(null);
-    } else {
-      setSelectedDay(day);
-    }
   };
 
   // 달력 다음 달, 저번 달 버튼
@@ -136,34 +167,40 @@ const CalendarPage = ({
 
   const buildCalendarTag = (calendarDays) => {
     return calendarDays.map((day, i) => {
+      // 추가된 부분: 특정 날짜에 해당하는 스케줄을 가져옴
+      const schedulesForDay = getScheduleForDay(day);
+
+      let className = '';
       if (day.getMonth() < currentMonth.getMonth()) {
-        return (
-          <td key={i} className="prevMonthDay">
-            {isPrevMonth ? day.getDate() : ''}
-          </td>
-        );
+        className = 'prevMonthDay';
+      } else if (day.getMonth() > currentMonth.getMonth()) {
+        className = 'nextMonthDay';
+      } else if (day < today) {
+        className = 'prevDay';
+      } else {
+        className = 'futureDay';
       }
-      if (day.getMonth() > currentMonth.getMonth()) {
-        return (
-          <td key={i} className="nextMonthDay">
-            {isNextMonth ? day.getDate() : ''}
-          </td>
-        );
-      }
-      if (day < today) {
-        return (
-          <td key={i} className="prevDay">
-            {day.getDate()}
-          </td>
-        );
-      }
+
       return (
         <td
           key={i}
-          className={`futureDay ${isSameDay(day, selectedDay) && 'choiceDay'}`}
+          className={`${className} ${
+            isSameDay(day, selectedDay) && 'choiceDay'
+          }`}
           onClick={() => onClickDay(day)}
         >
-          {day.getDate()}
+          <div className="schedule-content-wrapper">
+            <div className="schedule-content-day">{day.getDate()}</div>
+            {schedulesForDay.map((schedule, index) => (
+              <div
+                key={index}
+                className="schedule"
+                style={{ backgroundColor: schedule.color }}
+              >
+                {schedule.title}
+              </div>
+            ))}
+          </div>
         </td>
       );
     });
@@ -181,79 +218,61 @@ const CalendarPage = ({
   const calendarTags = buildCalendarTag(calendarDays);
   const calendarRows = divideWeek(calendarTags);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    console.log(formData);
-    try {
-      const response = await axios.post(
-        `/calendar/submitSchedule/${boardId}`,
-        formData
-      );
-      if (response.data.success) {
-        alert('Schedule added successfully');
-        setShowModal(false);
-        setFormData({
-          title: '',
-          startDate: '',
-          endDate: '',
-          startTime: '',
-          endTime: '',
-          fullTime: false,
-          color: '',
-          url: '',
-          memo: '',
-        });
-      }
-    } catch (error) {
-      console.error('Error adding schedule:', error);
-      alert('Error adding schedule');
-    }
-  };
-
+  // 선택한 날짜에 해당하는 스케줄
+  const schedulesForSelectedDay = selectedDay
+    ? getScheduleForDay(selectedDay)
+    : [];
   return (
     <>
       <WorkHeader title={'Calendar'} />
       <div className="year-box">{currentMonth.getFullYear()}</div>
       <Button name={'일정추가'} onClick={() => setShowModal(true)} />
-      <div className="calendar-container">
-        <div className="calendar-header">
-          <Button name="이전 달" onClick={prevCalendar} />
-          <div className="calendar-header-title">
-            <div className="calendar-month-num">
-              {currentMonth.getMonth() + 1}
+      <div className="calendar-wrap">
+        <div className="calendar-container">
+          <div className="calendar-header">
+            <Button name="이전 달" onClick={prevCalendar} />
+            <div className="calendar-header-title">
+              <div className="calendar-month-num">
+                {currentMonth.getMonth() + 1}
+              </div>
+              <div className="calendar-month-en">
+                {monthNames[currentMonth.getMonth()]}
+              </div>
             </div>
-            <div className="calendar-month-en">March</div>
+            <Button name="다음 달" onClick={nextCalendar} />
           </div>
-          <Button name="다음 달" onClick={nextCalendar} />
-        </div>
-        <table className="claendar-table">
-          <thead>
-            <tr>
-              {daysOfWeek.map((day, i) => (
-                <th key={i} data-testid="calendarHead">
-                  {day}
-                </th>
-              ))}{' '}
-            </tr>
-          </thead>
-          <tbody className="calendar-body">
-            {calendarRows.map((row, i) => (
-              <tr key={i} id="calendar-week">
-                {row}
+          <table className="claendar-table">
+            <thead>
+              <tr>
+                {daysOfWeek.map((day, i) => (
+                  <th key={i} data-testid="calendarHead">
+                    {day}
+                  </th>
+                ))}{' '}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="calendar-body">
+              {calendarRows.map((row, i) => (
+                <tr key={i} id="calendar-week">
+                  {row}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <ScheduleDetail
+          schedulesForDay={schedulesForSelectedDay}
+          selectedDay={selectedDay}
+          monthNames={monthNames}
+          fetchSchedules={fetchSchedules}
+        />
       </div>
       <AddSchedule
         show={showModal}
         onClose={() => setShowModal(false)}
-      ></AddSchedule>
+        boardId={boardId}
+        fetchSchedules={fetchSchedules}
+      />
     </>
   );
 };
