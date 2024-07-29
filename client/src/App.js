@@ -18,7 +18,7 @@ import DashBoard from './pages/work/Content/Dashboard/DashBoard';
 import Video from './pages/work/Content/Video/Video';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
-import Autho from './pages/work/Content/Approve/Autho';
+import Autho from './pages/work/Content/Approve/Autho copy'; //임시 변경
 // Storage
 import Memo from './pages/work/Content/Storage/Memo';
 import TaskPage from './pages/work/Content/Storage/task/TaskPage';
@@ -42,7 +42,7 @@ function App() {
           <Route path="/JoinupForm" element={<JoinupForm2 />} />
           <Route path="/Test" element={<Test />} />
           <Route path="/LoginAfter" element={<LoginAfter />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Autho />} />
           <Route path="/Sidebar" element={<Sidebar />} />
           <Route path="/add-study" element={<AddStudyForm />} />
           <Route path="/boardList" element={<BoardList />} />
@@ -69,7 +69,6 @@ function App() {
               <Route path=":taskId" element={<TaskDetail />} />
               <Route path=":taskId/update" element={<UpdateTask />} />
             </Route>
-            <Route path="autho" element={<Autho />} />
           </Route>
         </Routes>
       </div>
@@ -78,3 +77,5 @@ function App() {
 }
 
 export default App;
+
+// 45번째 줄도 임시변경

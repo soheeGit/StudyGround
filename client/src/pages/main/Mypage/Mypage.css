@@ -76,3 +76,12 @@
   margin-right: 10px;
   border: 1px solid black;
 }
+
+.mydelete {
+  background-color: rgb(246, 246, 246);
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #cfcfcf;
+  margin-top: 30px;
+}

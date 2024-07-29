@@ -30,7 +30,7 @@ const Mypagemodify = () => {
       });
 
       const result = await response.json();
-      console.log('Image upload response:', result); // Log the server response
+      console.log('Image upload response:', result);
       if (result.url) {
         setProfileImage(result.url);
         console.log('Profile image updated successfully:', result.url);
@@ -64,7 +64,7 @@ const Mypagemodify = () => {
         navigate('/Mypage');
       } else {
         console.error('Profile update failed');
-        alert('프로필이 업데이트 실패했습니다..');
+        alert('프로필 업데이트에 실패했습니다.');
       }
     } catch (error) {
       console.error('Error updating profile:', error);

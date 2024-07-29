@@ -14,7 +14,9 @@ const Mypage = () => {
   const navigate = useNavigate();
   const userData = useUserData();
   const [boardData, setBoardData] = useState([]);
+  const [reviewData, setReviewData] = useState([]);
 
+  // 내 활동보기
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
@@ -35,11 +37,54 @@ const Mypage = () => {
       }
     };
 
+    // 내 리뷰 확인
+    const fetchReviewData = async () => {
+      try {
+        const response = await fetch('/profile/myReviewData', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          setReviewData(result.reviewResult);
+        } else {
+          alert(result.message || '내 리뷰 확인 오류');
+        }
+      } catch (error) {
+        alert('내 리뷰 확인 오류: ' + error.message);
+      }
+    };
+
     fetchBoardData();
+    fetchReviewData();
   }, []);
 
+  // 프로필 편집
   const handleEditProfileClick = () => {
     navigate('/Mypagemodify');
+  };
+
+  // 탈퇴하기
+  const handleDeleteUserClick = async () => {
+    try {
+      const response = await fetch('/profile/deleteUser', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(result.message);
+        navigate('/#');
+      } else {
+        alert(result.message || '회원 탈퇴 오류');
+      }
+    } catch (error) {
+      alert('회원 탈퇴 오류: ' + error.message);
+    }
   };
 
   return (
@@ -87,22 +132,37 @@ const Mypage = () => {
         )}
 
         <div className="mypage_activities">내 활동</div>
-        <div className="activity">
-          <div className="review-left">
-            <img
-              src="{review.image}"
-              className="review-profile-image"
-              alt="Profile"
-            />
-            <p>이름</p>
-          </div>
-
-          <div className="review-right">
-            <p>⭐ (별 점수 3.0/5.0)</p>
-            <div className="review-tags">
-              <span className="review-tag">praise</span>
+        {reviewData.length > 0 ? (
+          reviewData.map((board) => (
+            <div className="activity" key={board.boardId}>
+              <h3>{board.boardName}</h3>
+              <p>평균 평점: {board.averageRating.toFixed(1)}</p>
+              <div className="reviews">
+                {board.reviews.map((review, index) => (
+                  <div key={index} className="review">
+                    <p>⭐ {review.rating.toFixed(1)} / 5.0</p>
+                    <p>{review.content}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="praises">
+                <h4>칭찬:</h4>
+                {board.praises.map((praise, index) => (
+                  <span key={index} className="praise-tag">
+                    {praise}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          ))
+        ) : (
+          <p>내 활동이 없습니다.</p>
+        )}
+
+        <div className="mydeleteuser">
+          <button className="mydelete" onClick={handleDeleteUserClick}>
+            탈퇴하기
+          </button>
         </div>
       </div>
     </>

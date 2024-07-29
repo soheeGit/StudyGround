@@ -42,11 +42,19 @@ function Test() {
           <tbody>
             {data.map((item, index) => (
               <tr key={item.title} className={`row-${index} table-row`}>
-                <td style={{ textAlign: 'center', width: '150px' }}>
+                <td
+                  className="Joinup-form-wrap"
+                  style={{ textAlign: 'center', width: '150px' }}
+                >
                   {item.title}
                 </td>
-                <td style={{ width: '600px' }}>{item.name}</td>
-                <td style={{ textAlign: 'center', width: '100px' }}>
+                <td className="Joinup-form-wrap" style={{ width: '600px' }}>
+                  {item.name}
+                </td>
+                <td
+                  className="Joinup-form-wrap"
+                  style={{ textAlign: 'center', width: '100px' }}
+                >
                   <input
                     type="checkbox"
                     checked={selectedRow === item.title}

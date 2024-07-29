@@ -1,36 +1,36 @@
-.Text-Column{
-    width: 60%;
-    margin-top: 50px;
-    margin-left: 340px;
+.Text-Column {
+  width: 60%;
+  margin-top: 50px;
+  margin-left: 340px;
 }
 
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
-   
-th, td {
-    border: 1px solid #dddddd;
-    padding: 8px;
-    text-align: center;
+
+.Joinup-form-wrap th,
+td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: center;
 }
 
 .table-row {
   display: block;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   width: 800px;
-  
 }
 
-.Test-button button{
+.Test-button button {
   padding: 10px;
-  background-color: #5CAD73;
+  background-color: #5cad73;
   color: #fff;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   width: 15%;
-  display: inline-block; 
-}  
+  display: inline-block;
+}
 
 .Test-button {
   text-align: center;
@@ -39,72 +39,70 @@ th, td {
 }
 
 .row-0 {
-  background-color: #FFE9E9; 
+  background-color: #ffe9e9;
 }
 
 .row-1 {
-  background-color: #FFF3E9; 
+  background-color: #fff3e9;
 }
 
 .row-2 {
-  background-color: #FFFFE9;
+  background-color: #ffffe9;
 }
 
 .row-3 {
-  background-color: #E9FFE9; 
+  background-color: #e9ffe9;
 }
 
 .row-4 {
-  background-color: #E9FFF8; 
+  background-color: #e9fff8;
 }
 
 .row-5 {
-  background-color: #E9F4FF;
+  background-color: #e9f4ff;
 }
 
 .row-6 {
-  background-color: #ECE9FF; 
+  background-color: #ece9ff;
 }
 
 .row-7 {
-  background-color: #FFE9FE;
+  background-color: #ffe9fe;
 }
 
 .row-8 {
-  background-color: #FFE9E9;
+  background-color: #ffe9e9;
 }
 
-.text-top{
+.text-top {
   width: 580px;
   height: 95px;
-  background-color: #E8FFEE;
+  background-color: #e8ffee;
   text-align: center;
   padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 80px;
   border-radius: 10px;
-  border: 1px solid #8A8A8A;
+  border: 1px solid #8a8a8a;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: 18px;
   height: 18px;
-
 }
 
-
-.nickname, .personality {
+.nickname,
+.personality {
   width: 150px;
   text-align: center;
-
 }
 
-.personality{
+.personality {
   margin-left: 360px;
   margin-bottom: 12px;
 }
 
-.nickname{
+.nickname {
   margin-bottom: -21px;
 }
