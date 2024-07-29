@@ -1,5 +1,5 @@
 // AddSchedule.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AddSchedule.css';
 import { Button } from '../../Component/Button';
 import MyModal from '../../Component/MyModal';
@@ -11,13 +11,31 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
     title: '',
     startDate: '',
     endDate: '',
-    startTime: '',
-    endTime: '',
+    startTime: '00:00',
+    endTime: '00:00',
     fullTime: false,
     color: '',
     url: '',
     memo: '',
   });
+
+  // 모달창 close시 formData 초기화
+  useEffect(() => {
+    if (!show) {
+      setFormData({
+        title: '',
+        startDate: '',
+        endDate: '',
+        startTime: '00:00',
+        endTime: '00:00',
+        fullTime: false,
+        color: '',
+        url: '',
+        memo: '',
+      });
+    }
+  }, [show]);
+
   const handleColorChange = (color) => {
     setFormData({ ...formData, color });
   };
@@ -27,9 +45,41 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
     setFormData({ ...formData, [name]: inputValue });
   };
 
+  useEffect(() => {
+    if (!formData.fullTime) {
+      setFormData((prevState) => ({
+        ...prevState,
+        startTime: '00:00',
+        endTime: '00:00',
+      }));
+    }
+  }, [formData.fullTime]);
+
+  // 유효성 검사
+  const validateFormData = () => {
+    const { startDate, endDate, startTime, endTime, color } = formData;
+    if (!color) {
+      return '색상을 선택하세요.';
+    }
+    if (new Date(startDate) > new Date(endDate)) {
+      return '시작 날짜는 종료 날짜보다 빠르거나 같아야 합니다.';
+    }
+    if (startDate === endDate && startTime > endTime) {
+      return '시작 시간은 종료 시간보다 빠르거나 같아야 합니다.';
+    }
+    return null;
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    // 유효성 검사 실행
+    const validationError = validateFormData();
+    if (validationError) {
+      alert(validationError);
+      return;
+    }
+
     const dataToSubmit = {
       ...formData,
       fullTime: formData.fullTime ? 'true' : 'false', // Ensure boolean is converted to string
@@ -47,8 +97,8 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
           title: '',
           startDate: '',
           endDate: '',
-          startTime: '',
-          endTime: '',
+          startTime: '00:00',
+          endTime: '00:00',
           fullTime: 'false',
           color: '',
           url: '',
@@ -85,7 +135,7 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
           </div>
           <div className="addschedule-startD">
             <div className="addschedule-startD-date">
-              <label>Start Date:</label>
+              <label>시작 날짜 </label>
               <input
                 type="date"
                 name="startDate"
@@ -94,21 +144,23 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
                 required
               />
             </div>
-            <div className="addschedule-startD-time">
-              <div>
-                <label>Start Time:</label>
-                <input
-                  type="time"
-                  name="startTime"
-                  value={formData.startTime}
-                  onChange={handleInputChange}
-                />
+            {formData.fullTime && (
+              <div className="addschedule-startD-time">
+                <div>
+                  <label>시작 시간 </label>
+                  <input
+                    type="time"
+                    name="startTime"
+                    value={formData.startTime}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="addschedule-startD">
             <div className="addschedule-startD-date">
-              <label>End Date:</label>
+              <label>종료 날짜 </label>
               <input
                 type="date"
                 name="endDate"
@@ -117,20 +169,22 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
                 required
               />
             </div>
-            <div className="addschedule-startD-time">
-              <div>
-                <label>End Time:</label>
-                <input
-                  type="time"
-                  name="endTime"
-                  value={formData.endTime}
-                  onChange={handleInputChange}
-                />
+            {formData.fullTime && (
+              <div className="addschedule-startD-time">
+                <div>
+                  <label>종료 시간 </label>
+                  <input
+                    type="time"
+                    name="endTime"
+                    value={formData.endTime}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div>
-            <label>Full Day:</label>
+            <label>시간 설정 </label>
             <input
               type="checkbox"
               name="fullTime"
@@ -140,7 +194,7 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
               }
             />
           </div>
-          <div className="addschedule-url">
+          {/* <div className="addschedule-url">
             <label>URL:</label>
             <input
               type="url"
@@ -148,16 +202,18 @@ const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
               value={formData.url}
               onChange={handleInputChange}
             />
-          </div>
+          </div> */}
           <div className="addschedule-memo">
-            <label>Memo:</label>
+            <label>메모 </label>
             <textarea
               name="memo"
               value={formData.memo}
               onChange={handleInputChange}
             ></textarea>
           </div>
-          <Button type="submit" name="Submit" />
+          <div className="addSchedule-submit-button">
+            <Button type="submit" name="Submit" />
+          </div>
         </div>
       </form>
     </MyModal>

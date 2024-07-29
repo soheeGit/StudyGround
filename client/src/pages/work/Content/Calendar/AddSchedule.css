@@ -63,3 +63,12 @@
 .addschedule-startD-time {
   width: 50%;
 }
+.addschedule-memo textarea {
+  width: 100%;
+  height: 100px;
+}
+.addSchedule-submit-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
