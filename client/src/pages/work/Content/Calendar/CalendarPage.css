@@ -8,11 +8,10 @@
   display: flex;
 }
 .calendar-container {
-  width: 50%;
+  width: 60%;
   height: 80vh;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   border: solid 2px;
@@ -42,23 +41,30 @@
 
 /* table body */
 .claendar-table {
+  width: 100%;
   flex-grow: 1;
   margin-top: 20px;
+  table-layout: fixed; /* Fix table layout */
 }
 .prevMonthDay,
-.prevDay {
+.nextMonthDay {
+  opacity: 0.2;
 }
 
 .calendar-body td {
   position: relative;
-  width: 14.28%; /* 7 columns, each column is 1/7 of the table width */
+  width: 100px; /* 7 columns, each column is 1/7 of the table width */
   height: 100px; /* You can adjust the height as needed */
   vertical-align: top;
 }
-.calendar-body td div {
-  overflow-y: auto;
-  max-height: 100px; /* Same as the height of td */
+.calendar-body td .schedule-content-wrapper {
+  width: 100%;
+  height: 100%; /* Make the content wrapper fill the cell */
+  overflow-y: auto; /* Add vertical scroll when content overflows */
+  overflow-x: hidden;
+  cursor: pointer;
 }
+
 .schedule {
   margin-top: 2px;
   padding: 2px;
@@ -68,4 +74,18 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   border-radius: 5px;
+}
+
+/* 토요일, 일요일 색상 설정 */
+.claendar-table th:nth-child(1),
+.calendar-body tr td:nth-child(1) .schedule-content-day {
+  color: red;
+}
+.claendar-table th:nth-child(7),
+.calendar-body tr td:nth-child(7) .schedule-content-day {
+  color: blue;
+}
+
+.calendar-body tr td .schedule-content-day {
+  font-weight: 600;
 }

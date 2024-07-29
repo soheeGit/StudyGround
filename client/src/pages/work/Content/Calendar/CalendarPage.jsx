@@ -7,15 +7,34 @@ import AddSchedule from './AddSchedule';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import ScheduleDetail from './ScheduleDetail';
 
-const CalendarPage = ({
-  selectedDay,
-  setSelectedDay,
-  isPrevMonth,
-  isNextMonth,
-}) => {
+const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
   const { boardId } = useOutletContext();
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat'];
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  // 선택된 스케줄 data
+  const [selectedDay, setSelectedDay] = useState();
+  const onClickDay = (day) => {
+    if (isSameDay(day, selectedDay)) {
+      setSelectedDay(null);
+    } else {
+      setSelectedDay(day);
+    }
+  };
 
   // 스케줄 데이터 get
   const [schedules, setSchedules] = useState([]);
@@ -31,11 +50,11 @@ const CalendarPage = ({
     } catch (error) {
       console.error('스케줄 데이터를 가져오는 중 오류 발생:', error);
     }
+    console.log(schedules);
   };
   useEffect(() => {
     fetchSchedules();
-    console.log(schedules);
-  }, [boardId]);
+  }, []);
 
   // 일정 추가 모달 state
   const [showModal, setShowModal] = useState(false);
@@ -43,15 +62,17 @@ const CalendarPage = ({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // 새로 추가된 함수: 특정 날짜에 해당하는 스케줄을 반환
+  // 특정 날짜에 해당하는 스케줄을 반환
   const getScheduleForDay = (day) => {
-    return schedules.filter((schedule) => {
-      const scheduleDate = new Date(schedule.startDate);
-      return isSameDay(scheduleDate, day);
-    });
+    if (schedules.length > 0) {
+      return schedules.filter((schedule) => {
+        const scheduleDate = new Date(schedule.startDate);
+        return isSameDay(scheduleDate, day);
+      });
+    }
+    return [];
   };
 
-  // 선택한 날짜와 오
   const isSameDay = (toDay, compareDay) => {
     if (
       toDay.getFullYear() === compareDay?.getFullYear() &&
@@ -61,13 +82,6 @@ const CalendarPage = ({
       return true;
     }
     return false;
-  };
-  const onClickDay = (day) => {
-    if (isSameDay(day, selectedDay)) {
-      setSelectedDay(null);
-    } else {
-      setSelectedDay(day);
-    }
   };
 
   // 달력 다음 달, 저번 달 버튼
@@ -155,44 +169,38 @@ const CalendarPage = ({
     return calendarDays.map((day, i) => {
       // 추가된 부분: 특정 날짜에 해당하는 스케줄을 가져옴
       const schedulesForDay = getScheduleForDay(day);
+
+      let className = '';
       if (day.getMonth() < currentMonth.getMonth()) {
-        return (
-          <td key={i} className="prevMonthDay">
-            {isPrevMonth ? day.getDate() : ''}
-          </td>
-        );
+        className = 'prevMonthDay';
+      } else if (day.getMonth() > currentMonth.getMonth()) {
+        className = 'nextMonthDay';
+      } else if (day < today) {
+        className = 'prevDay';
+      } else {
+        className = 'futureDay';
       }
-      if (day.getMonth() > currentMonth.getMonth()) {
-        return (
-          <td key={i} className="nextMonthDay">
-            {isNextMonth ? day.getDate() : ''}
-          </td>
-        );
-      }
-      if (day < today) {
-        return (
-          <td key={i} className="prevDay">
-            {day.getDate()}
-          </td>
-        );
-      }
+
       return (
         <td
           key={i}
-          className={`futureDay ${isSameDay(day, selectedDay) && 'choiceDay'}`}
+          className={`${className} ${
+            isSameDay(day, selectedDay) && 'choiceDay'
+          }`}
           onClick={() => onClickDay(day)}
         >
-          <div>{day.getDate()}</div>
-          {/* 특정 날짜에 해당하는 스케줄을 렌더링 */}
-          {schedulesForDay.map((schedule, idx) => (
-            <div
-              key={idx}
-              className="schedule"
-              style={{ backgroundColor: schedule.color }}
-            >
-              {schedule.title}
-            </div>
-          ))}
+          <div className="schedule-content-wrapper">
+            <div className="schedule-content-day">{day.getDate()}</div>
+            {schedulesForDay.map((schedule, index) => (
+              <div
+                key={index}
+                className="schedule"
+                style={{ backgroundColor: schedule.color }}
+              >
+                {schedule.title}
+              </div>
+            ))}
+          </div>
         </td>
       );
     });
@@ -209,6 +217,7 @@ const CalendarPage = ({
   const calendarDays = buildCalendarDays();
   const calendarTags = buildCalendarTag(calendarDays);
   const calendarRows = divideWeek(calendarTags);
+
   // 선택한 날짜에 해당하는 스케줄
   const schedulesForSelectedDay = selectedDay
     ? getScheduleForDay(selectedDay)
@@ -226,7 +235,9 @@ const CalendarPage = ({
               <div className="calendar-month-num">
                 {currentMonth.getMonth() + 1}
               </div>
-              <div className="calendar-month-en">March</div>
+              <div className="calendar-month-en">
+                {monthNames[currentMonth.getMonth()]}
+              </div>
             </div>
             <Button name="다음 달" onClick={nextCalendar} />
           </div>
@@ -249,12 +260,18 @@ const CalendarPage = ({
             </tbody>
           </table>
         </div>
-        <ScheduleDetail schedulesForDay={schedulesForSelectedDay} />
+        <ScheduleDetail
+          schedulesForDay={schedulesForSelectedDay}
+          selectedDay={selectedDay}
+          monthNames={monthNames}
+          fetchSchedules={fetchSchedules}
+        />
       </div>
       <AddSchedule
         show={showModal}
         onClose={() => setShowModal(false)}
         boardId={boardId}
+        fetchSchedules={fetchSchedules}
       />
     </>
   );

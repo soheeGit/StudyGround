@@ -6,7 +6,7 @@ import MyModal from '../../Component/MyModal';
 import ColorPicker from './ColorPicker';
 import axios from 'axios';
 
-const AddSchedule = ({ show, onClose, boardId }) => {
+const AddSchedule = ({ show, onClose, boardId, fetchSchedules }) => {
   const [formData, setFormData] = useState({
     title: '',
     startDate: '',
@@ -41,6 +41,7 @@ const AddSchedule = ({ show, onClose, boardId }) => {
       );
       if (response.data.success) {
         alert('Schedule added successfully');
+        fetchSchedules();
         onClose(false);
         setFormData({
           title: '',
