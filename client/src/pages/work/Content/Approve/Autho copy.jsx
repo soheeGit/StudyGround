@@ -30,8 +30,8 @@ const Autho = () => {
           <div className="autho-header-container">
             <div className="autho-header-left">
               <div className="study-header">
-                <span id="span1"></span> {/* data */}
-                <span id="span2">/</span>
+                <span id="span1">스터디 이름</span> {/* data */}
+                <span id="span2">현재 인원수/</span>
                 {/* data */}
               </div>
               <span className="study-date">2024.04.10</span>

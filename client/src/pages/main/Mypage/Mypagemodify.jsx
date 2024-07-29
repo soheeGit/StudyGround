@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../work/sidebar/Sidebar';
 import useUserData from './useUserData';
 import './Mypagemodify.css';
@@ -11,6 +11,19 @@ const Mypagemodify = () => {
   const [uType, setUType] = useState(userData.uType || '');
   const [profileImage, setProfileImage] = useState(userData.profileImage || '');
   const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+
+  useEffect(() => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPreview(null);
+    }
+  }, [file]);
 
   const handleNameChange = (e) => setUName(e.target.value);
   const handleTypeChange = (e) => setUType(e.target.value);
@@ -43,6 +56,8 @@ const Mypagemodify = () => {
   };
 
   const handleSubmit = async () => {
+    await handleImageUpload(); // Ensure image upload is complete before submitting
+
     try {
       const response = await fetch('/profile/updateProfile', {
         method: 'POST',
@@ -79,7 +94,7 @@ const Mypagemodify = () => {
         <div className="mpm_info">
           <div className="mpm_profile">
             <img
-              src={profileImage || 'default_profile_image_url'}
+              src={preview || profileImage || 'default_profile_image_url'}
               alt="Profile"
               className="mpm_profile_image"
             />
@@ -118,10 +133,6 @@ const Mypagemodify = () => {
           <div className="profile_nickname_edit">
             프로필 사진
             <input type="file" onChange={handleFileChange} />
-            <button className="myprofile_edit" onClick={handleImageUpload}>
-              편집
-            </button>
-            <button className="myprofile_delete">삭제</button>
           </div>
 
           <button className="mypage_edit" onClick={handleSubmit}>
