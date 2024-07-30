@@ -15,6 +15,7 @@ const Mypage = () => {
   const userData = useUserData();
   const [boardData, setBoardData] = useState([]);
   const [reviewData, setReviewData] = useState([]);
+  const [ongoingActivities, setOngoingActivities] = useState([]);
 
   // 내 활동보기
   useEffect(() => {
@@ -57,8 +58,29 @@ const Mypage = () => {
       }
     };
 
+    // Fetch ongoing activities
+    // const fetchOngoingActivities = async () => {
+    //   try {
+    //     const response = await fetch('/api/acceptBoardEnter/:id', {
+    //       method: 'GET',
+    //       credentials: 'include',
+    //     });
+
+    //     const result = await response.json();
+
+    //     if (response.ok) {
+    //       setOngoingActivities(result);
+    //     } else {
+    //       alert('진행중인 활동 데이터 불러오기 오류');
+    //     }
+    //   } catch (error) {
+    //     alert('진행중인 활동 데이터 불러오기 오류: ' + error.message);
+    //   }
+    // };
+
     fetchBoardData();
     fetchReviewData();
+    // fetchOngoingActivities();
   }, []);
 
   // 프로필 편집
@@ -113,17 +135,18 @@ const Mypage = () => {
         </div>
 
         <div className="mypage_activities">진행중인 활동</div>
-        {boardData.length > 0 ? (
-          boardData.map((board) => (
-            <div className="activity" key={board.bId}>
+        {ongoingActivities.length > 0 ? (
+          ongoingActivities.map((activity) => (
+            <div className="activity" key={activity.bId}>
               <img
                 src="activity_image_url"
-                alt={board.bName}
+                alt="사진"
                 className="activity_image"
               />
               <p>
-                {board.bName} <br /> {formatDate(board.bStartDate)} ~{' '}
-                {formatDate(board.bClosingDate)}
+                {activity.bName} <br />
+                {formatDate(activity.bStartDate)} ~{' '}
+                {formatDate(activity.bClosingDate)}
               </p>
             </div>
           ))
@@ -158,7 +181,6 @@ const Mypage = () => {
         ) : (
           <p>내 활동이 없습니다.</p>
         )}
-
         <div className="mydeleteuser">
           <button className="mydelete" onClick={handleDeleteUserClick}>
             탈퇴하기

@@ -1,6 +1,10 @@
 .approve-container {
-  margin: 20px 50px 20px 50px;
+  margin-left: 180px;
   padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: calc(100% - 300px);
 }
 
 h1 {
@@ -43,80 +47,52 @@ h1 {
   width: 100%;
 }
 
-.autho-header-right {
-  margin-left: auto;
-}
-
+/*
 .header-participant-container {
   display: flex;
   flex-wrap: wrap;
 }
+*/
+
 #span1 {
   font-weight: bold;
 }
+
 .study-date {
   color: #8a8a8a;
   margin-bottom: 10px;
   display: block;
 }
-
+/*
 .study-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
-
-/* 현재 작업부분 */
-
+*/
 .participant-container {
   display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.participant-box {
-  display: flex;
-  width: 40%;
-  border: 3px solid;
-  padding: 10px;
-  border-radius: 40px;
-  margin-top: 10px;
-  margin-left: 50px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-}
-.participant-box.red {
-  border-color: red;
-}
-.participant-box.orange {
-  border-color: orange;
-}
-.participant-box.yellow {
-  border-color: #fffa8c;
-}
-.participant-box.green {
-  border-color: green;
-}
-.participant-box.blue {
-  border-color: blue;
-}
-.participant-box.navy {
-  border-color: navy;
-}
-.participant-box.purple {
-  border-color: purple;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 20px;
 }
 
 #participant-message {
-  margin-left: 40px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
+
 .participant-info-box {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 70%;
+  border: 3px solid;
   padding: 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+  padding-left: 40px;
+  margin-bottom: 20px;
 }
 
 .participant-info-box1 {
@@ -135,6 +111,7 @@ h1 {
   text-align: center;
   color: #6b6b6b;
 }
+
 .info-content {
   text-align: center;
 }
