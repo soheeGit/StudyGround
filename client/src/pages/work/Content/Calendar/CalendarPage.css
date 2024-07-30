@@ -16,7 +16,11 @@
   margin-right: auto;
   border: solid 2px;
 }
-
+.header-button-continaer {
+  margin-left: 50px;
+  margin-bottom: 10px;
+  display: flex;
+}
 .calendar-container td {
   width: 30px;
   border: solid 1px #ddd;

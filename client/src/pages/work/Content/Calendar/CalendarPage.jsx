@@ -66,8 +66,12 @@ const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
   const getScheduleForDay = (day) => {
     if (schedules.length > 0) {
       return schedules.filter((schedule) => {
-        const scheduleDate = new Date(schedule.startDate);
-        return isSameDay(scheduleDate, day);
+        const startDate = new Date(schedule.startDate);
+        const endDate = new Date(schedule.endDate);
+        // 시간을 제거하고 날짜만 비교
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(0, 0, 0, 0);
+        return day >= startDate && day <= endDate;
       });
     }
     return [];
@@ -226,7 +230,9 @@ const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
     <>
       <WorkHeader title={'Calendar'} />
       <div className="year-box">{currentMonth.getFullYear()}</div>
-      <Button name={'일정추가'} onClick={() => setShowModal(true)} />
+      <div className="header-button-continaer">
+        <Button name={'일정추가'} onClick={() => setShowModal(true)} />
+      </div>
       <div className="calendar-wrap">
         <div className="calendar-container">
           <div className="calendar-header">
@@ -265,6 +271,7 @@ const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
           selectedDay={selectedDay}
           monthNames={monthNames}
           fetchSchedules={fetchSchedules}
+          boardId={boardId}
         />
       </div>
       <AddSchedule
