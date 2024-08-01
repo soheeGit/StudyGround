@@ -107,7 +107,7 @@ const Mid = () => {
             <div className="user-info">
               <div className="info">
                 <div className="count">
-                  {board.currentCount} / {board.bTotalNumber}
+                  {board.bCurrentNumber} / {board.bTotalNumber}
                 </div>
               </div>
               <div className="detail"></div>

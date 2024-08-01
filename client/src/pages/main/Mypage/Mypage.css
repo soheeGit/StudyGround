@@ -1,19 +1,16 @@
-.mypage_wrap {
-  margin-left: 200px;
-  padding: 20px;
-  position: absolute;
-  top: 0;
-  left: 50px;
-  width: calc(100% - 250px);
-}
 .mypage_title,
 .mypage_activities {
   font-size: 20px;
   margin-bottom: 20px;
 }
 
+.work-header-container {
+  margin-right: 100px;
+}
+
 .mypage_info,
-.activity {
+.activity,
+.review_board {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -29,8 +26,7 @@
   margin-left: 30px;
 }
 
-.profile_image,
-.activity_image {
+.profile_image {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -56,32 +52,53 @@
   margin-top: 20px;
 }
 
-.activity {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  border: 1px solid #cfcfcf;
-  padding-left: 40px;
-}
-
 .activity p {
-  margin-left: 16px;
+  margin-left: 40px;
 }
 
-/* 수정 */
-.review-profile-image {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  margin-right: 10px;
-  border: 1px solid black;
-}
-
-.mydelete {
+.mydelete,
+.accrej_study {
   background-color: rgb(246, 246, 246);
   border-radius: 15px;
   padding: 10px 20px;
   cursor: pointer;
   border: 1px solid #cfcfcf;
-  margin-top: 30px;
+  margin: 20px 0;
+}
+
+.review_praises ul {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.review_praises li {
+  background-color: #e4ffdf;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.review_rating {
+  margin-left: 10px;
+}
+
+.review_left {
+  margin-left: 30px;
+  width: 50px;
+}
+
+.review_right {
+  margin-left: 25px;
+}
+
+.toggle-button {
+  padding: 5px 10px;
+  border: none;
+  color: #434343;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 500px;
 }

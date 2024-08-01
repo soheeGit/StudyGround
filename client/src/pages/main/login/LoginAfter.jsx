@@ -35,7 +35,9 @@ const LoginAfter = () => {
             About
           </Link>
         </div>
-        <WorkHeader />
+        <div className="addWorkHeader">
+          <WorkHeader />
+        </div>
       </div>
       <div className="divider"></div>
       <Search />

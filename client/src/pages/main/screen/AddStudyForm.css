@@ -1,9 +1,27 @@
+.addwrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.addlogo {
+  flex: 1;
+  margin-left: 144px;
+}
+
+.addWorkHeader {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .aformContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 100px);
-  margin-top: 80px;
+  margin-top: 100px;
 }
 
 .addstudyform {

@@ -18,7 +18,7 @@ import DashBoard from './pages/work/Content/Dashboard/DashBoard';
 import Video from './pages/work/Content/Video/Video';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
-import Autho from './pages/work/Content/Approve/Autho copy'; //임시 변경
+import Autho from './pages/work/Content/Approve/Autho';
 // Storage
 import Memo from './pages/work/Content/Storage/Memo';
 import TaskPage from './pages/work/Content/Storage/task/TaskPage';
@@ -42,7 +42,7 @@ function App() {
           <Route path="/JoinupForm" element={<JoinupForm2 />} />
           <Route path="/Test" element={<Test />} />
           <Route path="/LoginAfter" element={<LoginAfter />} />
-          <Route path="/profile" element={<Autho />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/Sidebar" element={<Sidebar />} />
           <Route path="/add-study" element={<AddStudyForm />} />
           <Route path="/boardList" element={<BoardList />} />
@@ -50,6 +50,7 @@ function App() {
           <Route path="/evaluation/:boardId" element={<EvaluationTest />} />
           <Route path="Mypage" element={<Mypage />} />
           <Route path="Mypagemodify" element={<Mypagemodify />} />
+          <Route path="/Autho" element={<Autho />} />
           {/* Wokr페이지 라우팅 */}
           <Route path="/work/:boardId" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />

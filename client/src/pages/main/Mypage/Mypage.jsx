@@ -3,92 +3,78 @@ import Sidebar from '../../work/sidebar/Sidebar';
 import './Mypage.css';
 import { useNavigate } from 'react-router-dom';
 import useUserData from './useUserData';
-
-const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-CA', options);
-};
+import WorkHeader from '../../work/WorkHeader';
 
 const Mypage = () => {
   const navigate = useNavigate();
   const userData = useUserData();
-  const [boardData, setBoardData] = useState([]);
+  const [activities, setActivities] = useState([]);
   const [reviewData, setReviewData] = useState([]);
-  const [ongoingActivities, setOngoingActivities] = useState([]);
+  const [showMore, setShowMore] = useState({});
 
-  // 내 활동보기
+  const toggleShowMore = (boardId) => {
+    setShowMore((prev) => ({ ...prev, [boardId]: !prev[boardId] }));
+  };
+
+  // Fetch ongoing activities
   useEffect(() => {
-    const fetchBoardData = async () => {
+    const fetchActivities = async () => {
       try {
         const response = await fetch('/api/myBoard', {
           method: 'GET',
           credentials: 'include',
         });
 
-        const result = await response.json();
-
         if (response.ok) {
-          setBoardData(result);
+          const result = await response.json();
+          setActivities(result);
         } else {
-          alert('활동 데이터 불러오기 오류');
+          console.error('Failed to fetch activities');
         }
       } catch (error) {
-        alert('활동 데이터 불러오기 오류: ' + error.message);
+        console.error('Error fetching activities:', error);
       }
     };
 
-    // 내 리뷰 확인
-    const fetchReviewData = async () => {
+    fetchActivities();
+  }, []);
+
+  // Fetch reviews
+  useEffect(() => {
+    const fetchReviews = async () => {
       try {
         const response = await fetch('/profile/myReviewData', {
           method: 'GET',
           credentials: 'include',
         });
 
-        const result = await response.json();
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result); // Log the response to inspect the data
 
-        if (response.ok && result.success) {
-          setReviewData(result.reviewResult);
+          if (result.success) {
+            setReviewData(result.reviewResult);
+          } else {
+            console.error(result.message || 'Failed to fetch reviews');
+          }
         } else {
-          alert(result.message || '내 리뷰 확인 오류');
+          const errorResult = await response.json();
+          console.error(errorResult.error || 'Error fetching reviews');
         }
       } catch (error) {
-        alert('내 리뷰 확인 오류: ' + error.message);
+        console.error('Error fetching reviews:', error);
       }
     };
 
-    // Fetch ongoing activities
-    // const fetchOngoingActivities = async () => {
-    //   try {
-    //     const response = await fetch('/api/acceptBoardEnter/:id', {
-    //       method: 'GET',
-    //       credentials: 'include',
-    //     });
-
-    //     const result = await response.json();
-
-    //     if (response.ok) {
-    //       setOngoingActivities(result);
-    //     } else {
-    //       alert('진행중인 활동 데이터 불러오기 오류');
-    //     }
-    //   } catch (error) {
-    //     alert('진행중인 활동 데이터 불러오기 오류: ' + error.message);
-    //   }
-    // };
-
-    fetchBoardData();
-    fetchReviewData();
-    // fetchOngoingActivities();
+    fetchReviews();
   }, []);
 
-  // 프로필 편집
+  // Edit profile
   const handleEditProfileClick = () => {
     navigate('/Mypagemodify');
   };
 
-  // 탈퇴하기
+  // Delete user
   const handleDeleteUserClick = async () => {
     try {
       const response = await fetch('/profile/deleteUser', {
@@ -109,10 +95,16 @@ const Mypage = () => {
     }
   };
 
+  // Navigate to study acceptance/rejection page
+  const handleAccrejStudyClick = () => {
+    navigate('/Autho');
+  };
+
   return (
     <>
       <Sidebar />
       <div className="mypage_wrap">
+        <WorkHeader />
         <div className="mypage_title">내 정보</div>
         <div className="mypage_info">
           <div className="profile">
@@ -135,18 +127,14 @@ const Mypage = () => {
         </div>
 
         <div className="mypage_activities">진행중인 활동</div>
-        {ongoingActivities.length > 0 ? (
-          ongoingActivities.map((activity) => (
-            <div className="activity" key={activity.bId}>
-              <img
-                src="activity_image_url"
-                alt="사진"
-                className="activity_image"
-              />
+        {activities.length > 0 ? (
+          activities.map((activity) => (
+            <div key={activity.bId} className="activity">
               <p>
-                {activity.bName} <br />
-                {formatDate(activity.bStartDate)} ~{' '}
-                {formatDate(activity.bClosingDate)}
+                <b>{activity.bName}</b> <br />
+                <br />
+                {new Date(activity.bStartDate).toLocaleDateString()} ~{' '}
+                {new Date(activity.bClosingDate).toLocaleDateString()}
               </p>
             </div>
           ))
@@ -154,33 +142,58 @@ const Mypage = () => {
           <p>진행중인 활동이 없습니다.</p>
         )}
 
-        <div className="mypage_activities">내 활동</div>
+        <div className="studyingbutton">
+          <button className="accrej_study" onClick={handleAccrejStudyClick}>
+            신청 목록
+          </button>
+        </div>
+
+        <div className="mypage_activities">내 리뷰</div>
         {reviewData.length > 0 ? (
           reviewData.map((board) => (
-            <div className="activity" key={board.boardId}>
-              <h3>{board.boardName}</h3>
-              <p>평균 평점: {board.averageRating.toFixed(1)}</p>
-              <div className="reviews">
-                {board.reviews.map((review, index) => (
-                  <div key={index} className="review">
-                    <p>⭐ {review.rating.toFixed(1)} / 5.0</p>
-                    <p>{review.content}</p>
+            <div key={board.boardId} className="review_board">
+              <div className="review_left">{board.boardName}</div>
+              <div className="review_right">
+                <div className="average_rating">
+                  ⭐ {board.averageRating.toFixed(1)} / 5
+                </div>
+
+                {board.praises.length > 0 && (
+                  <div
+                    className={`review_praises ${
+                      showMore[board.boardId] ? 'show-more' : ''
+                    }`}
+                  >
+                    <ul>
+                      {board.praises.map((praise, index) => (
+                        <li key={index}>{praise}</li>
+                      ))}
+                    </ul>
+                    <button
+                      className="toggle-button"
+                      onClick={() => toggleShowMore(board.boardId)}
+                    >
+                      {showMore[board.boardId] ? '접기' : '더보기'}
+                    </button>
                   </div>
-                ))}
-              </div>
-              <div className="praises">
-                <h4>칭찬:</h4>
-                {board.praises.map((praise, index) => (
-                  <span key={index} className="praise-tag">
-                    {praise}
-                  </span>
-                ))}
+                )}
+
+                {showMore[board.boardId] && (
+                  <div className="review_content">
+                    <div className="review_contentname">팀원들의 한줄평</div>
+                    <hr />
+                    {board.reviews.map((review, index) => (
+                      <div key={index}>{review.content}</div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))
         ) : (
-          <p>내 활동이 없습니다.</p>
+          <p>리뷰가 없습니다.</p>
         )}
+
         <div className="mydeleteuser">
           <button className="mydelete" onClick={handleDeleteUserClick}>
             탈퇴하기

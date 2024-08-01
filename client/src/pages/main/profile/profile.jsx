@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './profile.css';
-import ProfileHeader from './ProfileHeader';
+import WorkHeader from '../../work/WorkHeader';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
 
@@ -49,19 +49,23 @@ const Profile = () => {
 
   return (
     <>
-      <div className="logo">
-        <Link to="/LoginAfter" className="logoLink">
-          <img
-            className="logoBox"
-            width="100px"
-            height="85px"
-            src={logo}
-            alt="logo"
-          />
-        </Link>
+      <div className="addwrap">
+        <div className="addlogo">
+          <Link to="/LoginAfter" className="logoLink">
+            <img
+              className="logoBox"
+              width="100px"
+              height="85px"
+              src={logo}
+              alt="logo"
+            />
+          </Link>
+        </div>
+        <div className="addWorkHeader">
+          <WorkHeader />
+        </div>
       </div>
       <div className="divider"></div>
-      <ProfileHeader />
       <div className="review-profile-container">
         <div className="profile-left">
           {reviews.map((review) => (

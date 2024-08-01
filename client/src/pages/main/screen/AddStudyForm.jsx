@@ -66,9 +66,9 @@ const AddStudyForm = () => {
 
   return (
     <>
-      <div className="wrap">
-        <div className="logo">
-          <Link to="/#" className="logoLink">
+      <div className="addwrap">
+        <div className="addlogo">
+          <Link to="/LoginAfter" className="logoLink">
             <img
               className="logoBox"
               width="100px"
@@ -78,7 +78,9 @@ const AddStudyForm = () => {
             />
           </Link>
         </div>
-        <WorkHeader />
+        <div className="addWorkHeader">
+          <WorkHeader />
+        </div>
       </div>
       <div className="divider"></div>
 

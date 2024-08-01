@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import './EvaluationTest.css';
 import WorkHeader from '../../work/WorkHeader';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EvaluationTest = () => {
   const { boardId } = useParams(); // Get boardId from URL parameters
@@ -69,7 +68,7 @@ const EvaluationTest = () => {
       const result = await response.json();
 
       if (response.ok) {
-        setSuccessMessage('리뷰가 성공적으로 저장되었습니다.'); // Set success message
+        setSuccessMessage('리뷰가 성공적으로 저장되었습니다.');
         setErrorMessage('');
         alert('리뷰가 성공적으로 저장되었습니다.');
         navigate('/LoginAfter');
@@ -77,26 +76,30 @@ const EvaluationTest = () => {
         throw new Error(result.error);
       }
     } catch (error) {
-      setSuccessMessage(''); // Clear success message on error
+      setSuccessMessage('');
       setErrorMessage(error.message);
     }
   };
 
   return (
     <>
-      <div className="reviewpglogo">
-        <Link to="/LoginAfter" className="reviewlogoLink">
-          <img
-            className="logoBox"
-            width="100px"
-            height="85px"
-            src={logo}
-            alt="logo"
-          />
-        </Link>
+      <div className="addwrap">
+        <div className="addlogo">
+          <Link to="/LoginAfter" className="logoLink">
+            <img
+              className="logoBox"
+              width="100px"
+              height="85px"
+              src={logo}
+              alt="logo"
+            />
+          </Link>
+        </div>
+        <div className="addWorkHeader">
+          <WorkHeader />
+        </div>
       </div>
       <div className="divider"></div>
-      <WorkHeader />
       <div className="evaluation-container">
         <h1>OPIC study for AL</h1>
         <form onSubmit={handleSubmitForm1}>
