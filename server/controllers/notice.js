@@ -17,9 +17,7 @@ exports.submitNotice = async (req, res, next) => {
   const userId = req.user.id;
   const boardId = req.params.id;
   if (!title || !content) {
-    return res
-      .status(400)
-      .json({ error: '제목과 내용을 모두 입력해야 합니다.' });
+    return res.status(400).json({ error: '제목과 내용을 모두 입력해야 합니다.' });
   }
   try {
     const board = await Board.findOne({ where: { bId: boardId } });
