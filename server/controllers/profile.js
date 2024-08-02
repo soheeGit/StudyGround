@@ -234,7 +234,7 @@ exports.updateProfile = async (req, res) => {
   const userId = req.user.id;
   const { uName, uType } = req.body;
   const profileImage = req.file ? `/uploads/${req.file.filename}` : null;
-  console.log('프로필이미지수정: ', profileImage)
+  console.log('프로필이미지수정: ', req.file)
   try {
     const user = await User.findByPk(userId);
     if (!user) {
@@ -266,6 +266,7 @@ exports.afterUploadImage = (req, res) => {
   }
 
   const imageUrl = `/uploads/${req.file.filename}`;
+  console.log('Image URL:', imageUrl);
   res.json({ url: imageUrl });
 };
 

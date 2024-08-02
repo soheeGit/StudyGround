@@ -33,7 +33,7 @@ const Mypagemodify = () => {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('img', file);
 
     try {
       const response = await fetch('/profile/img', {

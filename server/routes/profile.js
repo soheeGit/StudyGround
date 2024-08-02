@@ -35,7 +35,7 @@ router.get('/otherUserData/:id', isLoggedIn, otherUserData)
 // 다른사람이 받은 칭찬리뷰, 리뷰내용 분리해서 출력
 router.get('/otherReviewData/:id', isLoggedIn, otherReviewData)
 // 내 정보 수정
-router.post('/updateProfile', isLoggedIn, upload.none(), updateProfile)
+router.post('/updateProfile', isLoggedIn, upload.single('img'), updateProfile);
 // 프로필 이미지 업로드 후 미리보기
 router.post('/img', isLoggedIn, upload.single('img'), afterUploadImage)
 // 회원탈퇴
