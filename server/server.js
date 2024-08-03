@@ -9,6 +9,7 @@ const cors = require('cors')
 
 dotenv.config({path: path.join(__dirname, '../.env')});    //process.env 만들어줌
 
+const webSocket = require('./socket');
 const reviewRouter = require('./routes/review')
 const profileRouter = require('./routes/profile')
 const pageRouter = require('./routes/page')
@@ -46,7 +47,7 @@ server.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }));
-server.use(session({
+const sessionMiddleware = session({
     resave: false,
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
@@ -54,8 +55,9 @@ server.use(session({
         httpOnly: true, //자바스크립트에서 접근못하게
         secure: false,  //https 적용할때 true로 바꿔야함
     }
-}));
+});
 
+server.use(sessionMiddleware);
 server.use(passport.initialize())
 server.use(passport.session())
 
@@ -87,6 +89,8 @@ server.use((err, req, res, next) => {
   }
 });
 
-server.listen(server.get('port'), () => {
+const sv = server.listen(server.get('port'), () => {
   console.log(server.get('port'), '번 포트에서 대기 중');
 });
+
+webSocket(sv, server, sessionMiddleware);
