@@ -1,85 +1,48 @@
-.review-profile-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
+.profile-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content horizontally */
+  padding: 20px;
 }
 
-.profile-left {
-    width: 100%;
-    max-width: 640px;
+.profile_board {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
 }
 
-.review-card {
-    border: 1px solid #ccc;
-    margin: 30px 0;
-    padding: 10px;
-    border-radius: 30px;
-    background-color: #fff;
+.profile_left {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 15px;
 }
 
-.review-header {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+.profile_right {
+  display: flex;
+  flex-direction: column;
 }
 
-.review-left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 20px;
+.profile_rating {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 
-.review-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 40px;
+hr {
+  margin: 10px 0;
 }
 
-.review-header h3 {
-    margin: 0;
-}
-
-.review-header p {
-    margin: 5px 0;
-}
-
-.review-tags {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 450px;
-}
-
-.review-tag {
-    background-color: #D2EECD;
-    border-radius: 10px;
-    padding: 5px;
-    margin: 10px 10px 0 0;
-    
-}
-
-.review-button {
-    padding: 5px 10px;
-    border: none;
-    color: #434343;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-left: 540px;
-}
-
-.review-details {
-    margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #ccc;
-    border-radius: 0 0 5px 5px;
-}
-
-.review-profile-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-    margin-top: 10px;
+.profile_toggle-button {
+  float: right;
+  padding: 5px 10px;
+  border: none;
+  color: #434343;
+  border-radius: 3px;
+  cursor: pointer;
 }

@@ -9,8 +9,8 @@ const Mypagemodify = () => {
   const userData = useUserData();
   const [uName, setUName] = useState(userData.uName || '');
   const [uType, setUType] = useState(userData.uType || '');
-  const [profileImage, setProfileImage] = useState(userData.profileImage || '');
-  const [file, setFile] = useState(null);
+  const [profileImage, setProfileImage] = useState();
+  const [file, setFile] = useState();
   const [preview, setPreview] = useState(null);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Mypagemodify = () => {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('img', file);
 
     try {
       const response = await fetch('/profile/img', {
@@ -46,12 +46,12 @@ const Mypagemodify = () => {
       console.log('Image upload response:', result);
       if (result.url) {
         setProfileImage(result.url);
-        console.log('Profile image updated successfully:', result.url);
+        console.log('프로필 이미지 업데이트 성공:', result.url);
       } else {
-        console.error('Image upload failed');
+        console.error('이미지 업로드 실패');
       }
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('이미지 업로드 중 오류:', error);
     }
   };
 

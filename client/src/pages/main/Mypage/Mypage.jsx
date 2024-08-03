@@ -16,7 +16,7 @@ const Mypage = () => {
     setShowMore((prev) => ({ ...prev, [boardId]: !prev[boardId] }));
   };
 
-  // Fetch ongoing activities
+  // 활동중인 스터디
   useEffect(() => {
     const fetchActivities = async () => {
       try {
@@ -39,7 +39,7 @@ const Mypage = () => {
     fetchActivities();
   }, []);
 
-  // Fetch reviews
+  // 내 리뷰 보기
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -69,12 +69,12 @@ const Mypage = () => {
     fetchReviews();
   }, []);
 
-  // Edit profile
+  // 프로필 편집하기
   const handleEditProfileClick = () => {
     navigate('/Mypagemodify');
   };
 
-  // Delete user
+  // 탈퇴하기
   const handleDeleteUserClick = async () => {
     try {
       const response = await fetch('/profile/deleteUser', {
@@ -95,7 +95,7 @@ const Mypage = () => {
     }
   };
 
-  // Navigate to study acceptance/rejection page
+  // 스터디 수락,거절 (방장기능)
   const handleAccrejStudyClick = () => {
     navigate('/Autho');
   };
