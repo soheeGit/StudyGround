@@ -35,6 +35,7 @@ const Mypagemodify = () => {
     const formData = new FormData();
     formData.append('img', file);
 
+    // 프로필 이미지 설정
     try {
       const response = await fetch('/profile/img', {
         method: 'POST',
@@ -55,8 +56,9 @@ const Mypagemodify = () => {
     }
   };
 
+  // 프로필 업데이트
   const handleSubmit = async () => {
-    await handleImageUpload(); // Ensure image upload is complete before submitting
+    await handleImageUpload();
 
     try {
       const response = await fetch('/profile/updateProfile', {

@@ -3,10 +3,12 @@ import './profile.css';
 import WorkHeader from '../../work/WorkHeader';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
+import useUserData from '../Mypage/useUserData';
 
 const Profile = () => {
   const [reviewData, setReviewData] = useState([]);
   const [showMore, setShowMore] = useState({});
+  const userData = useUserData();
 
   const toggleShowMore = (boardId) => {
     setShowMore((prev) => ({ ...prev, [boardId]: !prev[boardId] }));
@@ -39,6 +41,7 @@ const Profile = () => {
 
     fetchReviews();
   }, []);
+
   return (
     <>
       <div className="addwrap">
@@ -60,16 +63,37 @@ const Profile = () => {
       <div className="divider"></div>
 
       <div className="profile-profile-container">
+        <div className="top_profile_info">
+          <div className="top_profile">
+            <img
+              src={userData.profileImage}
+              alt="Profile"
+              className="top_profile_image"
+            />
+            <div className="top_profile_details">
+              <div className="details1">
+                <span className="nickname">
+                  <b>닉네임 </b>
+                </span>{' '}
+                {userData.uId}
+              </div>
+              <div className="details1">
+                <span className="nickname">
+                  <b>유형 </b>{' '}
+                </span>{' '}
+                {userData.uType}
+              </div>
+            </div>
+          </div>
+        </div>
         {reviewData.length > 0 ? (
           reviewData.map((board) => (
             <div key={board.boardId} className="profile_board">
               <div className="profile_left">{board.boardName}</div>
-
               <div className="profile_right">
                 <div className="profile_rating">
                   ⭐ {board.averageRating.toFixed(1)} / 5
                 </div>
-
                 {board.praises.length > 0 && (
                   <div
                     className={`review_praises ${
@@ -89,7 +113,6 @@ const Profile = () => {
                     </button>
                   </div>
                 )}
-
                 {showMore[board.boardId] && (
                   <div className="review_content">
                     <div className="review_contentname">팀원들의 한줄평</div>
