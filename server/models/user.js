@@ -11,7 +11,7 @@ class User extends Sequelize.Model {
             },
             uId: {
                 type: Sequelize.STRING(15),
-                allowNull: false,
+                allowNull: true,
                 unique: true,
             },
             uEmail: {
@@ -50,12 +50,12 @@ class User extends Sequelize.Model {
             },
             uType: {
                 type: Sequelize.ENUM('선구자', '탐구자', '지도자', '추진자', '수행자', '전략판단가', '완주자', '환기자', '전문가'),
-                allowNull: false,
+                allowNull: true,
                 defaultValue: '선구자',
             },
             uLevel: {
                 type: Sequelize.ENUM('하양', '빨강', '주황', '노랑', '초록', '파랑', '보라'),
-                allowNull: false,
+                allowNull: true,
                 defaultValue: '하양',
             },
             profileImage: {

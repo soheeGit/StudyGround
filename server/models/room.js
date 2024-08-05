@@ -13,7 +13,7 @@ class Room extends Sequelize.Model {
                 defaultValue: 2,
             },
             userId: {
-                type: Sequelize.STRING(15),
+                type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'users',
