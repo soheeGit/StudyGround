@@ -39,7 +39,7 @@ function Login() {
   };
 
   const handleKakaoLogin = () => {
-    navigate('/auth/kakao');
+    window.location.href = 'http://localhost:5000/auth/kakao';
   };
 
   return (
