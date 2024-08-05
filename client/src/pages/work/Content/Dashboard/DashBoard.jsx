@@ -35,7 +35,7 @@ const DashBoard = () => {
     };
 
     fetchNotice5();
-  }, []);
+  }, [boardId]);
 
   // 상위 5개 메모 데이터 fetch
   const [memo5, setMemo5] = useState([]);
@@ -75,30 +75,18 @@ const DashBoard = () => {
           </div>
         </div>
         <div className="dashboard-content-container">
-          <div className="dashboard-content-1">
-            <div className="dashboard-content-1-title">About Studying</div>
-            <div className="dashboard-content-1-content">
-              안녕하세요! 저희는 Opic 스터디 그룹입니다. 우리 목표는 AL 레벨을
-              달성하는 것입니다. <br />
-              스터디 날짜는 팀원들과의 회의를 통해 유동적으로 정할 예정입니다.
-              따라서 유연한 스케줄로 참여할 수 있습니다. <br />각 스터디
-              세션마다 정해진 과제가 있으며, 이를 통해 체계적으로 준비하고
-              실력을 향상시킬 수 있습니다. <br />
-              다같이 함께 성장하고 목표를 달성합시다 화이팅!
-            </div>
-          </div>
-          <div className="dashboard-content-2">
-            <div className="dashboard-content-2-1">
-              <div className="dashboard-content-2-1-title">
+          <div className="dashboard-content-left">
+            <div className="dashboard-content-left-1">
+              <div className="dashboard-content-left-1-title">
                 <img src={storage1} width={'50px'} />
                 Notice
               </div>
-              <div className="dashboard-content-2-1-content">
+              <div className="dashboard-content-left-1-content">
                 {/* notice5 map */}
                 {notice5 && notice5.length > 0 ? (
                   notice5.map((notice, index) => (
                     <>
-                      <div className="dashboard-content-2-1-content-row">
+                      <div className="dashboard-content-left-1-content-row">
                         [ {notice.title} ]
                       </div>
                     </>
@@ -108,17 +96,17 @@ const DashBoard = () => {
                 )}
               </div>
             </div>
-            <div className="dashboard-content-2-1">
-              <div className="dashboard-content-2-1-title">
+            <div className="dashboard-content-left-1">
+              <div className="dashboard-content-left-1-title">
                 <img src={storage3} width={'50px'} />
                 Memo
               </div>
-              <div className="dashboard-content-2-1-content">
+              <div className="dashboard-content-left-1-content">
                 {/* memo5 map */}
                 {memo5 && memo5.length > 0 ? (
                   memo5.map((memo, index) => (
                     <>
-                      <div className="dashboard-content-2-1-content-row">
+                      <div className="dashboard-content-left-1-content-row">
                         <FormattedDate dateString={memo.updatedAt} />-{' '}
                         {memo.title}
                       </div>
@@ -129,6 +117,9 @@ const DashBoard = () => {
                 )}
               </div>
             </div>
+          </div>
+          <div className="dashboard-content-right-wrap">
+            <div className="dashboard-content-right-1"></div>
           </div>
         </div>
       </div>

@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 function GroupSelector() {
   const [groups, setGroups] = useState([]);
-  const [selectedGroup, setSelectedGroup] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,19 +42,19 @@ function GroupSelector() {
   //   return <div>NO Data for your groups</div>;
   // }
   const handleSelect = (event) => {
-    setSelectedGroup(event.target.value);
-    if (selectedGroup) {
-      navigate(`/work/${selectedGroup}/dashboard`);
+    const selectedGroupId = event.target.value;
+    if (selectedGroupId) {
+      navigate(`/work/${selectedGroupId}/dashboard`);
     }
   };
 
   return (
     <div className="select-container">
-      <select value={selectedGroup} onChange={handleSelect}>
+      <select defaultValue="" onChange={handleSelect}>
         <option value="">스터디를 선택하세요</option>
         {groups && groups.length > 0 ? (
           groups.map((group) => (
-            <option key={group.id} value={group.bId}>
+            <option key={group.bId} value={group.bId}>
               {group.bName}
             </option>
           ))
