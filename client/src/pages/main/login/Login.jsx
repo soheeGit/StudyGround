@@ -38,6 +38,10 @@ function Login() {
     }
   };
 
+  const handleKakaoLogin = () => {
+    navigate('/auth/kakao');
+  };
+
   return (
     <div className="page">
       <div className="titleWrap">
@@ -84,7 +88,7 @@ function Login() {
       </div>
 
       <div>
-        <button className="kakaoButton">
+        <button className="kakaoButton" onClick={handleKakaoLogin}>
           <img src={kakao} width="28px" alt="Kakao" /> 카카오톡으로 로그인
         </button>
       </div>
