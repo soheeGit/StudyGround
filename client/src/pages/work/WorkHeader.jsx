@@ -6,13 +6,20 @@ import { useNavigate } from 'react-router-dom';
 
 const WorkHeader = ({ title }) => {
   const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUserName(storedUser.user.uName); // Retrieve uId from localStorage
+      if (storedUser.user.uName) {
+        // uName이 있을 경우
+        setUserName(storedUser.user.uName);
+      } else {
+        // uName이 없으면 uEmail 받아옴
+        setUserEmail(storedUser.user.uEmail);
+      }
       console.log('User data retrieved from localStorage:', storedUser);
     } else {
       console.log(
@@ -60,7 +67,7 @@ const WorkHeader = ({ title }) => {
             <Avatar />
           </div>
           <div className="profile">
-            {userName}님
+            {userName ? userName : userEmail}님
             <CaretDownOutlined />
           </div>
           {dropdownVisible && (
