@@ -1,3 +1,4 @@
+// 로그인 후 Mid
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Mid.css';

@@ -42,6 +42,26 @@ const Profile = () => {
     fetchReviews();
   }, []);
 
+  // uLevel에 따라 프로필 테두리 색 바뀜
+  const getBorderColor = (level) => {
+    switch (level) {
+      case '빨강':
+        return 'red';
+      case '주황':
+        return 'orange';
+      case '노랑':
+        return 'yellow';
+      case '초록':
+        return 'green';
+      case '파랑':
+        return 'blue';
+      case '보라':
+        return 'purple';
+      default:
+        return 'black';
+    }
+  };
+
   return (
     <>
       <div className="addwrap">
@@ -67,8 +87,11 @@ const Profile = () => {
           <div className="top_profile">
             <img
               src={userData.profileImage}
-              alt="Profile"
+              alt="사진"
               className="top_profile_image"
+              style={{
+                borderColor: getBorderColor(userData.uLevel),
+              }}
             />
             <div className="top_profile_details">
               <div className="details1">

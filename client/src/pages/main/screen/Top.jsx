@@ -6,15 +6,10 @@ import CustomModal from '../Modal/Modal';
 import Search from '../screen/Search';
 import Range from '../screen/Range';
 import Mid_Top from '../screen/Mid_Top';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Top() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const isLoggedIn = () => {
-    return false;
-  };
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -22,14 +17,6 @@ function Top() {
 
   const closeModal = () => {
     setModalIsOpen(false);
-  };
-
-  const handleAddStudyClick = () => {
-    if (isLoggedIn()) {
-      navigate('/add-study');
-    } else {
-      console.log('로그인을 해주세요.');
-    }
   };
 
   return (
@@ -89,12 +76,6 @@ function Top() {
       <Mid_Top />
 
       <CustomModal isOpen={modalIsOpen} onRequestClose={closeModal} />
-
-      <div className="plusButton">
-        <button className="studyplus" onClick={handleAddStudyClick}>
-          스터디 추가
-        </button>
-      </div>
     </div>
   );
 }

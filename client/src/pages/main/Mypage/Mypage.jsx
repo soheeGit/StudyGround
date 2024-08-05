@@ -74,6 +74,26 @@ const Mypage = () => {
     navigate('/Mypagemodify');
   };
 
+  // uLevel에 따라 프로필 테두리 색 바뀜
+  const getBorderColor = (level) => {
+    switch (level) {
+      case '빨강':
+        return 'red';
+      case '주황':
+        return 'orange';
+      case '노랑':
+        return 'yellow';
+      case '초록':
+        return 'green';
+      case '파랑':
+        return 'blue';
+      case '보라':
+        return 'purple';
+      default:
+        return 'black';
+    }
+  };
+
   // 탈퇴하기
   const handleDeleteUserClick = async () => {
     try {
@@ -110,8 +130,11 @@ const Mypage = () => {
           <div className="profile">
             <img
               src={userData.profileImage}
-              alt="Profile"
+              alt="사진"
               className="profile_image"
+              style={{
+                borderColor: getBorderColor(userData.uLevel),
+              }}
             />
             <div className="profile_details">
               {userData.uName} ({userData.uId}) <br />

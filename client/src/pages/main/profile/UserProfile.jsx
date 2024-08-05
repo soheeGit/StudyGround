@@ -32,14 +32,13 @@ const UserProfile = () => {
     }
   }, [userId]);
 
-  // 수정해야됨
   const handleClose = () => {
     navigate(-1);
   };
 
-  // if (!userData) {
-  //   return <div>Loading...</div>;
-  // }
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="user-profile-overlay">
