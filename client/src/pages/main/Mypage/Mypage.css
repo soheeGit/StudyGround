@@ -78,11 +78,11 @@
   background-color: #e4ffdf;
   border-radius: 10px;
   padding: 5px;
-  margin: 10px;
+  margin: 7px;
 }
 
-.review_rating {
-  margin-left: 10px;
+.average_rating {
+  margin: 10px;
 }
 
 .review_left {

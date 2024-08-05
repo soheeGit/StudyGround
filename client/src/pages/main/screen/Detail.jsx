@@ -40,9 +40,9 @@ function Detail({ board }) {
     navigate(`/evaluation/${board.bId}`);
   };
 
-  if (!board) {
-    return <div>Loading...</div>;
-  }
+  // if (!board) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className="Detail-page">

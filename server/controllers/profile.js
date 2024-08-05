@@ -234,16 +234,21 @@ exports.updateProfile = async (req, res) => {
   const userId = req.user.id;
   const { uName, uType } = req.body;
   const profileImage = req.file ? `/uploads/${req.file.filename}` : null;
-
+  console.log('프로필이미지수정: ', req.file)
   try {
     const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
     }
-
-    user.uName = uName;
-    user.uType = uType;
-    user.profileImage = profileImage;
+    if (uName) {
+      user.uName = uName;
+    }
+    if (uType) {
+      user.uType = uType;
+    }
+    if (profileImage) {
+      user.profileImage = profileImage;
+    }
     await user.save();
 
     return res.status(200).json({ success: true, user });
@@ -261,6 +266,7 @@ exports.afterUploadImage = (req, res) => {
   }
 
   const imageUrl = `/uploads/${req.file.filename}`;
+  console.log('Image URL:', imageUrl);
   res.json({ url: imageUrl });
 };
 

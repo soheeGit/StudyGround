@@ -1,51 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './profile.css';
 import WorkHeader from '../../work/WorkHeader';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
-
-const reviews = [
-  {
-    id: 1,
-    date: '2 weeks ago',
-    name: '문서 스터디',
-    rating: '3.8 / 5.0',
-    tags: ['일정이 마음에 들어요', '상세해요', '질문이 좋아요'],
-    details: ['팀원들의 한줄평', '팀원 A', '팀원 B', '팀원 C', '팀원 D'],
-    image: require('../../../assets/profile_img1.png'),
-  },
-  {
-    id: 2,
-    date: '2 months ago',
-    name: 'OPIC STUDY',
-    rating: '4.0 / 5.0',
-    tags: ['일정이 마음에 들어요', '주도적이에요', '리더십이 있어요'],
-    details: ['팀원들의 한줄평', '팀원 A', '팀원 B', '팀원 C', '팀원 D'],
-    image: require('../../../assets/profile_img2.png'),
-  },
-  {
-    id: 3,
-    date: '3 months ago',
-    name: 'LG 프로젝트',
-    rating: '4.3 / 5.0',
-    tags: [
-      '일정이 마음에 들어요',
-      '주도적이에요',
-      '리더십이 있어요',
-      '공감해요',
-      '상세해요',
-    ],
-    details: ['팀원들의 한줄평', '팀원 A', '팀원 B', '팀원 C', '팀원 D'],
-    image: require('../../../assets/profile_img3.png'),
-  },
-];
+import useUserData from '../Mypage/useUserData';
 
 const Profile = () => {
-  const [expandedReview, setExpandedReview] = useState(null);
+  const [reviewData, setReviewData] = useState([]);
+  const [showMore, setShowMore] = useState({});
+  const userData = useUserData();
 
-  const toggleReview = (id) => {
-    setExpandedReview(expandedReview === id ? null : id);
+  const toggleShowMore = (boardId) => {
+    setShowMore((prev) => ({ ...prev, [boardId]: !prev[boardId] }));
   };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('/profile/myReviewData', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+
+          if (result.success) {
+            setReviewData(result.reviewResult);
+          } else {
+            console.error(result.message || 'Failed to fetch reviews');
+          }
+        } else {
+          const errorResult = await response.json();
+          console.error(errorResult.error || 'Error fetching reviews');
+        }
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   return (
     <>
@@ -66,47 +61,73 @@ const Profile = () => {
         </div>
       </div>
       <div className="divider"></div>
-      <div className="review-profile-container">
-        <div className="profile-left">
-          {reviews.map((review) => (
-            <div key={review.id} className="review-card">
-              <div className="review-header">
-                <div className="review-left">
-                  <p>{review.date}</p>
-                  <img
-                    src={review.image}
-                    className="review-profile-image"
-                    alt="Profile"
-                  />
-                  <p>{review.name}</p>
+
+      <div className="profile-profile-container">
+        <div className="top_profile_info">
+          <div className="top_profile">
+            <img
+              src={userData.profileImage}
+              alt="Profile"
+              className="top_profile_image"
+            />
+            <div className="top_profile_details">
+              <div className="details1">
+                <span className="nickname">
+                  <b>닉네임 </b>
+                </span>{' '}
+                {userData.uId}
+              </div>
+              <div className="details1">
+                <span className="nickname">
+                  <b>유형 </b>{' '}
+                </span>{' '}
+                {userData.uType}
+              </div>
+            </div>
+          </div>
+        </div>
+        {reviewData.length > 0 ? (
+          reviewData.map((board) => (
+            <div key={board.boardId} className="profile_board">
+              <div className="profile_left">{board.boardName}</div>
+              <div className="profile_right">
+                <div className="profile_rating">
+                  ⭐ {board.averageRating.toFixed(1)} / 5
                 </div>
-                <div className="review-right">
-                  <p>⭐ {review.rating}</p>
-                  <div className="review-tags">
-                    {review.tags.map((tag, index) => (
-                      <span key={index} className="review-tag">
-                        {tag}
-                      </span>
+                {board.praises.length > 0 && (
+                  <div
+                    className={`review_praises ${
+                      showMore[board.boardId] ? 'show-more' : ''
+                    }`}
+                  >
+                    <ul>
+                      {board.praises.map((praise, index) => (
+                        <li key={index}>{praise}</li>
+                      ))}
+                    </ul>
+                    <button
+                      className="profile_toggle-button"
+                      onClick={() => toggleShowMore(board.boardId)}
+                    >
+                      {showMore[board.boardId] ? '접기' : '더보기'}
+                    </button>
+                  </div>
+                )}
+                {showMore[board.boardId] && (
+                  <div className="review_content">
+                    <div className="review_contentname">팀원들의 한줄평</div>
+                    <hr />
+                    {board.reviews.map((review, index) => (
+                      <div key={index}>{review.content}</div>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
-              <button
-                className="review-button"
-                onClick={() => toggleReview(review.id)}
-              >
-                {expandedReview === review.id ? '접기' : '더보기'}
-              </button>
-              {expandedReview === review.id && (
-                <div className="review-details">
-                  {review.details.map((detail, index) => (
-                    <p key={index}>{detail}</p>
-                  ))}
-                </div>
-              )}
             </div>
-          ))}
-        </div>
+          ))
+        ) : (
+          <p>리뷰가 없습니다.</p>
+        )}
       </div>
     </>
   );

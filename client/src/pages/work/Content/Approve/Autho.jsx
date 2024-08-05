@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Autho.css';
 import WorkHeader from '../../WorkHeader';
 import Sidebar from '../../sidebar/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 const Autho = () => {
   const [selectedTab, setSelectedTab] = useState('ongoing');
   const [applyList, setApplyList] = useState([]);
+  const navigate = useNavigate();
 
-  // 스터디 신청 목록(방장)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,7 +31,6 @@ const Autho = () => {
     return applyList;
   };
 
-  // 스터디 수락
   const acceptRequest = async (requestId) => {
     try {
       const response = await fetch(`/api/accept-board/${requestId}`, {
@@ -65,7 +65,6 @@ const Autho = () => {
     }
   };
 
-  // 스터디 거절
   const rejectRequest = async (requestId) => {
     try {
       const response = await fetch(`/api/reject-board/${requestId}`, {
@@ -100,6 +99,14 @@ const Autho = () => {
     }
   };
 
+  const handleNicknameClick = (userId) => {
+    if (userId) {
+      navigate(`/UserProfile/${userId}`);
+    } else {
+      console.error('User ID is undefined');
+    }
+  };
+
   return (
     <>
       <Sidebar />
@@ -118,7 +125,7 @@ const Autho = () => {
         <hr />
 
         {getFilteredApplyList().map((studyGroup) => (
-          <div className="study-group">
+          <div className="study-group" key={studyGroup.board.bName}>
             <div className="autho-header-container">
               <div className="autho-header-left">
                 <div className="study-header">
@@ -138,15 +145,24 @@ const Autho = () => {
                   <div className="participant-info-box1">
                     <div className="participant-info">
                       <div className="info-title">닉네임</div>
-                      <div className="info-content">{request.User.uName}</div>
+                      <div
+                        className="info-content"
+                        onClick={() => {
+                          console.log('Request object:', request); // Debugging
+                          console.log('User ID on click:', request.userId); // Updated for correct userId
+                          handleNicknameClick(request.userId);
+                        }}
+                      >
+                        {request.User?.uName}{' '}
+                      </div>
                     </div>
                     <div className="participant-info">
                       <div className="info-title">등급</div>
-                      <div className="info-content">{request.User.uLevel}</div>
+                      <div className="info-content">{request.User?.uLevel}</div>
                     </div>
                     <div className="participant-info">
                       <div className="info-title">진단</div>
-                      <div className="info-content">{request.User.uType}</div>
+                      <div className="info-content">{request.User?.uType}</div>
                     </div>
                     <div className="participant-info">
                       <div className="info-title">상태</div>

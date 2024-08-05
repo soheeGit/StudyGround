@@ -10,7 +10,6 @@ module.exports = () => {
     })
 
     passport.deserializeUser((id, done) => {    //각 요청마다 실행
-        console.log('---------------------------------Deserializing user with ID:', id);
         User.findOne({ where: { id } })
             .then(user => {
                 if (user) {
