@@ -11,8 +11,7 @@ class User extends Sequelize.Model {
             },
             uId: {
                 type: Sequelize.STRING(15),
-                allowNull: true,
-                unique: true,
+                allowNull: false,
             },
             uEmail: {
                 type: Sequelize.STRING(40),
