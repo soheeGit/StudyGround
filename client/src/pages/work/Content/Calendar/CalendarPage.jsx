@@ -6,6 +6,8 @@ import axios from 'axios';
 import AddSchedule from './AddSchedule';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import ScheduleDetail from './ScheduleDetail';
+import { useQuery } from '@tanstack/react-query';
+import { fetchSchedules } from '../../api/calendarApi';
 
 const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
   const { boardId } = useOutletContext();
@@ -37,24 +39,10 @@ const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
   };
 
   // 스케줄 데이터 get
-  const [schedules, setSchedules] = useState([]);
-  const fetchSchedules = async () => {
-    try {
-      const response = await axios.get(`/calendar/allSchedule/${boardId}`, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      setSchedules(response.data);
-    } catch (error) {
-      console.error('스케줄 데이터를 가져오는 중 오류 발생:', error);
-    }
-    console.log(schedules);
-  };
-  useEffect(() => {
-    fetchSchedules();
-  }, []);
+  const { data: schedules, isSchedulesLoading } = useQuery({
+    queryKey: ['schedules', boardId],
+    queryFn: () => fetchSchedules(boardId),
+  });
 
   // 일정 추가 모달 state
   const [showModal, setShowModal] = useState(false);
@@ -64,7 +52,7 @@ const CalendarPage = ({ isPrevMonth, isNextMonth }) => {
 
   // 특정 날짜에 해당하는 스케줄을 반환
   const getScheduleForDay = (day) => {
-    if (schedules.length > 0) {
+    if (schedules && schedules.length > 0) {
       return schedules.filter((schedule) => {
         const startDate = new Date(schedule.startDate);
         const endDate = new Date(schedule.endDate);

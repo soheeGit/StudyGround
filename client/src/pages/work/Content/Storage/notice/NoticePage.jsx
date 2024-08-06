@@ -14,6 +14,9 @@ import clip from '../../../../../assets/clip.png';
 import star from '../../../../../assets/star.png';
 import nostar from '../../../../../assets/nostar.png';
 import { Button } from '../../../Component/Button';
+import { fetchNotices } from '../../../api/storageApi';
+import { useQuery } from '@tanstack/react-query';
+import { FormatFullDate } from '../../../Component/FormattedDate';
 
 const NoticePage = () => {
   const { boardId } = useOutletContext();
@@ -21,8 +24,6 @@ const NoticePage = () => {
   const navigate = useNavigate();
   const [isOutletVisible, setIsOutletVisible] = useState(false); // Outlet 활성화 상태
 
-  // Notice 데이터
-  const [notices, setNotices] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
   const fetchNoticesRef = useRef(null);
 
@@ -39,27 +40,15 @@ const NoticePage = () => {
   }, [location]);
 
   // 공지사항 데이터 get
-  const fetchNotices = async () => {
-    try {
-      const noticeResponse = await axios.get(`/storage/notice/${boardId}`, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const sortedNotices = noticeResponse.data.sort((a, b) =>
-        b.importance === 'High' ? 1 : -1
-      );
-      setNotices(sortedNotices);
-    } catch (error) {
-      console.error('공지사항 데이터를 가져오는 중 오류 발생:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotices();
-    fetchNoticesRef.current = fetchNotices;
-  }, [boardId]);
+  const {
+    data: notices,
+    isLoading: isNoticesLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['notices', boardId],
+    queryFn: () => fetchNotices(boardId),
+  });
+  console.log(notices);
 
   // 공지사항 상세확인 : NoticeDetail로 notice데이터 넘겨준다
   const handleClickNotice = (notice) => {
@@ -79,12 +68,26 @@ const NoticePage = () => {
   // 현재 페이지의 공지사항 가져오기
   const indexOfLastData = currentPage * datasPerPage;
   const indexOfFirstData = indexOfLastData - datasPerPage;
-  const currentDatas = notices.slice(indexOfFirstData, indexOfLastData);
+  const currentDatas =
+    notices && notices.length > 0
+      ? notices.slice(indexOfFirstData, indexOfLastData)
+      : [];
 
   // 페이지 번호 계산
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(notices.length / datasPerPage); i++) {
-    pageNumbers.push(i);
+  const pageNumbers =
+    notices && notices.length > 0
+      ? Array.from(
+          { length: Math.ceil(notices.length / datasPerPage) },
+          (_, i) => i + 1
+        )
+      : [];
+
+  if (isNoticesLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading notices. Please try again later.</div>;
   }
 
   return (
@@ -107,7 +110,7 @@ const NoticePage = () => {
             <div className="notice-content-container">
               {currentDatas && currentDatas.length > 0 ? (
                 currentDatas.map((notice, noticeKey) => (
-                  <div className="notice-content-box">
+                  <div key={noticeKey} className="notice-content-box">
                     <div className="notice-content-1">
                       {notice.importance == 'High' ? (
                         <img src={star} style={{ width: '30px' }} />
@@ -132,7 +135,9 @@ const NoticePage = () => {
                         <>-</>
                       )}
                     </div>
-                    <div className="notice-content-4">2024-03-30</div>
+                    <div className="notice-content-4">
+                      <FormatFullDate dateString={notice.updatedAt} />
+                    </div>
                   </div>
                 ))
               ) : (

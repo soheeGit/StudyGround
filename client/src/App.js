@@ -33,6 +33,8 @@ import UpdateNotice from './pages/work/Content/Storage/notice/UpdateNotice';
 import BoardList from './pages/work/Content/Storage/boardData';
 import FilePage from './pages/work/Content/Storage/file/FilePage';
 import CalendarPage from './pages/work/Content/Calendar/CalendarPage';
+import { QueryClient } from '@tanstack/react-query';
+
 function App() {
   return (
     <Router>

@@ -6,58 +6,27 @@ import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import storage1 from '../../../../assets/storage1.png';
 import storage3 from '../../../../assets/storage3.png';
-import FormattedDate from '../../Component/FormattedDate';
+import { FormatFullDate } from '../../Component/FormattedDate';
+import { fetchMemo5, fetchNotice5 } from '../../api/fetch5data';
+import { useQuery } from '@tanstack/react-query';
 
 const DashBoard = () => {
   const { boardId } = useOutletContext();
   const { myStudy } = useOutletContext();
-  console.log(myStudy);
 
   // 상위 5개 공지사항 데이터 fetch
-  const [notice5, setNotice5] = useState([]);
-  useEffect(() => {
-    const fetchNotice5 = async () => {
-      try {
-        const Response = await axios.get(`/storage/currentNotice/${boardId}`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setNotice5(Response.data);
-        console.log(Response.data);
-      } catch (error) {
-        console.error(
-          '상위 5개 공지사항 데이터를 가져오는 중 오류 발생:',
-          error
-        );
-      }
-    };
-
-    fetchNotice5();
-  }, [boardId]);
+  const { data: notice5, isNotice5Loading } = useQuery({
+    queryKey: ['notice5', boardId],
+    queryFn: () => fetchNotice5(boardId),
+  });
+  console.log(notice5);
 
   // 상위 5개 메모 데이터 fetch
-  const [memo5, setMemo5] = useState([]);
-  useEffect(() => {
-    const fetchMemo5 = async () => {
-      try {
-        const Response = await axios.get(`/storage/currentMemo`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setMemo5(Response.data);
-        console.log(Response.data);
-      } catch (error) {
-        console.error('상위 5개 메모 데이터를 가져오는 중 오류 발생:', error);
-      }
-    };
+  const { data: memo5, isMemo5Loading } = useQuery({
+    queryKey: 'memo5',
+    queryFn: fetchMemo5,
+  });
 
-    fetchMemo5();
-    console.log(memo5);
-  }, []);
   return (
     <>
       <WorkHeader title="DashBoard" />
@@ -107,7 +76,7 @@ const DashBoard = () => {
                   memo5.map((memo, index) => (
                     <>
                       <div className="dashboard-content-left-1-content-row">
-                        <FormattedDate dateString={memo.updatedAt} />-{' '}
+                        <FormatFullDate dateString={memo.updatedAt} />-{' '}
                         {memo.title}
                       </div>
                     </>

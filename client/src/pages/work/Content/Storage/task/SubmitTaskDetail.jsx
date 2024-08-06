@@ -1,7 +1,7 @@
 import './SubmitTaskDetail.css';
 import { Button } from '../../../Component/Button';
 import Divider from '../../../Component/Divider';
-import FormattedDate from '../../../Component/FormattedDate';
+import { FormatFullDate } from '../../../Component/FormattedDate';
 import { useNavigate } from 'react-router-dom';
 
 const SubmitTaskDetail = ({ submitTasks }) => {
@@ -26,7 +26,7 @@ const SubmitTaskDetail = ({ submitTasks }) => {
               <div className="submitTaskDetail-row">
                 <div className="submitTaskDetail-row-1">제출일시</div>
                 <div className="divider-column"></div>
-                <FormattedDate dateString={submitTask.updatedAt} />
+                <FormatFullDate dateString={submitTask.updatedAt} />
               </div>
               <div className="submitTaskDetail-content">
                 {submitTask.content}

@@ -9,7 +9,7 @@ import {
   useOutletContext,
   useParams,
 } from 'react-router-dom';
-import FormattedDate from '../../../Component/FormattedDate';
+import { FormatFullDate } from '../../../Component/FormattedDate';
 import SubmitTask from './SubmitTask';
 import Divider from '../../../Component/Divider';
 import SubmitTaskDetail from './SubmitTaskDetail';
@@ -65,14 +65,14 @@ const NoticeDetail = () => {
         <div className="detail-field-title">게시일</div>
         <div className="divider-column"></div>
         <div className="detail-field-content">
-          <FormattedDate dateString={task.createdAt} />
+          <FormatFullDate dateString={task.createdAt} />
         </div>
       </div>
       <div className="detail-field">
         <div className="detail-field-title">마감일</div>
         <div className="divider-column"></div>
         <div className="detail-field-content">
-          <FormattedDate dateString={task.deadline} />
+          <FormatFullDate dateString={task.deadline} />
         </div>
       </div>
       <div className="divider-row"></div>

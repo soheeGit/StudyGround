@@ -3,6 +3,8 @@ import './AddNotice.css';
 import axios from 'axios';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Button } from '../../../Component/Button';
+import { useMutation } from '@tanstack/react-query';
+import { addNotice } from '../../../api/storageApi';
 
 const AddNotice = () => {
   const { boardId, fetchNoticesRef } = useOutletContext();
@@ -18,7 +20,19 @@ const AddNotice = () => {
     setFiles([...files, ...event.target.files]);
   };
 
-  // 공지사항 추가 post
+  // 공지사항 추가 mutation
+  const mutation = useMutation({
+    mutationFn: (formData) => addNotice({ boardId, formData }),
+    onSuccess: (data) => {
+      alert('공지사항이 성공적으로 추가되었습니다.');
+      navigate(`/work/${boardId}/notice`);
+    },
+    onError: (error) => {
+      console.error('공지사항 추가 중 오류 발생 : ', error);
+      alert('공지사항 추가 중 오류가 발생하였습니다.');
+    },
+  });
+
   const handleAddNotice = async (event) => {
     event.preventDefault();
 
@@ -29,31 +43,8 @@ const AddNotice = () => {
     files.forEach((file) => {
       formData.append('files', file);
     });
-    console.log(files);
-    try {
-      const response = await axios.post(
-        `/storage/submitNotice/${boardId}`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      if (response.data.success) {
-        alert('공지사항이 성공적으로 추가되었습니다.');
-        if (fetchNoticesRef.current) {
-          fetchNoticesRef.current();
-        }
-        navigate(`/work/${boardId}/notice`);
-      } else {
-        alert('공지사항 추가에 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('공지사항 추가 중 오류 발생:', error);
-      alert('공지사항 추가 중 오류가 발생했습니다.');
-    }
+
+    mutation.mutate(formData);
   };
 
   return (

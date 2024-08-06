@@ -8,55 +8,24 @@ import storage3 from '../../../../assets/storage3.png';
 import storage4 from '../../../../assets/storage4.png';
 import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { fetchMemo5, fetchNotice5 } from '../../api/fetch5data';
+import { FormatMonthDay } from '../../Component/FormattedDate';
 
 const Storage = () => {
   const { boardId } = useOutletContext();
 
   // 상위 5개 공지사항 데이터 fetch
-  const [notice5, setNotice5] = useState([]);
-  useEffect(() => {
-    const fetchNotice5 = async () => {
-      try {
-        const Response = await axios.get(`/storage/currentNotice/${boardId}`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setNotice5(Response.data);
-        console.log(Response.data);
-      } catch (error) {
-        console.error(
-          '상위 5개 공지사항 데이터를 가져오는 중 오류 발생:',
-          error
-        );
-      }
-    };
-
-    fetchNotice5();
-  }, []);
+  const { data: notice5, isNotice5Loading } = useQuery({
+    queryKey: ['notice5', boardId],
+    queryFn: () => fetchNotice5(boardId),
+  });
 
   // 상위 5개 메모 데이터 fetch
-  const [memo5, setMemo5] = useState([]);
-  useEffect(() => {
-    const fetchMemo5 = async () => {
-      try {
-        const Response = await axios.get(`/storage/currentMemo`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setMemo5(Response.data);
-        console.log(Response.data);
-      } catch (error) {
-        console.error('상위 5개 메모 데이터를 가져오는 중 오류 발생:', error);
-      }
-    };
-
-    fetchMemo5();
-    console.log(memo5);
-  }, []);
+  const { data: memo5, isMemo5Loading } = useQuery({
+    queryKey: 'memo5',
+    queryFn: fetchMemo5,
+  });
 
   const [selectedTab, setSelectedTab] = useState('');
   console.log(selectedTab);
@@ -92,7 +61,9 @@ const Storage = () => {
                   <div className="storage-notice-content-title">
                     {notice5.title}
                   </div>
-                  <div className="storage-notice-content-date">6/24</div>
+                  <div className="storage-notice-content-date">
+                    <FormatMonthDay dateString={notice5.updatedAt} />
+                  </div>
                 </div>
               ))
             ) : (
