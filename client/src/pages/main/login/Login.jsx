@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import kakao from '../../../assets/kakao.png';
@@ -41,6 +41,18 @@ function Login() {
   const handleKakaoLogin = () => {
     window.location.href = 'http://localhost:5000/auth/kakao';
   };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userParam = urlParams.get('user');
+
+    if (userParam) {
+      const userData = JSON.parse(decodeURIComponent(userParam));
+      console.log('User data:', userData);
+      localStorage.setItem('user', JSON.stringify(userData)); // Save user data to local storage
+      navigate('/LoginAfter');
+    }
+  }, []);
 
   return (
     <div className="page">
