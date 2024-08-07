@@ -6,6 +6,7 @@ const session = require('express-session')
 const dotenv = require('dotenv')
 const passport = require('passport')
 const cors = require('cors')
+//const ColorHash = require('color-hash').default;
 
 dotenv.config({path: path.join(__dirname, '../.env')});    //process.env 만들어줌
 
@@ -67,6 +68,15 @@ server.use('/reviews', reviewRouter);
 server.use('/storage', storageRouter);
 server.use('/calendar', calendarRouter);
 server.use('/profile', profileRouter);
+
+/*server.use((req, res, next) => {
+  if(!req.session.color) {
+    const colorHash = new ColorHash();
+    req.session.color = colorHash.hex(req.sessionID)
+    console.log(req.session.color, req.sessionID);
+  }
+  next();
+})*/
 
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
