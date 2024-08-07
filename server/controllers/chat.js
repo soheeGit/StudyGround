@@ -1,4 +1,5 @@
 const { Board, User, Chat } = require('../models');
+const { removeRoom: removeRoomService } = require('../services/chat')
 
 exports.createRoom = async (req, res, next) => {
     const boardId = req.params.id;
@@ -59,7 +60,7 @@ exports.enterRoom = async (req, res, next) => {
 exports.removeRoom = async (req, res, next) => {
     const boardId = req.params.id;
     try {
-        await Chat.remove({ where: {boardId: boardId} })
+        await removeRoomService(boardId)
         return res.status(200).json({ message: '채팅방 삭제 성공' });
     } catch(error) {
         console.error(error);
