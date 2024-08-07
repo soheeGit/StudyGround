@@ -31,6 +31,7 @@ exports.enterRoom = async (req, res, next) => {
         if(board.bTotalNumber <= boards.get(boardId)?.size){
             return res.status(404).json({ error: '허용 인원을 초과했습니다.' });
         }
+        const chats = await Chat.find({ where: {boardId: boardId} }).sort('createdAt');
         return res.status(200).json({
             message: '채팅방 입장 성공', 
             user: {
@@ -49,7 +50,9 @@ exports.enterRoom = async (req, res, next) => {
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt,
                 deletedAt: user.deletedAt
-            }
+            },
+            board,
+            chats,
         });
     } catch(error) {
         console.error(error);
@@ -67,3 +70,18 @@ exports.removeRoom = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.sendChat = async (req, res, next) => {
+    try {
+        const chat = await Chat.create({
+            boardId: req.params.id,
+            userId: req.user.id,
+            message: req.body.chat,
+        })
+        req.server.get('io').of('/chat').to(req.params.id).emit('chat', chat);
+        return res.status(200).json({ message: '채팅 성공' });
+    }catch(error) {
+        console.error(error);
+        next(error);
+    }
+}
