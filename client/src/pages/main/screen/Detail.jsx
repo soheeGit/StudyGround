@@ -1,10 +1,8 @@
 import React from 'react';
 import './Detail.css';
-import { useNavigate } from 'react-router-dom';
 
 function Detail({ board }) {
   const [message, setMessage] = React.useState('');
-  const navigate = useNavigate();
 
   const handleParticipateClick = () => {
     if (!board || !board.bId) {
@@ -30,20 +28,6 @@ function Detail({ board }) {
         setMessage('Internal server error');
       });
   };
-
-  const handleReviewClick = () => {
-    if (!board || !board.bId) {
-      console.error('Board ID is not available', board);
-      return;
-    }
-
-    navigate(`/evaluation/${board.bId}`);
-  };
-
-  // if (!board) {
-  //   return <div>Loading...</div>;
-  // }
-
   return (
     <div className="Detail-page">
       <div className="Detail-top">
@@ -86,9 +70,6 @@ function Detail({ board }) {
 
       <button className="detail-participate" onClick={handleParticipateClick}>
         참여하기
-      </button>
-      <button className="detail-review" onClick={handleReviewClick}>
-        리뷰남기기
       </button>
 
       {message && <div className="message">{message}</div>}

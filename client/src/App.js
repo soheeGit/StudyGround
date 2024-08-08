@@ -13,6 +13,7 @@ import Detail from './pages/main/screen/Detail';
 import Mypage from './pages/main/Mypage/Mypage';
 import Mypagemodify from './pages/main/Mypage/Mypagemodify';
 import UserProfile from './pages/main/profile/UserProfile';
+import Evaluation from './pages/main/evaluation/Evaluation';
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
@@ -55,6 +56,7 @@ function App() {
           <Route path="Mypagemodify" element={<Mypagemodify />} />
           <Route path="/Autho" element={<Autho />} />
           <Route path="/UserProfile/:userId" element={<UserProfile />} />
+          <Route path="/evaluation/:boardId" element={<Evaluation />} />
 
           {/* Wokr페이지 라우팅 */}
           <Route path="/work/:boardId" element={<Work />}>
