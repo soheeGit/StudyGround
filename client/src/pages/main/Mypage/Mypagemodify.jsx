@@ -116,7 +116,7 @@ const Mypagemodify = () => {
         <div className="mpm_info">
           <div className="mpm_profile">
             <img
-              src={preview || profileImage || 'default_profile_image_url'}
+              src={preview || userData.profileImage}
               alt="사진"
               className="mpm_profile_image"
               style={{
