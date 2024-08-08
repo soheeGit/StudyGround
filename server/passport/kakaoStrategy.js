@@ -18,9 +18,10 @@ module.exports = () => {
             } else {    //회원가입
                 const newUser = await User.create({
                     uEmail: profile._json?.kakao_account?.email,
-                    uId: profile.displayname,
+                    uId: profile.displayName,
                     snsId: profile.id,
                     provider: 'kakao',
+                    uName: profile.displayName,
                 });
                 done(null, newUser);
             }

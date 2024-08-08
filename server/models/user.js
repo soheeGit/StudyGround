@@ -11,8 +11,7 @@ class User extends Sequelize.Model {
             },
             uId: {
                 type: Sequelize.STRING(15),
-                allowNull: true,
-                unique: true,
+                allowNull: false,
             },
             uEmail: {
                 type: Sequelize.STRING(40),
@@ -75,7 +74,6 @@ class User extends Sequelize.Model {
     }
     static associate(db) {
         db.User.belongsToMany(db.Board, { through: 'BoardUser', foreignKey: 'userId' });
-        db.User.belongsToMany(db.Room, { through: 'RoomUser', foreignKey: 'userId' });
         db.User.hasMany(db.Review, { as: 'ReviewsWritten', foreignKey: 'reviewerId' });
         db.User.hasMany(db.Review, { as: 'ReviewsReceived', foreignKey: 'revieweeId' });
         db.User.hasMany(db.Board, { as: 'OwnedBoards', foreignKey: 'leaderId' });
