@@ -62,13 +62,6 @@ server.use(sessionMiddleware);
 server.use(passport.initialize())
 server.use(passport.session())
 
-server.use('/api', pageRouter);
-server.use('/auth', authRouter);
-server.use('/reviews', reviewRouter);
-server.use('/storage', storageRouter);
-server.use('/calendar', calendarRouter);
-server.use('/profile', profileRouter);
-
 /*server.use((req, res, next) => {
   if(!req.session.color) {
     const colorHash = new ColorHash();
@@ -77,6 +70,13 @@ server.use('/profile', profileRouter);
   }
   next();
 })*/
+
+server.use('/api', pageRouter);
+server.use('/auth', authRouter);
+server.use('/reviews', reviewRouter);
+server.use('/storage', storageRouter);
+server.use('/calendar', calendarRouter);
+server.use('/profile', profileRouter);
 
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
