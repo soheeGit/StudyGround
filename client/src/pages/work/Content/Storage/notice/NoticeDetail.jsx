@@ -9,41 +9,36 @@ import {
   useParams,
 } from 'react-router-dom';
 import { FormatFullDate } from '../../../Component/FormattedDate';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteNotice } from '../../../api/noticeApi';
 
 const NoticeDetail = () => {
+  const queryClient = useQueryClient();
   const host = 'http://localhost:5000';
   const location = useLocation();
   const navigate = useNavigate();
   const { notice } = location.state || {}; //location.state로 부터 notice 데이터를 가져옴
   const { boardId, fetchNoticesRef } = useOutletContext();
-  const noticeId = useParams();
-  console.log(notice);
-  console.log(noticeId.noticeId);
+  const { noticeId } = useParams();
 
   // 공지사항 삭제
-  const handleDeleteNotice = async () => {
-    try {
-      const response = await axios.get(
-        `/storage/deleteNotice/${noticeId.noticeId}`,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      if (response.data.success) {
-        alert('공지사항이 성공적으로 삭제되었습니다.');
-        if (fetchNoticesRef.current) {
-          fetchNoticesRef.current();
-        }
-        navigate(`../`);
-      } else {
-        alert('공지사항 삭제 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('공지사항 삭제 중 오류 발생:', error);
-      alert('공지사항 삭제 중 오류가 발생했습니다.');
+  const deleteNoticeMutation = useMutation({
+    mutationFn: () => deleteNotice({ noticeId }),
+    onSuccess: () => {
+      alert('공지사항이 성공적으로 삭제되었습니다.');
+      queryClient.invalidateQueries(['notices', boardId]);
+      navigate(`/work/${boardId}/notice`);
+    },
+    onError: (error) => {
+      console.error('공지사항 삭제 중 오류 발생 : ', error);
+      alert('공지사항 삭제 중 오류가 발생하였습니다.');
+    },
+  });
+  // 삭제 확인
+  const handleDelete = () => {
+    const confirmDelete = window.confirm('정말 삭제하시겠습니까 ?');
+    if (confirmDelete) {
+      deleteNoticeMutation.mutate();
     }
   };
 
@@ -81,14 +76,14 @@ const NoticeDetail = () => {
           name="수정"
           color="#3D9BF3"
           onClick={() =>
-            navigate(`../${noticeId.noticeId}/update`, { state: { notice } })
+            navigate(`../${noticeId}/update`, { state: { notice } })
           }
           hoverColor="#5AA7F6"
         />
         <Button
           name="삭제"
           color="#E86161"
-          onClick={handleDeleteNotice}
+          onClick={handleDelete}
           hoverColor="#D2625D"
         />
         <Button

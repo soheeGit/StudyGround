@@ -3,10 +3,15 @@ import './AddNotice.css';
 import axios from 'axios';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Button } from '../../../Component/Button';
-import { useMutation } from '@tanstack/react-query';
-import { addNotice } from '../../../api/storageApi';
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { addNotice } from '../../../api/noticeApi';
 
 const AddNotice = () => {
+  const queryClient = useQueryClient();
   const { boardId, fetchNoticesRef } = useOutletContext();
   const navigate = useNavigate();
 
@@ -23,8 +28,9 @@ const AddNotice = () => {
   // 공지사항 추가 mutation
   const mutation = useMutation({
     mutationFn: (formData) => addNotice({ boardId, formData }),
-    onSuccess: (data) => {
+    onSuccess: () => {
       alert('공지사항이 성공적으로 추가되었습니다.');
+      queryClient.invalidateQueries(['notices', boardId]);
       navigate(`/work/${boardId}/notice`);
     },
     onError: (error) => {

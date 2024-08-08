@@ -3,8 +3,11 @@ import './AddTask.css';
 import axios from 'axios';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Button } from '../../../Component/Button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addTask } from '../../../api/taskApi';
 
 const AddTask = () => {
+  const queryClient = useQueryClient();
   const { boardId, fetchTasksRef } = useOutletContext();
   const navigate = useNavigate();
 
@@ -19,6 +22,19 @@ const AddTask = () => {
   };
 
   // 과제 추가 post
+  const mutation = useMutation({
+    mutationFn: (formData) => addTask({ boardId, formData }),
+    onSuccess: () => {
+      alert('과제가 성공적으로 추가되었습니다.');
+      queryClient.invalidateQueries(['tasks', boardId]);
+      navigate(`/work/${boardId}/task`);
+    },
+    onError: (error) => {
+      console.error('과제 추가 중 오류 발생:', error);
+      alert('과제 추가 중 오류가 발생했습니다.');
+    },
+  });
+
   const handleAddTask = async (event) => {
     event.preventDefault();
 
@@ -34,30 +50,7 @@ const AddTask = () => {
     for (let pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     }
-    try {
-      const response = await axios.post(
-        `/storage/enrollTask/${boardId}`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      if (response.data.success) {
-        alert('과제가 성공적으로 추가되었습니다.');
-        if (fetchTasksRef.current) {
-          fetchTasksRef.current();
-        }
-        navigate(`/work/${boardId}/task`);
-      } else {
-        alert('과제 추가에 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('과제 추가 중 오류 발생:', error);
-      alert('과제 추가 중 오류가 발생했습니다.');
-    }
+    mutation.mutate(formData);
   };
 
   return (

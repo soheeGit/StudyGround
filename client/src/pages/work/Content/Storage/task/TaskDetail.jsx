@@ -13,14 +13,17 @@ import { FormatFullDate } from '../../../Component/FormattedDate';
 import SubmitTask from './SubmitTask';
 import Divider from '../../../Component/Divider';
 import SubmitTaskDetail from './SubmitTaskDetail';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteTask } from '../../../api/taskApi';
 
-const NoticeDetail = () => {
+const TaskDetail = () => {
+  const queryClient = useQueryClient();
   const host = 'http://localhost:5000';
   const location = useLocation();
   const navigate = useNavigate();
   const { task } = location.state || {}; //location.state로 부터 task 데이터를 가져옴
-  const { boardId, fetchTasksRef } = useOutletContext();
-  const taskId = useParams();
+  const { boardId } = useOutletContext();
+  const { taskId } = useParams();
 
   // 과제 제출
   const [submitTask, setSubmitTask] = useState(null); // 제출 내역 상태
@@ -31,26 +34,24 @@ const NoticeDetail = () => {
   };
 
   // 과제 삭제(방장)
-  const handleDeleteTask = async () => {
-    try {
-      const response = await axios.get(`/storage/deleteTask/${taskId.taskId}`, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      if (response.data.success) {
-        alert('과제가 성공적으로 삭제되었습니다.');
-        if (fetchTasksRef.current) {
-          fetchTasksRef.current();
-        }
-        navigate(`../`);
-      } else {
-        alert('과제 삭제 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('과제 삭제 중 오류 발생:', error);
-      alert('과제 삭제 중 오류가 발생했습니다.');
+  const mutation = useMutation({
+    mutationFn: () => deleteTask(taskId),
+    onSuccess: () => {
+      alert('과제가 성공적으로 삭제되었습니다.');
+      queryClient.invalidateQueries(['tasks', boardId]);
+      navigate(`/work/${boardId}/task`);
+    },
+    onError: (error) => {
+      console.error('과제 삭제 중 오류 발생 : ', error);
+      alert('과제 삭제 중 오류가 발생하였습니다.');
+    },
+  });
+
+  // 삭제 확인
+  const handleDelete = () => {
+    const confirmDelete = window.confirm('정말 삭제하시겠습니까 ?');
+    if (confirmDelete) {
+      mutation.mutate();
     }
   };
 
@@ -101,7 +102,7 @@ const NoticeDetail = () => {
         <Button
           name="삭제"
           color="#E86161"
-          onClick={handleDeleteTask}
+          onClick={handleDelete}
           hoverColor="#D2625D"
         />
       </div>
@@ -124,4 +125,4 @@ const NoticeDetail = () => {
     </div>
   );
 };
-export default NoticeDetail;
+export default TaskDetail;

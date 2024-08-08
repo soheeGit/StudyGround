@@ -8,6 +8,8 @@ import {
 } from 'react-router-dom';
 import { Button } from '../../../Component/Button';
 import './UpdateNotice.css';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateNotice } from '../../../api/noticeApi';
 
 const UpdateNotice = () => {
   const { boardId, fetchNoticesRef } = useOutletContext();
@@ -15,6 +17,7 @@ const UpdateNotice = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { notice } = location.state || {};
+  const queryClient = useQueryClient();
 
   // 수정중인 공지사항 데이터
   const [title, setTitle] = useState(notice.title || '');
@@ -57,6 +60,20 @@ const UpdateNotice = () => {
     setFilesToDelete([...filesToDelete, fileId]);
   };
 
+  // 공지사항 수정 mutation
+  const mutation = useMutation({
+    mutationFn: (formData) => updateNotice({ noticeId, formData }),
+    onSuccess: () => {
+      alert('공지사항이 성공적으로 수정되었습니다.');
+      queryClient.invalidateQueries(['notices', boardId]);
+      navigate(`/work/${boardId}/notice`);
+    },
+    onError: (error) => {
+      console.error('공지사항 수정 중 오류 발생:', error);
+      alert('공지사항 수정 중 오류가 발생했습니다.');
+    },
+  });
+
   const handleUpdateNotice = async (event) => {
     event.preventDefault();
 
@@ -68,31 +85,7 @@ const UpdateNotice = () => {
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
-
-    try {
-      const response = await axios.post(
-        `/storage/updateNotice/${noticeId}`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      if (response.data.success) {
-        alert('공지사항이 성공적으로 수정되었습니다.');
-        if (fetchNoticesRef.current) {
-          fetchNoticesRef.current();
-        }
-        navigate(`/work/${boardId}/notice`);
-      } else {
-        alert('공지사항 수정에 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('공지사항 수정 중 오류 발생:', error);
-      alert('공지사항 수정 중 오류가 발생했습니다.');
-    }
+    mutation.mutate(formData);
   };
 
   // 수정

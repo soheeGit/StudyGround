@@ -16,7 +16,7 @@ import UserProfile from './pages/main/profile/UserProfile';
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
-import Video from './pages/work/Content/Video/Video';
+import VideoPage from './pages/work/Content/Video/Video';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
 import Autho from './pages/work/Content/Approve/Autho';
@@ -59,7 +59,7 @@ function App() {
           {/* Wokr페이지 라우팅 */}
           <Route path="/work/:boardId" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />
-            <Route path="video" element={<Video />} />
+            <Route path="video" element={<VideoPage />} />
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="board" element={<Board />} />
             <Route path="storage" element={<Storage />} />

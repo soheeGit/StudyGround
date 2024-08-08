@@ -14,7 +14,7 @@ import clip from '../../../../../assets/clip.png';
 import star from '../../../../../assets/star.png';
 import nostar from '../../../../../assets/nostar.png';
 import { Button } from '../../../Component/Button';
-import { fetchNotices } from '../../../api/storageApi';
+import { fetchNotices } from '../../../api/noticeApi';
 import { useQuery } from '@tanstack/react-query';
 import { FormatFullDate } from '../../../Component/FormattedDate';
 
@@ -25,7 +25,6 @@ const NoticePage = () => {
   const [isOutletVisible, setIsOutletVisible] = useState(false); // Outlet 활성화 상태
 
   const [selectedNotice, setSelectedNotice] = useState(null);
-  const fetchNoticesRef = useRef(null);
 
   // 현재 URL이 /addnotice인 경우 Outlet 활성화
   useEffect(() => {
@@ -55,7 +54,6 @@ const NoticePage = () => {
     navigate(`/work/${boardId}/notice/${notice.id}`, { state: { notice } });
   };
 
-  /* 페이지네이션 */
   // 페이지네이션 상태
   const [currentPage, setCurrentPage] = useState(1);
   const datasPerPage = 7;
@@ -82,13 +80,13 @@ const NoticePage = () => {
         )
       : [];
 
-  if (isNoticesLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isNoticesLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (isError) {
-    return <div>Error loading notices. Please try again later.</div>;
-  }
+  // if (isError) {
+  //   return <div>Error loading notices. Please try again later.</div>;
+  // }
 
   return (
     <>
@@ -108,7 +106,7 @@ const NoticePage = () => {
               <div className="notice-header-4">날짜</div>
             </div>
             <div className="notice-content-container">
-              {currentDatas && currentDatas.length > 0 ? (
+              {currentDatas.length > 0 ? (
                 currentDatas.map((notice, noticeKey) => (
                   <div key={noticeKey} className="notice-content-box">
                     <div className="notice-content-1">
@@ -168,14 +166,7 @@ const NoticePage = () => {
           </div>
         </>
       )}
-
-      <Outlet context={{ boardId, fetchNoticesRef }} />
-
-      {/* {!selectedTask ? (
-        <TaskList tasks={task} onSelectTask={handleSelectTask} />
-      ) : (
-        <TaskDetail task={selectedTask} onBack={handleBackToList} />
-      )} */}
+      <Outlet context={{ boardId }} />
     </>
   );
 };

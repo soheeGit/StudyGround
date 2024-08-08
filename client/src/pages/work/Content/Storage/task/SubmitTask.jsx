@@ -5,11 +5,14 @@ import { Button } from '../../../Component/Button';
 import './SubmitTask.css';
 import Divider from '../../../Component/Divider';
 import SubmitTaskDetail from './SubmitTaskDetail';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { submitTask } from '../../../api/taskApi';
 
 const SubmitTask = ({ submitTasks }) => {
   // LocalStorage의 id불러오기
   const userData = JSON.parse(localStorage.getItem('user'));
   const userId = userData.user.id;
+  const queryClient = useQueryClient();
 
   const { boardId } = useOutletContext();
   const { taskId } = useParams();
@@ -22,6 +25,19 @@ const SubmitTask = ({ submitTasks }) => {
     setFiles([...files, ...event.target.files]);
   };
 
+  // 과제 제출
+  const mutation = useMutation({
+    mutationFn: (formData) => submitTask({ taskId, formData }),
+    onSuccess: () => {
+      alert('과제가 성공적으로 제출되었습니다.');
+      queryClient.invalidateQueries(['tasks', boardId]);
+    },
+    onError: (error) => {
+      console.error('과제 제출 중 오류 발생:', error);
+      alert('과제 제출 중 오류가 발생했습니다.');
+    },
+  });
+
   const handleSubmitTask = async (event) => {
     event.preventDefault();
 
@@ -30,31 +46,7 @@ const SubmitTask = ({ submitTasks }) => {
     files.forEach((file) => {
       formData.append('files', file);
     });
-
-    try {
-      const response = await axios.post(
-        `/storage/submitTask/${taskId}`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      if (response.data.success) {
-        alert('과제가 성공적으로 제출되었습니다.');
-        // if (fetchTasksRef.current) {
-        //   fetchTasksRef.current();
-        // }
-        navigate(`/work/${boardId}/task`);
-      } else {
-        alert('과제 제출에 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('과제 제출 중 오류 발생:', error);
-      alert('과제 제출 중 오류가 발생했습니다.');
-    }
+    mutation.mutate(formData);
   };
 
   // 내 제출한 과제 확인
