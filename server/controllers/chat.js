@@ -86,3 +86,18 @@ exports.sendChat = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.sendImage = async (req, res, next) => {
+    try {
+        const chat = await Chat.create({
+            boardId: req.params.id,
+            userId: req.user.id,
+            imageUrl: req.file.filename,
+        })
+        req.server.get('io').of('/chat').to(req.params.id).emit('chat', chat);
+        return res.status(200).json({ message: '이미지 채팅 성공' });
+    } catch(error) {
+        console.error(error);
+        next(error);
+    }
+}

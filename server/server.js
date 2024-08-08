@@ -40,7 +40,7 @@ sequelize.sync({ force: false })    //배포할때 true로 바꾸기
 server.use(morgan('dev'));  //현재 개발용. 배포할때 combined로 바꿔야함
 server.use(express.json());
 server.use(express.static(path.join(__dirname, '../client/build')))
-server.use('/files', express.static(path.join(__dirname, 'uploads')))
+server.use('/files', express.static(path.join(__dirname, 'uploads')))   //  /files라는 주소로 uploads 폴더 접근가능
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(cookieParser(process.env.COOKIE_SECRET));
