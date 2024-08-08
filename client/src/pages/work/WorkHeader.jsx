@@ -33,7 +33,7 @@ const WorkHeader = ({ title }) => {
     const handleStoredUser = () => {
       const storedUser = JSON.parse(localStorage.getItem('user'));
       if (storedUser) {
-        setUserName(storedUser.uName); // Access uName directly
+        setUserName(storedUser.user.uName); // Access uName directly
       } else {
         console.log('사용자 데이터 찾을 수 없음. 메인화면으로 돌아감');
         navigate('/#');
