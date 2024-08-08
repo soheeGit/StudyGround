@@ -251,7 +251,25 @@ exports.updateProfile = async (req, res) => {
     }
     await user.save();
 
-    return res.status(200).json({ success: true, user });
+    return res.status(200).json({ success: true, 
+      user: {
+        id: user.id,
+        uId: user.uId,
+        uEmail: user.uEmail,
+        uName: user.uName,
+        uNumber: user.uNumber,
+        uBirth: user.uBirth,
+        uSex: user.uSex,
+        provider: user.provider,
+        snsId: user.snsId,
+        uType: user.uType,
+        uLevel: user.uLevel,
+        profileImage: user.profileImage,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        deletedAt: user.deletedAt
+      }, 
+    });
   } catch (error) {
     console.error(error);
     return res

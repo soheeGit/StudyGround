@@ -19,12 +19,12 @@ class Chat extends Sequelize.Model {
                     key: 'id'
                 },
             },
-            roomId: {
+            boardId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'rooms',
-                    key: 'id'
+                    model: 'boards',
+                    key: 'bId'
                 },
             },
         }, {
@@ -40,7 +40,7 @@ class Chat extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Chat.belongsTo(db.Room, { foreignKey: 'roomId' });
+        db.Chat.belongsTo(db.Board, { foreignKey: 'boardId' });
         db.Chat.belongsTo(db.User, { foreignKey: 'userId' });
     }
 }
