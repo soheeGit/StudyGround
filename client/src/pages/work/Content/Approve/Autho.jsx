@@ -132,9 +132,12 @@ const Autho = () => {
                   <span id="span1">{studyGroup.board.bName}</span>
                 </div>
                 <span className="study-date">
-                  {new Date(
-                    studyGroup.requests[0].createdAt
-                  ).toLocaleDateString()}
+                  {studyGroup.requests.length > 0 &&
+                  studyGroup.requests[0].createdAt
+                    ? new Date(
+                        studyGroup.requests[0].createdAt
+                      ).toLocaleDateString()
+                    : 'No request date available'}
                 </span>
               </div>
             </div>

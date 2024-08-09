@@ -16,6 +16,7 @@ function JoinupForm2() {
     phoneNumber: '',
     gender: '',
     birthDate: '',
+    uType: '',
   });
 
   const handleChange = (e) => {
@@ -38,7 +39,7 @@ function JoinupForm2() {
         uNumber: formData.phoneNumber,
         uBirth: formData.birthDate,
         uSex: formData.gender,
-        uType: '선구자',
+        uType: formData.uType,
       };
 
       const response = await axios.post('/auth/join', requestBody);
@@ -56,6 +57,7 @@ function JoinupForm2() {
         phoneNumber: '',
         gender: '',
         birthDate: '',
+        uType: '',
       });
     } catch (error) {
       console.error('API error:', error);

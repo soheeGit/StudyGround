@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './WorkHeader.css';
-import Avatar from 'antd/es/avatar/avatar';
+import Avatar from 'antd/es/avatar';
 import { BellOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import useUserData from '../main/Mypage/useUserData';
 
 const WorkHeader = ({ title }) => {
   const [userName, setUserName] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const userData = useUserData();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,11 +56,11 @@ const WorkHeader = ({ title }) => {
   };
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    navigate('/Mypage');
   };
 
-  const handleMypageClick = () => {
-    navigate('/Mypage');
+  const handleBellClick = () => {
+    navigate('/Autho');
   };
 
   const handleLogout = async () => {
@@ -84,7 +86,7 @@ const WorkHeader = ({ title }) => {
       <div className="header-right">
         <div className="profile-container" onClick={toggleDropdown}>
           <div className="profile-img">
-            <Avatar />
+            <Avatar src={userData.profileImage} alt="프로필 사진" />
           </div>
           <div className="profile">
             {userName}님
@@ -94,13 +96,12 @@ const WorkHeader = ({ title }) => {
             <div className="dropdown-menu">
               <ul>
                 <li onClick={handleProfileClick}>프로필 보기</li>
-                <li onClick={handleMypageClick}>설정</li>
                 <li onClick={handleLogout}>로그아웃</li>
               </ul>
             </div>
           )}
         </div>
-        <div className="alarm-container">
+        <div className="alarm-container" onClick={handleBellClick}>
           <BellOutlined style={{ fontSize: '25px' }} />
         </div>
       </div>

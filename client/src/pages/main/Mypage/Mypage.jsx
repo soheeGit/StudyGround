@@ -115,11 +115,6 @@ const Mypage = () => {
     }
   };
 
-  // 스터디 수락,거절 (방장기능)
-  const handleAccrejStudyClick = () => {
-    navigate('/Autho');
-  };
-
   return (
     <>
       <Sidebar />
@@ -165,12 +160,6 @@ const Mypage = () => {
           <p>진행중인 활동이 없습니다.</p>
         )}
 
-        <div className="studyingbutton">
-          <button className="accrej_study" onClick={handleAccrejStudyClick}>
-            신청 목록
-          </button>
-        </div>
-
         <div className="mypage_activities">내 리뷰</div>
         {reviewData.length > 0 ? (
           reviewData.map((board) => (
@@ -178,7 +167,7 @@ const Mypage = () => {
               <div className="review_left">{board.boardName}</div>
               <div className="review_right">
                 <div className="average_rating">
-                  ⭐ {board.averageRating.toFixed(1)} / 5
+                  ⭐ {board.averageRating.toFixed(1)} / 5.0
                 </div>
 
                 {board.praises.length > 0 && (

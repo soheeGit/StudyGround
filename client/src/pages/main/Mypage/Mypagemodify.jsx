@@ -13,6 +13,18 @@ const Mypagemodify = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
+  const typecategoryOptions = [
+    '선구자',
+    '탐구자',
+    '지도자',
+    '추진자',
+    '수행자',
+    '전략판단가',
+    '완주자',
+    '환기자',
+    '전문가',
+  ];
+
   useEffect(() => {
     if (file) {
       const reader = new FileReader();
@@ -63,7 +75,7 @@ const Mypagemodify = () => {
       if (file) {
         imageUrl = await handleImageUpload();
       }
-  
+
       const response = await fetch('/profile/updateProfile', {
         method: 'POST',
         headers: {
@@ -76,7 +88,7 @@ const Mypagemodify = () => {
           profileImage: imageUrl,
         }),
       });
-  
+
       const result = await response.json();
       if (result.success) {
         console.log('Profile updated successfully:', result.user);
@@ -90,7 +102,6 @@ const Mypagemodify = () => {
       console.error('Error updating profile:', error);
     }
   };
-  
 
   const getBorderColor = (level) => {
     switch (level) {
@@ -119,7 +130,7 @@ const Mypagemodify = () => {
         <div className="mpm_info">
           <div className="mpm_profile">
             <img
-              src={preview || profileImage || '/default-profile.png'} // 기본 이미지 제공
+              src={preview || userData.profileImage || '/default-profile.png'}
               alt="사진"
               className="mpm_profile_image"
               style={{
@@ -147,12 +158,20 @@ const Mypagemodify = () => {
           <div className="profile_nickname_edit">
             <label className="profile_team">
               팀 프로젝트 유형
-              <input
-                className="nickname_edit"
-                type="text"
-                value={uType}
-                onChange={handleTypeChange}
-              />
+              <div className="team_type_radio">
+                {typecategoryOptions.map((category) => (
+                  <label key={category} className="radio-label">
+                    <input
+                      type="radio"
+                      name="uType"
+                      value={category}
+                      checked={uType === category}
+                      onChange={handleTypeChange}
+                    />
+                    {category}
+                  </label>
+                ))}
+              </div>
             </label>
           </div>
 

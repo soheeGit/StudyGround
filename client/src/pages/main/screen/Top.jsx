@@ -1,10 +1,10 @@
+// 메인화면
 import './Top.css';
 import React, { useState } from 'react';
 import logo from '../../../assets/logo.png';
 import { MdSearch } from 'react-icons/md';
 import CustomModal from '../Modal/Modal';
 import Search from '../screen/Search';
-import Range from '../screen/Range';
 import Mid_Top from '../screen/Mid_Top';
 import { Link } from 'react-router-dom';
 
@@ -72,7 +72,6 @@ function Top() {
       </div>
 
       <Search />
-      <Range />
       <Mid_Top />
 
       <CustomModal isOpen={modalIsOpen} onRequestClose={closeModal} />
