@@ -34,7 +34,7 @@ const upload = multer({
     }),
     limits: { fileSize: 10 * 1024 * 1024 },
 })
-
+// 이미지 전송
 router.post('/room/:id/image', isLoggedIn, upload.single('img'), sendImage);
 
 module.exports = router;

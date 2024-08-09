@@ -19,7 +19,7 @@ const WorkHeader = ({ title }) => {
         try {
           const userData = JSON.parse(decodeURIComponent(userDataString));
           localStorage.setItem('user', JSON.stringify(userData));
-          setUserName(userData.uName);
+          setUserName(userData.uName || userData.user.uName);
           console.log('User data saved to localStorage:', userData);
           navigate('/LoginAfter');
         } catch (error) {
@@ -33,9 +33,15 @@ const WorkHeader = ({ title }) => {
     const handleStoredUser = () => {
       const storedUser = JSON.parse(localStorage.getItem('user'));
       if (storedUser) {
-        setUserName(storedUser.user.uName); // Access uName directly
+        const userName = storedUser.uName || storedUser.user?.uName;
+        if (userName) {
+          setUserName(userName);
+        } else {
+          console.error('유효한 사용자 이름을 찾을 수 없습니다.');
+          navigate('/#');
+        }
       } else {
-        console.log('사용자 데이터 찾을 수 없음. 메인화면으로 돌아감');
+        console.log('사용자 데이터를 찾을 수 없음. 메인화면으로 돌아감');
         navigate('/#');
       }
     };
