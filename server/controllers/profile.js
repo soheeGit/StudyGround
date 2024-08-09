@@ -237,7 +237,6 @@ exports.myReviewData = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   const userId = req.user.id;
   const { uName, uType, profileImage } = req.body;
-  console.log('------------------------Received profileImage:', profileImage);
   try {
     const user = await User.findByPk(userId);
     if (!user) {

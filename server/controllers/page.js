@@ -101,6 +101,23 @@ exports.postApplyBoard = async (req, res) => {
   const userId = req.user.id;
 
   try {
+    const user = await User.findOne({where: {id: userId}})
+    if(!user) {
+      return res.status(404).json( { message: '사용자를 찾을 수 없습니다. ' } );
+    }
+    const board = await Board.findOne({where: {bId: boardId}});
+    if(!board) {
+      return res.status(404).json( { message: '스터디를 찾을 수 없습니다. ' } );
+    }
+    if (board.leaderId === userId) {
+      return res.status(400).json({ message: '리더는 스터디 신청을 할 수 없습니다.' });
+    }
+    
+    const existingUserBoard = await board.hasUser(user);
+    if (existingUserBoard) {
+      return res.status(400).json({ message: '이미 해당 스터디에 참여 중입니다.' });
+    }
+
     const request = await BoardRequest.create({
       boardId,
       userId,
