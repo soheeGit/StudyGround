@@ -46,18 +46,22 @@ const Mypagemodify = () => {
       if (result.url) {
         setProfileImage(result.url);
         console.log('프로필 이미지 업데이트 성공:', result.url);
+        return result.url;
       } else {
         console.error('이미지 업로드 실패');
+        return null;
       }
     } catch (error) {
       console.error('이미지 업로드 중 오류:', error);
+      return null;
     }
   };
 
   const handleSubmit = async () => {
     try {
+      let imageUrl = profileImage;
       if (file) {
-        await handleImageUpload();
+        imageUrl = await handleImageUpload();
       }
   
       const response = await fetch('/profile/updateProfile', {
@@ -69,7 +73,7 @@ const Mypagemodify = () => {
         body: JSON.stringify({
           uName,
           uType,
-          profileImage,
+          profileImage: imageUrl,
         }),
       });
   
