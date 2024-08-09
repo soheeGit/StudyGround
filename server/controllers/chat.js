@@ -1,7 +1,7 @@
 const { Board, User, Chat } = require('../models');
 const { removeRoom: removeRoomService } = require('../services/chat')
 
-exports.createRoom = async (req, res, next) => {
+/*exports.createRoom = async (req, res, next) => {
     const boardId = req.params.id;
     try{
         const board = await Board.findOne({where: { bId: boardId }})
@@ -12,7 +12,7 @@ exports.createRoom = async (req, res, next) => {
         console.error(error);
         next(error);
     }
-};
+};*/
 
 exports.enterRoom = async (req, res, next) => {
     const boardId = req.params.id;
@@ -39,17 +39,10 @@ exports.enterRoom = async (req, res, next) => {
                 uId: user.uId,
                 uEmail: user.uEmail,
                 uName: user.uName,
-                uNumber: user.uNumber,
-                uBirth: user.uBirth,
-                uSex: user.uSex,
-                provider: user.provider,
-                snsId: user.snsId,
                 uType: user.uType,
                 uLevel: user.uLevel,
                 profileImage: user.profileImage,
                 createdAt: user.createdAt,
-                updatedAt: user.updatedAt,
-                deletedAt: user.deletedAt
             },
             board,
             chats,
@@ -63,6 +56,14 @@ exports.enterRoom = async (req, res, next) => {
 exports.removeRoom = async (req, res, next) => {
     const boardId = req.params.id;
     try {
+        const now = new Date();
+        const board = await Board.findOne({ where: { bId: boardId } })
+        if(!board) {
+            return res.status(404).json({ error: '채팅방을 찾을 수 없습니다.' });
+        }
+        if(now < board.bClosingDate) {
+            return res.status(400).json({ error: '스터디가 아직 종료되지 않았습니다.' });
+        }
         await removeRoomService(boardId)
         return res.status(200).json({ message: '채팅방 삭제 성공' });
     } catch(error) {
@@ -81,6 +82,21 @@ exports.sendChat = async (req, res, next) => {
         req.server.get('io').of('/chat').to(req.params.id).emit('chat', chat);
         return res.status(200).json({ message: '채팅 성공' });
     }catch(error) {
+        console.error(error);
+        next(error);
+    }
+}
+
+exports.sendImage = async (req, res, next) => {
+    try {
+        const chat = await Chat.create({
+            boardId: req.params.id,
+            userId: req.user.id,
+            imageUrl: req.file.filename,
+        })
+        req.server.get('io').of('/chat').to(req.params.id).emit('chat', chat);
+        return res.status(200).json({ message: '이미지 채팅 성공' });
+    } catch(error) {
         console.error(error);
         next(error);
     }

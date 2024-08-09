@@ -29,7 +29,7 @@ const upload = multer({
             cb(null, `${baseName}_${Date.now()}${ext}`);
         },
     }),
-    limits: { fileSize: 5 * 1024 * 1024 },     //5MB
+    limits: { fileSize: 10 * 1024 * 1024 },     //5MB
 });
 
 const maxCount = 10;

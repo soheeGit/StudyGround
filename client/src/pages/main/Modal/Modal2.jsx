@@ -1,3 +1,4 @@
+// Detail 모달창
 import React from 'react';
 import Modal from 'react-modal';
 import './Modal2.css';

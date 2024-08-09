@@ -22,6 +22,7 @@ exports.myUserData = async (req, res) => {
       success: true,
       message: '사용자 정보',
       user: {
+        id: user.id,
         uId: user.uId,
         uEmail: user.uEmail,
         uName: user.uName,
@@ -32,8 +33,10 @@ exports.myUserData = async (req, res) => {
         snsId: user.snsId,
         uType: user.uType,
         uLevel: user.uLevel,
+        profileImage: user.profileImage,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
+        deletedAt: user.deletedAt
       },
     });
   } catch (error) {
@@ -142,6 +145,7 @@ exports.otherUserData = async (req, res) => {
         snsId: otherUser.snsId,
         uType: otherUser.uType,
         uLevel: otherUser.uLevel,
+        profileImage: otherUser.profileImage,
         createdAt: otherUser.createdAt,
         updatedAt: otherUser.updatedAt,
       },
@@ -232,9 +236,8 @@ exports.myReviewData = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   const userId = req.user.id;
-  const { uName, uType } = req.body;
-  const profileImage = req.file ? `/uploads/${req.file.filename}` : null;
-  console.log('프로필이미지수정: ', req.file)
+  const { uName, uType, profileImage } = req.body;
+  console.log('------------------------Received profileImage:', profileImage);
   try {
     const user = await User.findByPk(userId);
     if (!user) {
@@ -251,7 +254,8 @@ exports.updateProfile = async (req, res) => {
     }
     await user.save();
 
-    return res.status(200).json({ success: true, 
+    return res.status(200).json({ 
+      success: true, 
       user: {
         id: user.id,
         uId: user.uId,
@@ -268,13 +272,11 @@ exports.updateProfile = async (req, res) => {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         deletedAt: user.deletedAt
-      }, 
+      },
     });
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ error: '프로필 이미지 업데이트 오류', details: error.message });
+    return res.status(500).json({ error: '프로필 업데이트 오류', details: error.message });
   }
 };
 
@@ -282,10 +284,9 @@ exports.afterUploadImage = (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: '파일이 업로드되지 않았습니다.' });
   }
-
-  const imageUrl = `/uploads/${req.file.filename}`;
+  const imageUrl = `/files/${req.file.filename}`;
   console.log('Image URL:', imageUrl);
-  res.json({ url: imageUrl });
+  res.status(200).json({ url: imageUrl });
 };
 
 exports.deleteUser = async (req, res) => {

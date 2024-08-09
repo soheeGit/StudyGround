@@ -9,8 +9,8 @@ const Mypagemodify = () => {
   const userData = useUserData();
   const [uName, setUName] = useState(userData.uName || '');
   const [uType, setUType] = useState(userData.uType || '');
-  const [profileImage, setProfileImage] = useState();
-  const [file, setFile] = useState();
+  const [profileImage, setProfileImage] = useState(userData.profileImage || '');
+  const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
   useEffect(() => {
@@ -35,7 +35,6 @@ const Mypagemodify = () => {
     const formData = new FormData();
     formData.append('img', file);
 
-    // 프로필 이미지 설정
     try {
       const response = await fetch('/profile/img', {
         method: 'POST',
@@ -44,23 +43,27 @@ const Mypagemodify = () => {
       });
 
       const result = await response.json();
-      console.log('Image upload response:', result);
       if (result.url) {
         setProfileImage(result.url);
         console.log('프로필 이미지 업데이트 성공:', result.url);
+        return result.url;
       } else {
         console.error('이미지 업로드 실패');
+        return null;
       }
     } catch (error) {
       console.error('이미지 업로드 중 오류:', error);
+      return null;
     }
   };
 
-  // 프로필 업데이트
   const handleSubmit = async () => {
-    await handleImageUpload();
-
     try {
+      let imageUrl = profileImage;
+      if (file) {
+        imageUrl = await handleImageUpload();
+      }
+  
       const response = await fetch('/profile/updateProfile', {
         method: 'POST',
         headers: {
@@ -70,10 +73,10 @@ const Mypagemodify = () => {
         body: JSON.stringify({
           uName,
           uType,
-          profileImage,
+          profileImage: imageUrl,
         }),
       });
-
+  
       const result = await response.json();
       if (result.success) {
         console.log('Profile updated successfully:', result.user);
@@ -87,8 +90,8 @@ const Mypagemodify = () => {
       console.error('Error updating profile:', error);
     }
   };
+  
 
-  // uLevel에 따라 프로필 테두리 색 바뀜
   const getBorderColor = (level) => {
     switch (level) {
       case '빨강':
@@ -116,7 +119,7 @@ const Mypagemodify = () => {
         <div className="mpm_info">
           <div className="mpm_profile">
             <img
-              src={preview || profileImage || 'default_profile_image_url'}
+              src={preview || profileImage || '/default-profile.png'} // 기본 이미지 제공
               alt="사진"
               className="mpm_profile_image"
               style={{
@@ -143,9 +146,7 @@ const Mypagemodify = () => {
 
           <div className="profile_nickname_edit">
             <label className="profile_team">
-              팀 프로젝트
-              <br />
-              유형
+              팀 프로젝트 유형
               <input
                 className="nickname_edit"
                 type="text"

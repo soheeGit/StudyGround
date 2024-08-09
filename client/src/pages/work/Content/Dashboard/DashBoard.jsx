@@ -9,10 +9,21 @@ import storage3 from '../../../../assets/storage3.png';
 import { FormatFullDate } from '../../Component/FormattedDate';
 import { fetchMemo5, fetchNotice5 } from '../../api/fetch5data';
 import { useQuery } from '@tanstack/react-query';
+import { fetchBoardDetails } from '../../api/boardDetailApi';
+import Evaluation from '../../../main/evaluation/Evaluation';
 
 const DashBoard = () => {
   const { boardId } = useOutletContext();
   const { myStudy } = useOutletContext();
+
+  // 스터디 종료 후 상호평가 모달 창
+  const [showModal, setShowModal] = useState(false);
+
+  // 특정 스터디 데이터 fetch
+  const { data: board, isLoading: isBoardLoading } = useQuery({
+    queryKey: ['boardDetails', boardId],
+    queryFn: () => fetchBoardDetails(boardId),
+  });
 
   // 상위 5개 공지사항 데이터 fetch
   const { data: notice5, isNotice5Loading } = useQuery({
@@ -27,6 +38,17 @@ const DashBoard = () => {
     queryFn: fetchMemo5,
   });
 
+  // 현재 날짜랑 비교해서 스터디 기간이 끝난 스터디에만 모달창 뜨게 설정
+  useEffect(() => {
+    if (board) {
+      const currentDate = new Date();
+      const endDate = new Date(board.bClosingDate);
+      if (currentDate > endDate) {
+        setShowModal(true);
+      }
+    }
+  }, [board]);
+
   return (
     <>
       <WorkHeader title="DashBoard" />
@@ -39,7 +61,12 @@ const DashBoard = () => {
             </div>
             <div className="dday2">
               <a />
-              2024.01.01 ~ 2024.08.31
+              {board && (
+                <>
+                  {new Date(board.bStartDate).toLocaleDateString()} ~{' '}
+                  {new Date(board.bClosingDate).toLocaleDateString()}
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -92,6 +119,7 @@ const DashBoard = () => {
           </div>
         </div>
       </div>
+      {showModal && <Evaluation />}
     </>
   );
 };
