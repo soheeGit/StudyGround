@@ -91,7 +91,7 @@ const AddStudyForm = () => {
       <div className="aformContainer">
         <form className="addstudyform" onSubmit={handleSubmit}>
           <label className="studylabel">
-            스터디 이름*
+            스터디 이름<span className="red-asterisk">*</span>
             <input
               className="studyinput"
               type="text"
@@ -103,7 +103,7 @@ const AddStudyForm = () => {
           </label>
           <br />
           <label>
-            스터디 간단소개*
+            스터디 간단소개<span className="red-asterisk">*</span>
             <input
               className="studyinput"
               type="text"
@@ -115,7 +115,7 @@ const AddStudyForm = () => {
           </label>
           <br />
           <label>
-            총 인원*
+            총 인원<span className="red-asterisk">*</span>
             <select
               className="studyinput"
               name="bTotalNumber"
@@ -135,7 +135,7 @@ const AddStudyForm = () => {
           </label>
           <br />
           <div>
-            카테고리*
+            카테고리<span className="red-asterisk">*</span>
             {categoryOptions.map((category) => (
               <label key={category} className="radio-label">
                 <input
@@ -151,7 +151,7 @@ const AddStudyForm = () => {
           </div>
           <br />
           <label>
-            스터디 시작일*
+            스터디 시작일<span className="red-asterisk">*</span>
             <input
               className="studyinput"
               type="date"
@@ -163,7 +163,7 @@ const AddStudyForm = () => {
           </label>
           <br />
           <label>
-            스터디 마감일*
+            스터디 마감일<span className="red-asterisk">*</span>
             <input
               className="studyinput"
               type="date"

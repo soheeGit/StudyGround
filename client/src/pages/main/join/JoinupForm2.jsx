@@ -40,7 +40,9 @@ function JoinupForm2() {
         <form onSubmit={handleSubmit}>
           <div className="userInputFrame">
             <div className="input-group">
-              <div className="joinupInput-name">아이디*</div>
+              <div className="joinupInput-name">
+                아이디<span className="red-asterisk">*</span>
+              </div>
               <input
                 type="text"
                 placeholder="아이디를 입력해주세요"
@@ -50,7 +52,9 @@ function JoinupForm2() {
               />
             </div>
             <div className="input-group">
-              <div className="joinupInput-name">비밀번호*</div>
+              <div className="joinupInput-name">
+                비밀번호<span className="red-asterisk">*</span>
+              </div>
               <input
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
@@ -60,7 +64,9 @@ function JoinupForm2() {
               />
             </div>
             <div className="input-group">
-              <div className="joinupInput-name">비밀번호 확인*</div>
+              <div className="joinupInput-name">
+                비밀번호 확인<span className="red-asterisk">*</span>
+              </div>
               <input
                 type="password"
                 placeholder="비밀번호를 한번 더 입력해주세요"
@@ -70,7 +76,9 @@ function JoinupForm2() {
               />
             </div>
             <div className="input-group">
-              <div className="joinupInput-name">이름*</div>
+              <div className="joinupInput-name">
+                이름<span className="red-asterisk">*</span>
+              </div>
               <input
                 type="text"
                 placeholder="이름을 입력해주세요"
@@ -80,7 +88,9 @@ function JoinupForm2() {
               />
             </div>
             <div className="input-group">
-              <div className="joinupInput-name">이메일*</div>
+              <div className="joinupInput-name">
+                이메일<span className="red-asterisk">*</span>
+              </div>
               <input
                 type="text"
                 placeholder="예: studyground@gmail.com"
@@ -90,7 +100,9 @@ function JoinupForm2() {
               />
             </div>
             <div className="input-group">
-              <div className="joinupInput-name">전화번호*</div>
+              <div className="joinupInput-name">
+                전화번호<span className="red-asterisk">*</span>
+              </div>
               <input
                 type="tel"
                 placeholder="숫자를 입력해주세요"
@@ -109,7 +121,9 @@ function JoinupForm2() {
               />
             </div>
             <div className="input-group">
-              <div className="joinupInput-name">성별*</div>
+              <div className="joinupInput-name">
+                성별<span className="red-asterisk">*</span>
+              </div>
               <label>
                 <input
                   type="radio"

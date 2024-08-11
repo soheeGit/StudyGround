@@ -138,7 +138,9 @@ const EvaluationTest = () => {
                 </select>
               </div>
               <div className="rating-section">
-                <label>별점 *</label>
+                <label>
+                  별점<span className="red-asterisk"> *</span>
+                </label>
                 <div className="stars">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <span
