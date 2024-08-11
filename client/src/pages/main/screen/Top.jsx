@@ -37,7 +37,7 @@ function Top() {
           <Link to="/Sidebar" className="navigation">
             Work
           </Link>
-          <Link to="/Recruitment" className="navigation">
+          <Link to="/Chat" className="navigation">
             Recruitment
           </Link>
           <Link to="/Notice" className="navigation">
