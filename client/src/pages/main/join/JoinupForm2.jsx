@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './JoinupForm2.css';
 import Top1 from '../screen/Top1';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 function JoinupForm2() {
   const navigate = useNavigate();
@@ -27,41 +26,10 @@ function JoinupForm2() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const requestBody = {
-        uId: formData.id,
-        uEmail: formData.email,
-        uPassword: formData.password,
-        uName: formData.name,
-        uNumber: formData.phoneNumber,
-        uBirth: formData.birthDate,
-        uSex: formData.gender,
-        uType: formData.uType,
-      };
-
-      const response = await axios.post('/auth/join', requestBody);
-
-      console.log('API response:', response.data);
-
-      navigate('/test');
-
-      setFormData({
-        id: '',
-        password: '',
-        passwordConfirm: '',
-        name: '',
-        email: '',
-        phoneNumber: '',
-        gender: '',
-        birthDate: '',
-        uType: '',
-      });
-    } catch (error) {
-      console.error('API error:', error);
-    }
+    navigate('/test', { state: { formData } });
   };
 
   return (
@@ -75,13 +43,12 @@ function JoinupForm2() {
               <div className="joinupInput-name">아이디*</div>
               <input
                 type="text"
-                placeholder="6자 이상의 영문 혹은 영문과 숫자 조합"
+                placeholder="아이디를 입력해주세요"
                 name="id"
                 value={formData.id}
                 onChange={handleChange}
               />
             </div>
-
             <div className="input-group">
               <div className="joinupInput-name">비밀번호*</div>
               <input
@@ -92,7 +59,6 @@ function JoinupForm2() {
                 onChange={handleChange}
               />
             </div>
-
             <div className="input-group">
               <div className="joinupInput-name">비밀번호 확인*</div>
               <input
@@ -103,7 +69,6 @@ function JoinupForm2() {
                 onChange={handleChange}
               />
             </div>
-
             <div className="input-group">
               <div className="joinupInput-name">이름*</div>
               <input
@@ -114,7 +79,6 @@ function JoinupForm2() {
                 onChange={handleChange}
               />
             </div>
-
             <div className="input-group">
               <div className="joinupInput-name">이메일*</div>
               <input
@@ -125,7 +89,6 @@ function JoinupForm2() {
                 onChange={handleChange}
               />
             </div>
-
             <div className="input-group">
               <div className="joinupInput-name">전화번호*</div>
               <input
@@ -136,7 +99,6 @@ function JoinupForm2() {
                 onChange={handleChange}
               />
             </div>
-
             <div className="input-group">
               <div className="joinupInput-name">생년월일</div>
               <input
@@ -146,7 +108,6 @@ function JoinupForm2() {
                 onChange={handleChange}
               />
             </div>
-
             <div className="input-group">
               <div className="joinupInput-name">성별*</div>
               <label>

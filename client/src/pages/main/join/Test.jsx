@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Test.css';
 import Top1 from '../screen/Top1';
+import axios from 'axios';
 import data from '../join/data';
 
 function Test() {
   const [selectedRow, setSelectedRow] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const formData = location.state?.formData || {};
 
   const handleCheckboxChange = (event, title) => {
     if (event.target.checked) {
@@ -16,9 +19,33 @@ function Test() {
     }
   };
 
-  const handleNextStep = () => {
-    alert('회원가입 완료되었습니다');
-    navigate('/#');
+  const handleNextStep = async () => {
+    if (!selectedRow) {
+      alert('성격 유형을 선택해주세요.');
+      return;
+    }
+
+    try {
+      const requestBody = {
+        uId: formData.id,
+        uEmail: formData.email,
+        uPassword: formData.password,
+        uName: formData.name,
+        uNumber: formData.phoneNumber,
+        uBirth: formData.birthDate,
+        uSex: formData.gender,
+        uType: selectedRow,
+      };
+
+      const response = await axios.post('/auth/join', requestBody);
+
+      console.log('API response:', response.data);
+
+      alert('회원가입 완료되었습니다');
+      navigate('/#');
+    } catch (error) {
+      console.error('API error:', error);
+    }
   };
 
   return (
