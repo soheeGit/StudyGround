@@ -19,10 +19,10 @@ const Mypagemodify = () => {
     '지도자',
     '추진자',
     '수행자',
-    '전략판단가',
     '완주자',
     '환기자',
     '전문가',
+    '전략판단가',
   ];
 
   useEffect(() => {
@@ -177,7 +177,11 @@ const Mypagemodify = () => {
 
           <div className="profile_nickname_edit">
             프로필 사진
-            <input type="file" onChange={handleFileChange} />
+            <input
+              type="file"
+              className="file-edit"
+              onChange={handleFileChange}
+            />
           </div>
 
           <button className="mypage_edit" onClick={handleSubmit}>

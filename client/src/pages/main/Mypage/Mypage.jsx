@@ -120,6 +120,9 @@ const Mypage = () => {
       <Sidebar />
       <div className="mypage_wrap">
         <WorkHeader />
+        <div className="mypage_header">
+          <b>마이페이지</b>
+        </div>
         <div className="mypage_title">내 정보</div>
         <div className="mypage_info">
           <div className="profile">

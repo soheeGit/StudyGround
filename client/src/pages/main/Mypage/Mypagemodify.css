@@ -76,3 +76,16 @@
   border: 1px solid #cfcfcf;
   margin-right: 20px;
 }
+
+.team_type_radio {
+  margin-left: 140px;
+  margin-top: -20px;
+}
+
+.radio-label {
+  padding-right: 16px;
+}
+
+.profile_nickname_edit .file-edit {
+  margin-left: 20px;
+}
