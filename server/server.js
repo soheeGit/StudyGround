@@ -11,6 +11,7 @@ const cors = require('cors')
 dotenv.config({path: path.join(__dirname, '../.env')});    //process.env 만들어줌
 
 const webSocket = require('./socket');
+const chatRouter = require('./routes/chat')
 const reviewRouter = require('./routes/review')
 const profileRouter = require('./routes/profile')
 const pageRouter = require('./routes/page')
@@ -71,6 +72,7 @@ server.use(passport.session())
   next();
 })*/
 
+server.use('/chat', chatRouter);
 server.use('/api', pageRouter);
 server.use('/auth', authRouter);
 server.use('/reviews', reviewRouter);
