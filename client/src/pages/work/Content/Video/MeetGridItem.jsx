@@ -1,37 +1,30 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-const MeetGridItem = ({ stream }) => {
+const MeetGridItem = ({ stream, userName, width }) => {
   const ref = useRef(null);
-
+  console.log(width);
   useEffect(() => {
     if (ref.current) {
       ref.current.srcObject = stream;
     }
   }, [stream]);
-
   return (
     <MeetGridItemBlock>
-      {stream ? (
-        <VideoContainer ref={ref} playsInline autoPlay />
-      ) : (
-        <PlaceholderImage
-          src="/path/to/placeholder-image.jpg"
-          alt="No Video Available"
-        />
-      )}
+      <VideoContainer ref={ref} playsInline autoPlay />
+      <Overlay>{userName}</Overlay>
     </MeetGridItemBlock>
   );
 };
 export default MeetGridItem;
 
 const MeetGridItemBlock = styled.div`
-  border: 8px solid #212121;
+  width: ${(props) => props.width};
   position: releative;
+  border: 8px solid #212121;
 `;
 
 const VideoContainer = styled.video`
-  object-fit: cover; // video 태그 무조건 1:1 비율인걸 없애줌
   position: absolute;
   left: 0;
   top: 0;
@@ -39,11 +32,12 @@ const VideoContainer = styled.video`
   height: 100%;
 `;
 
-const PlaceholderImage = styled.img`
-  object-fit: cover;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+const Overlay = styled.div`
+  position: relative;
+  bottom: 479px;
+  right: 293px;
+  color: white;
+  background-color: #7f7f7f;
+  padding: 5px;
+  border-radius: 5px;
 `;
