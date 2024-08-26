@@ -14,7 +14,6 @@ import Mypage from './pages/main/Mypage/Mypage';
 import Mypagemodify from './pages/main/Mypage/Mypagemodify';
 import UserProfile from './pages/main/profile/UserProfile';
 import Evaluation from './pages/main/evaluation/Evaluation';
-import Chat from './pages/work/Content/Chat/Chat'; // 임시 위치
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
 import DashBoard from './pages/work/Content/Dashboard/DashBoard';
@@ -22,6 +21,7 @@ import VideoPage from './pages/work/Content/Video/Video';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
 import Autho from './pages/work/Content/Approve/Autho';
+import Chat from './pages/work/Content/Chat/Chat'; // 임시 위치
 // Storage
 import Memo from './pages/work/Content/Storage/Memo';
 import TaskPage from './pages/work/Content/Storage/task/TaskPage';
@@ -49,7 +49,6 @@ function App() {
           <Route path="/LoginAfter" element={<LoginAfter />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/Sidebar" element={<Sidebar />} />
-          <Route path="/Chat" element={<Chat />} />
           <Route path="/add-study" element={<AddStudyForm />} />
           <Route path="/boardList" element={<BoardList />} />
           <Route path="/" element={<Detail />} />
@@ -67,6 +66,7 @@ function App() {
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="board" element={<Board />} />
             <Route path="storage" element={<Storage />} />
+            <Route path="Chat" element={<Chat />} />
             <Route path="notice" element={<NoticePage />}>
               <Route path="addnotice" element={<AddNotice />} />
               <Route path=":noticeId" element={<NoticeDetail />} />

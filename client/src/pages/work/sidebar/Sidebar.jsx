@@ -69,6 +69,14 @@ const Sidebar = ({ boardId, onComponentChange }) => {
               isSelected={selectedItem === 'Storage'}
             />
           </Link>
+          <Link to={`/work/${boardId}/chat`}>
+            <SidebarItem
+              title="Chat"
+              icon={<TiCloudStorage />}
+              onClick={() => itemSelect('Chat')}
+              isSelected={selectedItem === 'Chat'}
+            />
+          </Link>
         </div>
       </div>
     </div>

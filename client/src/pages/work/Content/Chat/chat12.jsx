@@ -3,10 +3,11 @@ import { useState, useEffect } from 'react';
 import Chat from '../../Component/Chat';
 import styled from 'styled-components';
 
-const socket = io.connect('http://localhost:8005/room', {
-  // 네임스페이스
-  path: '/socket.io',
-});
+// Connect to the room namespace
+const socket = io.connect('http://localhost:8005/room', { path: '/socket.io' });
+
+// Connect to the chat namespace
+// const chatSocket = io('http://localhost:8005/chat', { path: '/socket.io' });
 
 function Chating() {
   const [username, setUsername] = useState('');
@@ -23,22 +24,28 @@ function Chating() {
       console.log('User Left:', data.chat);
     };
 
+    // Confirm connection to the room namespace
     socket.on('connect', () => {
       console.log('Connected to room namespace');
     });
 
-    socket.on('connect_error', (error) => {
-      console.error('Connection Error:', error);
-    });
+    // Confirm connection to the chat namespace
+    // chatSocket.on('connect', () => {
+    //   console.log('Connected to chat namespace');
+    // });
 
+    // Set up listener for room messages or notifications
     socket.on('userJoined', handleUserJoined);
     socket.on('userLeft', handleUserLeft);
 
-    // Cleanup function to remove event listeners
+    // Cleanup function to remove listeners
     return () => {
       socket.off('connect');
+      socket.off('connect_error');
       socket.off('userJoined', handleUserJoined);
       socket.off('userLeft', handleUserLeft);
+      // chatSocket.off('connect');
+      // chatSocket.off('connect_error');
     };
   }, []);
 
@@ -51,7 +58,7 @@ function Chating() {
       );
       setShowChat(true);
     } else {
-      setErrorMsg('Please enter a username and room.');
+      setErrorMsg('사용자 이름과 입장할 방을 입력해주세요.');
     }
   };
 
@@ -62,7 +69,7 @@ function Chating() {
           <ChatTitle>Team Chat</ChatTitle>
           <ChatInput
             type="text"
-            placeholder="이름을 입력하세요"
+            placeholder="사용할 이름을 입력해주세요"
             onChange={(e) => {
               setErrorMsg('');
               setUsername(e.target.value);
@@ -70,14 +77,14 @@ function Chating() {
           />
           <ChatInput
             type="text"
-            placeholder="방 번호를 입력하세요"
+            placeholder="입장할 방을 입력해주세요"
             onChange={(e) => {
               setErrorMsg('');
               setRoom(e.target.value);
             }}
           />
           <ErrorMessage>{errorMsg}</ErrorMessage>
-          <ChatButton type="submit">참가하기</ChatButton>
+          <ChatButton type="submit">입장</ChatButton>
         </ChatContainer>
       ) : (
         <Chat socket={socket} username={username} room={room} />
@@ -91,10 +98,8 @@ export default Chating;
 const ChatApp = styled.div`
   background: #fff;
   color: #212121;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  display: grid;
+  place-items: left;
 `;
 
 const ChatContainer = styled.form`
@@ -103,7 +108,7 @@ const ChatContainer = styled.form`
   text-align: center;
   border: 1px solid steelblue;
   border-radius: 6px;
-  padding: 20px;
+  padding: 10px;
   width: 300px;
 `;
 
@@ -115,7 +120,7 @@ const ChatTitle = styled.h3`
 
 const ChatInput = styled.input`
   height: 35px;
-  margin: 7px 0;
+  margin: 7px;
   border: 2px solid steelblue;
   border-radius: 5px;
   padding: 5px 10px;
@@ -124,8 +129,8 @@ const ChatInput = styled.input`
 
 const ErrorMessage = styled.p`
   color: red;
+  height: 10px;
   font-size: 0.8rem;
-  margin: 5px 0;
 `;
 
 const ChatButton = styled.button`
@@ -139,9 +144,10 @@ const ChatButton = styled.button`
   background: steelblue;
   color: #fff;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.5s;
   &:hover {
     background: rgb(35, 65, 89);
+    transition: all 0.5s;
   }
   &:active {
     font-size: 0.8rem;

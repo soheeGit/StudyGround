@@ -3,10 +3,16 @@ import './Detail.css';
 
 function Detail({ board }) {
   const [message, setMessage] = React.useState('');
+  const [hasApplied, setHasApplied] = React.useState(false);
 
   const handleParticipateClick = () => {
     if (!board || !board.bId) {
       console.error('Board ID is not available', board);
+      return;
+    }
+
+    if (hasApplied) {
+      alert('이미 신청되었습니다.');
       return;
     }
 
@@ -17,6 +23,7 @@ function Detail({ board }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
+          setHasApplied(true); // Mark as applied
           alert('신청 완료되었습니다.');
         } else {
           alert('신청 실패: ' + (data.message || 'Unknown error'));
@@ -28,6 +35,7 @@ function Detail({ board }) {
         setMessage('Internal server error');
       });
   };
+
   return (
     <div className="Detail-page">
       <div className="Detail-top">
