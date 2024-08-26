@@ -23,8 +23,12 @@ function Detail({ board }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          setHasApplied(true); // Mark as applied
-          alert('신청 완료되었습니다.');
+          if (data.message.includes('이미 해당 스터디에 참여 중입니다')) {
+            alert('이미 해당 스터디에 참여 중입니다');
+            setHasApplied(true);
+          } else {
+            alert(data.message);
+          }
         } else {
           alert('신청 실패: ' + (data.message || 'Unknown error'));
         }
