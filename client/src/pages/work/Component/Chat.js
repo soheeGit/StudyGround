@@ -1,42 +1,118 @@
+// 채팅방 참여
 import React, { useEffect, useRef, useState } from 'react';
+import io from 'socket.io-client';
 import { Message } from './Message';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import teamChatIcon from '../../../assets/talk.png';
 import '../Content/Chat/Chat.css';
 
-function Chat({ socket, username, room }) {
-  const inputRef = useRef();
-  const [messageList, setMessageList] = useState([]);
+const socket = io.connect('http://localhost:5000/chat', {
+  // 수정
+  path: '/socket.io',
+  transports: ['websocket', 'polling'],
+  withCredentials: true,
+});
 
-  const messageBottomRef = useRef(null);
+function Chat({ username, boardId }) {
+  const inputRef = useRef(); // 메시지 입력 필드에 대한 참조
+  const [messageList, setMessageList] = useState([]); // 현재 채팅방의 메시지를 저장하는 상태
+  const [userInfo, setUserInfo] = useState(null); // 사용자 정보 상태
+  const messageBottomRef = useRef(null); // 채팅 메시지 스크롤을 자동으로 최신 메시지로 이동시키기 위한 참조
+
+  socket.on('connect_error', (err) => {
+    // 수정
+    console.error('WebSocket connection error:', err);
+  });
+
+  socket.on('disconnect', (reason) => {
+    // 수정
+    console.warn('WebSocket disconnected:', reason);
+  });
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const response = await fetch(`/chat/room/${boardId}`);
+        const data = await response.json();
+
+        console.log('Fetched data:', data);
+
+        if (Array.isArray(data.chats)) {
+          setUserInfo(data.user);
+          setMessageList(
+            data.chats.map((chat) => ({
+              room: boardId,
+              author: chat.userId,
+              message: chat.message,
+              time: new Date(chat.createdAt).toLocaleTimeString(),
+            }))
+          );
+        } else {
+          console.error('Chats data is not an array:', data.chats);
+        }
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+      }
+    };
+
+    fetchInitialData();
+  }, [boardId]);
 
   const sendMessage = async () => {
     const currentMsg = inputRef.current.value;
     if (currentMsg !== '') {
       const messageData = {
-        room: room,
+        room: boardId,
         author: username,
         message: currentMsg,
-        time:
-          new Date(Date.now()).getHours() +
-          ':' +
-          new Date(Date.now()).getMinutes(),
+        time: new Date(Date.now()).toLocaleTimeString(),
       };
-      await socket.emit('send_message', messageData);
-      setMessageList((list) => [...list, messageData]);
-      inputRef.current.value = '';
+      try {
+        await fetch(`/room/${boardId}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat: currentMsg }),
+        });
+        socket.emit('send_message', messageData); // 수정
+        setMessageList((list) => [...list, messageData]);
+        inputRef.current.value = '';
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
     }
   };
+
   useEffect(() => {
     socket.on('receive_message', (data) => {
+      // 수정
       setMessageList((list) => [...list, data]);
     });
-  }, [socket]);
+
+    return () => {
+      socket.off('receive_message'); // 수정
+    };
+  }, []);
 
   useEffect(() => {
     messageBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messageList]);
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('image', file);
+      try {
+        await fetch(`/chat/room/${boardId}/image`, {
+          method: 'POST',
+          body: formData,
+        });
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
+  };
 
   return (
     <RoomContainer>
@@ -48,7 +124,7 @@ function Chat({ socket, username, room }) {
               alt="Team Chat Icon"
               className="chat-icon"
             />
-            <div className="chat-font"> Team Chat</div>
+            <div className="chat-font"> Team Chat </div>
           </div>
         </RoomTitle>
       </RoomHeader>
@@ -76,6 +152,11 @@ function Chat({ socket, username, room }) {
           }}
         />
         <ChatButton onClick={sendMessage}>▹</ChatButton>
+        <ChatImageInput
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
       </ChatInputBox>
     </RoomContainer>
   );
@@ -95,7 +176,6 @@ const RoomContainer = styled.div`
 const RoomHeader = styled.div`
   height: 40px;
   border-radius: 6px 6px 0 0;
-
   position: relative;
 `;
 
@@ -103,7 +183,6 @@ const RoomTitle = styled.p`
   margin: 0;
   display: block;
   padding: 0 1em 0 2em;
-
   font-weight: 700;
   line-height: 45px;
 `;
@@ -160,7 +239,10 @@ const ChatButton = styled.button`
   }
   &:active {
     background: darkblue;
-    /* transition: all 0.5s; */
     font-size: 0.5rem;
   }
+`;
+
+const ChatImageInput = styled.input`
+  display: none;
 `;
