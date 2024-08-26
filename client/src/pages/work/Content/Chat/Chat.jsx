@@ -1,11 +1,13 @@
+// 방 들어가기
 import io from 'socket.io-client';
 import { useState, useEffect } from 'react';
 import Chat from '../../Component/Chat';
 import styled from 'styled-components';
 
 const socket = io.connect('http://localhost:5000/room', {
-  // 네임스페이스
   path: '/socket.io',
+  transports: ['websocket', 'polling'],
+  withCredentials: true,
 });
 
 function Chating() {
@@ -15,14 +17,6 @@ function Chating() {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    const handleUserJoined = (data) => {
-      console.log('User Joined:', data.chat);
-    };
-
-    const handleUserLeft = (data) => {
-      console.log('User Left:', data.chat);
-    };
-
     socket.on('connect', () => {
       console.log('Connected to room namespace');
     });
@@ -31,14 +25,8 @@ function Chating() {
       console.error('Connection Error:', error);
     });
 
-    socket.on('userJoined', handleUserJoined);
-    socket.on('userLeft', handleUserLeft);
-
-    // Cleanup function to remove event listeners
     return () => {
       socket.off('connect');
-      socket.off('userJoined', handleUserJoined);
-      socket.off('userLeft', handleUserLeft);
     };
   }, []);
 
