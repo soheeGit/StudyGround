@@ -35,7 +35,7 @@ import UpdateNotice from './pages/work/Content/Storage/notice/UpdateNotice';
 import BoardList from './pages/work/Content/Storage/boardData';
 import FilePage from './pages/work/Content/Storage/file/FilePage';
 import CalendarPage from './pages/work/Content/Calendar/CalendarPage';
-import { QueryClient } from '@tanstack/react-query';
+import Meet from './pages/work/Content/Video/Meet';
 
 function App() {
   return (
@@ -58,11 +58,12 @@ function App() {
           <Route path="/Autho" element={<Autho />} />
           <Route path="/UserProfile/:userId" element={<UserProfile />} />
           <Route path="/evaluation/:boardId" element={<Evaluation />} />
+          <Route path="meet" element={<Meet />} />
 
           {/* Wokr페이지 라우팅 */}
           <Route path="/work/:boardId" element={<Work />}>
             <Route path="dashboard" element={<DashBoard />} />
-            <Route path="video" element={<VideoPage />} />
+            <Route path="video" element={<VideoPage />}></Route>
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="board" element={<Board />} />
             <Route path="storage" element={<Storage />} />
