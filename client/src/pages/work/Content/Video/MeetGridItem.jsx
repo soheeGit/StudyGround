@@ -19,8 +19,8 @@ const MeetGridItem = ({ stream, userName, width }) => {
 export default MeetGridItem;
 
 const MeetGridItemBlock = styled.div`
-  width: ${(props) => props.width};
-  position: releative;
+  width: 100%;
+  position: relative;
   border: 8px solid #212121;
 `;
 

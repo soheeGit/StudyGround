@@ -8,6 +8,7 @@ const MeetGrid = ({ users, sidebarOpen, remoteViedeoRef }) => {
   const divisor = useMemo(() => {
     return Math.ceil(Math.sqrt(users.length)) || 1;
   }, [users.length]);
+  console.log(users.length);
 
   useLayoutEffect(() => {
     const gridWidth = sidebarOpen
@@ -16,6 +17,8 @@ const MeetGrid = ({ users, sidebarOpen, remoteViedeoRef }) => {
     setItemWidth(gridWidth / divisor);
   }, [divisor, sidebarOpen]);
 
+  console.log(divisor);
+  console.log(itemWidth);
   return (
     <Grid>
       {users.map((user, index) => (
@@ -36,6 +39,5 @@ const Grid = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   background: black;
 `;
