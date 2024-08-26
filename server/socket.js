@@ -18,6 +18,15 @@ module.exports = (sv, server, sessionMiddleware) => {
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
     chat.use(wrap(sessionMiddleware))
 
+    chat.use((socket, next) => {
+        const req = socket.request;
+        if (req.user && req.user.id) {
+            next();
+        } else {
+            next(new Error('Authentication error: 로그인 필요'));
+        }
+    });
+
     room.on('connection', (socket) => {
         console.log('room 네임스페이스 접속');
         socket.on('disconnect', () => {
@@ -29,6 +38,7 @@ module.exports = (sv, server, sessionMiddleware) => {
         console.log('chat 네임스페이스 접속');
 
         const req = socket.request;
+        console.log(req.user);
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         console.log('새로운 클라이언트 접속', ip, socket.id);
 
