@@ -3,7 +3,14 @@ const { User } = require('./models')
 const { removeRoom } = require('./services/chat');
 
 module.exports = (sv, server, sessionMiddleware) => {
-    const io = SocketIO(sv, {path: '/socket.io'})
+    const io = SocketIO(sv, {
+        path: '/socket.io',
+        cors: {
+            origin: "http://localhost:3000",
+            methods: ["GET", "POST"],
+            credentials: true
+        }
+    })
     server.set('io', io);
     const room = io.of('/room')
     const chat = io.of('/chat')

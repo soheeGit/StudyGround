@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Chat from '../../Component/Chat';
 import styled from 'styled-components';
 
-const socket = io.connect('http://localhost:8005/room', {
+const socket = io.connect('http://localhost:5000/room', {
   // 네임스페이스
   path: '/socket.io',
 });
