@@ -11,6 +11,7 @@ import { fetchMemo5, fetchNotice5 } from '../../api/fetch5data';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBoardDetails } from '../../api/boardDetailApi';
 import Evaluation from '../../../main/evaluation/Evaluation';
+import Chat from '../Chat/Chat';
 
 const DashBoard = () => {
   const { boardId } = useOutletContext();
@@ -115,7 +116,9 @@ const DashBoard = () => {
             </div>
           </div>
           <div className="dashboard-content-right-wrap">
-            <div className="dashboard-content-right-1"></div>
+            <div className="dashboard-content-right-1">
+              <Chat />
+            </div>
           </div>
         </div>
       </div>

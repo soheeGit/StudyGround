@@ -1,4 +1,5 @@
 const SocketIO = require('socket.io')
+const passport = require('passport');
 const { User } = require('./models')
 const { removeRoom } = require('./services/chat');
 
@@ -17,6 +18,8 @@ module.exports = (sv, server, sessionMiddleware) => {
 
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
     chat.use(wrap(sessionMiddleware))
+    chat.use(wrap(passport.initialize()));
+    chat.use(wrap(passport.session()));
 
     chat.use((socket, next) => {
         const req = socket.request;

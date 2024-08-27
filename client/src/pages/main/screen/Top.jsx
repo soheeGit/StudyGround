@@ -54,23 +54,6 @@ function Top() {
 
       <div className="divider"></div>
 
-      <div
-        className="inputWrap"
-        style={{
-          position: 'absolute',
-          top: '19%',
-          left: '77%',
-          transform: 'translate(5%, -50%)',
-        }}
-      >
-        <input
-          type="text"
-          className="input"
-          placeholder="  검색어를 입력하세요."
-        />
-        <MdSearch className="material-symbols-outlined" />
-      </div>
-
       <Search />
       <Mid_Top />
 
