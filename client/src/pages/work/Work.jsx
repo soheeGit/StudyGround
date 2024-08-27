@@ -11,6 +11,7 @@ const Work = (props) => {
 
   // 스터디 정보 최초 조회
   const [myStudy, setMyStudy] = useState();
+  const leaderId = myStudy?.leaderId;
   useEffect(() => {
     const fetchMyBoard = async () => {
       try {
@@ -34,7 +35,7 @@ const Work = (props) => {
     <div className="work-container">
       <Sidebar boardId={boardId} />
       <div className="content-container">
-        <Outlet context={{ boardId, myStudy }} />
+        {myStudy ? <Outlet context={{ boardId, myStudy, leaderId }} /> : <></>}
       </div>
     </div>
   );

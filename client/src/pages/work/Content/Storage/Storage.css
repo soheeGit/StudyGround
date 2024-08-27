@@ -24,7 +24,7 @@
   align-items: center;
 }
 .storage-notice-container {
-  width: 30%;
+  width: 28%;
   height: 40vh;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@
 }
 
 .storage-file-container {
-  width: 30%;
+  width: 28%;
   display: flex;
   flex-direction: column;
   border: 2px solid;
@@ -87,7 +87,7 @@
 }
 
 .storage-memo-container {
-  width: 30%;
+  width: 28%;
   display: flex;
   flex-direction: column;
   border: 2px solid;
@@ -109,7 +109,7 @@
 }
 
 .storage-task-container {
-  width: 100%;
+  width: 91%;
   height: 40vh;
   display: flex;
   flex-direction: column;

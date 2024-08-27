@@ -3,6 +3,7 @@ import { useState } from 'react';
 export function Button({ name, type, size, onClick, color, hoverColor }) {
   const [isHovered, setIsHovered] = useState(false);
   const buttonStyle = {
+    width: `${size}`,
     backgroundColor: isHovered ? hoverColor : color,
     'background-color': `${color}`,
     border: 'none',

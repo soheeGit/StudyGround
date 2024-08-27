@@ -3,6 +3,8 @@ import { Button } from '../../../Component/Button';
 import Divider from '../../../Component/Divider';
 import { FormatFullDate } from '../../../Component/FormattedDate';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { mdeleteTask } from '../../../api/taskApi';
 
 const SubmitTaskDetail = ({ submitTasks }) => {
   console.log(submitTasks);
@@ -39,7 +41,12 @@ const SubmitTaskDetail = ({ submitTasks }) => {
                 {submitTask.userId === userId ? (
                   <>
                     <Button name="수정" color="#3D9BF3" hoverColor="#5AA7F6" />
-                    <Button name="삭제" color="#E86161" hoverColor="#D2625D" />
+                    <Button
+                      name="삭제"
+                      color="#E86161"
+                      hoverColor="#D2625D"
+                      onClick={() => mdeleteTask(submitTask.taskId)}
+                    />
                   </>
                 ) : (
                   <></>

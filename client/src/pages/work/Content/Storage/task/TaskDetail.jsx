@@ -22,9 +22,9 @@ const TaskDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { task } = location.state || {}; //location.state로 부터 task 데이터를 가져옴
-  const { boardId } = useOutletContext();
+  const { boardId, leaderId, client } = useOutletContext();
   const { taskId } = useParams();
-
+  const userId = client.user.id;
   // 과제 제출
   const [submitTask, setSubmitTask] = useState(null); // 제출 내역 상태
   const [content, setContent] = useState(''); // 제출 내용 상태
@@ -90,22 +90,25 @@ const TaskDetail = () => {
           </a>
         </div>
       ))}
-      <div className="buttonsArea">
-        <Button
-          name="수정"
-          color="#3D9BF3"
-          onClick={() =>
-            navigate(`../${taskId.taskId}/update`, { state: { task } })
-          }
-          hoverColor="#5AA7F6"
-        />
-        <Button
-          name="삭제"
-          color="#E86161"
-          onClick={handleDelete}
-          hoverColor="#D2625D"
-        />
-      </div>
+      {userId === leaderId ? (
+        <div className="buttonsArea">
+          <Button
+            name="수정"
+            color="#3D9BF3"
+            onClick={() => navigate(`../${taskId}/update`, { state: { task } })}
+            hoverColor="#5AA7F6"
+          />
+          <Button
+            name="삭제"
+            color="#E86161"
+            onClick={handleDelete}
+            hoverColor="#D2625D"
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+
       {/* 과제 제출 영역 */}
       <div className="submit-title">Submit</div>
       <Divider color="#000000" height={'2px'} margin={'10px'} />
