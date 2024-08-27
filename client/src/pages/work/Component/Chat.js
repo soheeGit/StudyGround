@@ -1,116 +1,74 @@
-// 채팅방 참여
 import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import { Message } from './Message';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import teamChatIcon from '../../../assets/talk.png';
+import sendIcon from '../../../assets/send.png';
+import chatImageIcon from '../../../assets/chatimage.png';
 import '../Content/Chat/Chat.css';
 
-const socket = io.connect('http://localhost:5000/chat', {
-  // 수정
-  path: '/socket.io',
-  transports: ['websocket', 'polling'],
-  withCredentials: true,
-});
-
-function Chat({ username, boardId }) {
-  const inputRef = useRef(); // 메시지 입력 필드에 대한 참조
-  const [messageList, setMessageList] = useState([]); // 현재 채팅방의 메시지를 저장하는 상태
-  const [userInfo, setUserInfo] = useState(null); // 사용자 정보 상태
-  const messageBottomRef = useRef(null); // 채팅 메시지 스크롤을 자동으로 최신 메시지로 이동시키기 위한 참조
-
-  socket.on('connect_error', (err) => {
-    // 수정
-    console.error('WebSocket connection error:', err);
-  });
-
-  socket.on('disconnect', (reason) => {
-    // 수정
-    console.warn('WebSocket disconnected:', reason);
-  });
+function Chat({ boardId }) {
+  const inputRef = useRef();
+  const fileInputRef = useRef();
+  const [messageList, setMessageList] = useState([]);
+  const messageBottomRef = useRef(null);
+  const userId = localStorage.getItem('userId');
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const response = await fetch(`/chat/room/${boardId}`);
-        const data = await response.json();
+    const socketInstance = io('http://localhost:5000/chat', {
+      path: '/socket.io',
+      transports: ['websocket'],
+      withCredentials: true,
+    });
 
-        console.log('Fetched data:', data);
+    socketInstance.on('connect', () => {
+      console.log('Connected to chat namespace');
+      socketInstance.emit('join', { boardId, userId });
+    });
 
-        if (Array.isArray(data.chats)) {
-          setUserInfo(data.user);
-          setMessageList(
-            data.chats.map((chat) => ({
-              room: boardId,
-              author: chat.userId,
-              message: chat.message,
-              time: new Date(chat.createdAt).toLocaleTimeString(),
-            }))
-          );
-        } else {
-          console.error('Chats data is not an array:', data.chats);
-        }
-      } catch (error) {
-        console.error('Error fetching initial data:', error);
-      }
-    };
+    socketInstance.on('connect_error', (error) => {
+      console.error('Connection Error:', error);
+    });
 
-    fetchInitialData();
-  }, [boardId]);
-
-  const sendMessage = async () => {
-    const currentMsg = inputRef.current.value;
-    if (currentMsg !== '') {
-      const messageData = {
-        room: boardId,
-        author: username,
-        message: currentMsg,
-        time: new Date(Date.now()).toLocaleTimeString(),
-      };
-      try {
-        await fetch(`/room/${boardId}/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat: currentMsg }),
-        });
-        socket.emit('send_message', messageData); // 수정
-        setMessageList((list) => [...list, messageData]);
-        inputRef.current.value = '';
-      } catch (error) {
-        console.error('Error sending message:', error);
-      }
-    }
-  };
-
-  useEffect(() => {
-    socket.on('receive_message', (data) => {
-      // 수정
+    socketInstance.on('receive_message', (data) => {
       setMessageList((list) => [...list, data]);
     });
 
+    setSocket(socketInstance);
+
     return () => {
-      socket.off('receive_message'); // 수정
+      socketInstance.off('receive_message');
+      socketInstance.off('connect');
+      socketInstance.disconnect();
     };
-  }, []);
+  }, [boardId, userId]);
 
   useEffect(() => {
     messageBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messageList]);
 
-  const handleImageUpload = async (event) => {
+  const handleSend = () => {
+    const message = inputRef.current.value;
+    if (message && socket) {
+      socket.emit('send_message', { boardId, userId, message });
+      inputRef.current.value = '';
+    }
+  };
+
+  const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file);
-      try {
-        await fetch(`/chat/room/${boardId}/image`, {
-          method: 'POST',
-          body: formData,
+    if (file && socket) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        socket.emit('send_message', {
+          boardId,
+          userId,
+          image: reader.result,
         });
-      } catch (error) {
-        console.error('Error uploading image:', error);
-      }
+      };
+      reader.readAsDataURL(file); // Convert the file to a Base64 string
     }
   };
 
@@ -130,33 +88,33 @@ function Chat({ username, boardId }) {
       </RoomHeader>
       <RoomBody>
         <MessageBox>
-          {messageList.map((messageContent) => {
-            return (
-              <Message
-                messageContent={messageContent}
-                username={username}
-                key={uuidv4()}
-              />
-            );
-          })}
+          {messageList.map((messageContent) => (
+            <Message messageContent={messageContent} key={uuidv4()} />
+          ))}
           <div ref={messageBottomRef} />
         </MessageBox>
       </RoomBody>
       <ChatInputBox>
-        <ChatInput
-          ref={inputRef}
-          type="text"
-          placeholder="Message."
-          onKeyPress={(event) => {
-            event.key === 'Enter' && sendMessage();
-          }}
-        />
-        <ChatButton onClick={sendMessage}>▹</ChatButton>
-        <ChatImageInput
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
+        <ChatInput ref={inputRef} type="text" placeholder="Message." />
+        <ChatButton>
+          <ChatIcon onClick={() => fileInputRef.current.click()}>
+            <img
+              src={chatImageIcon}
+              alt="Chatimage Icon"
+              className="chatimage-icon"
+            />
+            <input
+              ref={fileInputRef}
+              type="file"
+              style={{ display: 'none' }}
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </ChatIcon>
+          <ChatIcon onClick={handleSend}>
+            <img src={sendIcon} alt="Send Icon" className="send-icon" />
+          </ChatIcon>
+        </ChatButton>
       </ChatInputBox>
     </RoomContainer>
   );
@@ -165,8 +123,8 @@ function Chat({ username, boardId }) {
 export default Chat;
 
 const RoomContainer = styled.div`
-  width: 50%;
-  max-width: 600px;
+  width: 100%;
+  max-width: 620px;
   @media screen and (max-width: 550px) {
     width: 90%;
   }
@@ -185,13 +143,16 @@ const RoomTitle = styled.p`
   padding: 0 1em 0 2em;
   font-weight: 700;
   line-height: 45px;
+  margin-left: -45px;
+  margin-top: 10px;
 `;
 
 const RoomBody = styled.div`
-  height: 360px;
+  height: 420px;
   border: 1px solid #355463;
   background: #fff;
   position: relative;
+  margin-top: 10px;
 `;
 
 const MessageBox = styled.div`
@@ -208,6 +169,7 @@ const ChatInputBox = styled.div`
   border-top: none;
   display: flex;
   border-radius: 0 0 6px 6px;
+  align-items: center; /* Align items vertically center */
 `;
 
 const ChatInput = styled.input`
@@ -216,33 +178,28 @@ const ChatInput = styled.input`
   border: 0;
   padding: 0 0.7em;
   font-size: 1em;
-  border-right: 1px dotted #355463;
+
   outline: none;
   background: transparent;
 `;
 
-const ChatButton = styled.button`
-  border: 0;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
+const ChatButton = styled.div`
+  display: flex;
   flex: 15%;
   height: 100%;
   background: transparent;
   outline: none;
-  font-size: 25px;
-  transition: all 0.5s;
-  color: lightgray;
-  &:hover {
-    background: steelblue;
-    transition: all 0.5s;
-  }
-  &:active {
-    background: darkblue;
-    font-size: 0.5rem;
-  }
+  align-items: center; /* Align items vertically center */
+  justify-content: space-between; /* Space items evenly */
+  padding: 0 0.5em; /* Add padding for spacing */
 `;
 
-const ChatImageInput = styled.input`
-  display: none;
+const ChatIcon = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  img {
+    height: 24px; /* Adjust icon size as needed */
+    width: 24px;
+  }
 `;

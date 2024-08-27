@@ -1,74 +1,90 @@
-// 방 들어가기
-import io from 'socket.io-client';
 import { useState, useEffect } from 'react';
 import Chat from '../../Component/Chat';
 import styled from 'styled-components';
-
-const socket = io.connect('http://localhost:5000/room', {
-  path: '/socket.io',
-  transports: ['websocket', 'polling'],
-  withCredentials: true,
-});
+import io from 'socket.io-client';
 
 function Chating() {
   const [username, setUsername] = useState('');
-  const [room, setRoom] = useState('');
+  const [boardId, setBoardId] = useState('');
   const [showChat, setShowChat] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [socket, setSocket] = useState(null);
+  const client = JSON.parse(localStorage.getItem('user'));
+  const user = client.user;
+  const userId = client.user.uId;
+
+  console.log('userId:', user.uId); // Check if userId is fetched correctly
 
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Connected to room namespace');
-    });
+    if (socket) {
+      socket.on('connect', () => {
+        console.log('Connected to room namespace');
+      });
 
-    socket.on('connect_error', (error) => {
-      console.error('Connection Error:', error);
-    });
+      socket.on('connect_error', (error) => {
+        console.error('Connection Error:', error);
+      });
 
-    return () => {
-      socket.off('connect');
-    };
-  }, []);
+      return () => {
+        socket.off('connect');
+      };
+    }
+  }, [socket]);
+
+  const connectSocket = () => {
+    const newSocket = io.connect('http://localhost:5000/room', {
+      path: '/socket.io',
+      transports: ['websocket', 'polling'],
+      withCredentials: true,
+    });
+    setSocket(newSocket);
+  };
 
   const joinRoom = (e) => {
     e.preventDefault();
-    if (username && room) {
-      socket.emit('join', { room, username });
+    if (userId && boardId) {
+      socket.emit('join', { room: boardId, userId });
       console.log(
-        `Emitted 'join' to room namespace with room: ${room} and username: ${username}`
+        `Emitted 'join' to room namespace with room: ${boardId} and username: ${userId}`
       );
       setShowChat(true);
     } else {
-      setErrorMsg('Please enter a username and room.');
+      setErrorMsg('Please enter a valid userId and boardId.');
     }
   };
 
   return (
     <ChatApp>
       {!showChat ? (
-        <ChatContainer onSubmit={joinRoom}>
-          <ChatTitle>Team Chat</ChatTitle>
-          <ChatInput
-            type="text"
-            placeholder="이름을 입력하세요"
-            onChange={(e) => {
-              setErrorMsg('');
-              setUsername(e.target.value);
-            }}
-          />
-          <ChatInput
-            type="text"
-            placeholder="방 번호를 입력하세요"
-            onChange={(e) => {
-              setErrorMsg('');
-              setRoom(e.target.value);
-            }}
-          />
-          <ErrorMessage>{errorMsg}</ErrorMessage>
-          <ChatButton type="submit">참가하기</ChatButton>
-        </ChatContainer>
+        socket ? (
+          <ChatContainer onSubmit={joinRoom}>
+            <ChatTitle>Team Chat</ChatTitle>
+            <ChatInput
+              type="text"
+              placeholder="이름을 입력하세요"
+              value={username}
+              onChange={(e) => {
+                setErrorMsg('');
+                setUsername(e.target.value);
+              }}
+            />
+            <ChatInput
+              type="text"
+              placeholder="방 번호를 입력하세요"
+              value={boardId}
+              onChange={(e) => {
+                setErrorMsg('');
+                setBoardId(e.target.value);
+              }}
+            />
+            <ErrorMessage>{errorMsg}</ErrorMessage>
+            <ChatButton type="submit">참가하기</ChatButton>
+          </ChatContainer>
+        ) : (
+          <ChatTitle onClick={connectSocket}>Team Chat</ChatTitle>
+        )
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chat socket={socket} username={username} boardId={boardId} />
       )}
     </ChatApp>
   );
@@ -82,23 +98,22 @@ const ChatApp = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 `;
 
 const ChatContainer = styled.form`
   display: flex;
   flex-direction: column;
   text-align: center;
-  border: 1px solid steelblue;
-  border-radius: 6px;
   padding: 20px;
-  width: 300px;
+  width: 250px;
+  margin-top: 70px;
+  height: 90%;
 `;
 
 const ChatTitle = styled.h3`
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: steelblue;
+  color: black;
 `;
 
 const ChatInput = styled.input`
@@ -117,7 +132,7 @@ const ErrorMessage = styled.p`
 `;
 
 const ChatButton = styled.button`
-  width: 200px;
+  width: 250px;
   height: 50px;
   margin: 10px auto;
   border: none;
