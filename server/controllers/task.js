@@ -206,3 +206,34 @@ exports.deleteTask= async(req, res, next) => {
         res.status(500).json({ error: '서버 오류' })
     }
 }
+
+exports.currentTask = async (req, res, next) => {
+    const userId = req.user.id;
+    const boardId = req.params.id;
+    try{ 
+        const user = await User.findOne({ where: {id: userId} })
+        if(!user){
+            return res.status(400).json({ message: '사용자를 찾을 수 없습니다.' });
+        }
+        const tasks = await Task.findAll({
+            where: {
+              boardId: boardId,
+            },
+            include: [
+              {
+                model: File,
+                as: 'files',
+              },
+            ],
+            limit: 5,
+            order: [['createdAt', 'DESC']],
+        });
+        if (tasks.length === 0) {
+            return res.status(200).json({ message: '해당 스터디의 과제가 없습니다.' });
+        }
+        res.json(tasks);
+    }catch(error) {
+        console.error(error);
+        res.status(500).json({ error: '서버오류' })
+    }
+}

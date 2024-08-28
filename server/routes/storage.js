@@ -3,9 +3,9 @@ const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 const { submitMemo, updateMemo, getMemoData, getCurrentMemoData, deleteMemo } = require('../controllers/memo')
 const { submitNotice, getNoticeData, getCurrentNoticeData, updateNotice, deleteNotice } = require('../controllers/notice')
 const { submitStudyMaterial, getStudyMaterialData, updateStudyMaterial, deleteStudyMaterial } = require('../controllers/studyMaterial');
-const { enrollTask, updateTask, getTaskData, deleteTask} = require('../controllers/task');
+const { enrollTask, updateTask, getTaskData, deleteTask, currentTask} = require('../controllers/task');
 const { submitTask, mUpdateTask, getmTaskData, mdeleteTask } =require('../controllers/submitTask')
-const { submitFiles, updateFiles, getFileStorage, deleteFiles } = require('../controllers/fileStorage')
+const { submitFiles, updateFiles, getFileStorage, deleteFiles, currentFile } = require('../controllers/fileStorage')
 
 const router = express.Router();
 const fs = require('fs');
@@ -73,6 +73,8 @@ router.post('/updateTask/:id', isLoggedIn, upload.array('files', maxCount), upda
 router.get('/task/:id', isLoggedIn, getTaskData);
 // 과제 삭제
 router.get('/deleteTask/:id', isLoggedIn, deleteTask);
+// 과제 상위 5개 노출
+router.get('/currentTask/:id', isLoggedIn, currentTask);
 
 // 팀원 과제 제출
 router.post('/submitTask/:id', isLoggedIn, upload.array('files', maxCount), submitTask);
@@ -88,8 +90,10 @@ router.post('/submitFiles/:id', isLoggedIn, upload.array('files', maxCount), sub
 // 파일 스토리지 수정
 router.post('/updateFiles/:id', isLoggedIn, upload.array('files', maxCount), updateFiles)
 // 파일 스토리지 확인(모두가 올린)
-router.get('fileStorage/:id', isLoggedIn, getFileStorage);
+router.get('/fileStorage/:id', isLoggedIn, getFileStorage);
 // 파일 스토리지 삭제
-router.get('deleteFiles/:id', isLoggedIn, deleteFiles)
+router.get('/deleteFiles/:id', isLoggedIn, deleteFiles);
+// 파일 상위 5개 노출
+router.get('/currentFile/:id', isLoggedIn, currentFile);
 
 module.exports = router;
