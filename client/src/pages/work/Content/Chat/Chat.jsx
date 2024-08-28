@@ -14,6 +14,31 @@ function Chating() {
   const userId = client.user.uId;
   const { boardId } = useParams();
 
+  const connectSocket = () => {
+    if (!socket) {
+      const newSocket = io.connect('http://localhost:5000/room', {
+        path: '/socket.io',
+        transports: ['websocket', 'polling'],
+        withCredentials: true,
+        reconnection: false, // 자동 연결 비활성화
+      });
+      setSocket(newSocket);
+    }
+  };
+
+  const joinRoom = (e) => {
+    e.preventDefault();
+    if (userId && boardId && socket) {
+      socket.emit('join', { room: boardId, userId });
+      console.log(
+        `Emitted 'join' to room namespace with room: ${boardId} and userId: ${userId}`
+      );
+      setShowChat(true);
+    } else {
+      setErrorMsg('Please enter a valid userId and boardId.');
+    }
+  };
+
   useEffect(() => {
     if (socket) {
       socket.on('connect', () => {
@@ -30,29 +55,6 @@ function Chating() {
     }
   }, [socket]);
 
-  const connectSocket = () => {
-    const newSocket = io.connect('http://localhost:5000/room', {
-      path: '/socket.io',
-      transports: ['websocket', 'polling'],
-      withCredentials: true,
-    });
-    setSocket(newSocket);
-  };
-
-  const joinRoom = (e) => {
-    e.preventDefault();
-    if (userId && boardId) {
-      socket.emit('join', { room: boardId, userId });
-
-      console.log(
-        `Emitted 'join' to room namespace with room: ${boardId} and username: ${userId}`
-      );
-      setShowChat(true);
-    } else {
-      setErrorMsg('Please enter a valid userId and boardId.');
-    }
-  };
-
   return (
     <ChatApp>
       {!showChat ? (
@@ -62,10 +64,10 @@ function Chating() {
             <ChatInput
               type="text"
               placeholder="이름을 입력하세요"
-              value={username}
+              value={userId}
               onChange={(e) => {
                 setErrorMsg('');
-                setUsername(e.target.value);
+                /* setUsername(e.target.value);*/
               }}
             />
             <ChatInput
