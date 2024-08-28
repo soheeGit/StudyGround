@@ -46,10 +46,11 @@ module.exports = (sv, server, sessionMiddleware) => {
         console.log('새로운 클라이언트 접속', ip, socket.id);
 
         const user = await User.findOne({where: {id: req.user.id}}) 
-        console.log('사용자 정보', user);
 
         socket.on('join', (data) => {
+            console.log('join 이벤트 데이터:', data); 
             socket.join(data);  //데이터는 방 id, 방에 참가
+            req.session.roomId = data;
             socket.to(data).emit('join', {
                 user: 'system',
                 chat: `${user.uName}님이 입장하셨습니다.`
@@ -58,10 +59,14 @@ module.exports = (sv, server, sessionMiddleware) => {
 
         socket.on('disconnect', async () => {
             console.log('클라이언트 접속 해제', ip, socket.id);
-            const { referer } = socket.request.headers;     //  /room/방아이디
-            const roomId = new URL(referer).pathname.split('/').at(-1)
+            /*const { referer } = socket.request.headers;     //  /room/방아이디
+            console.log('referer', referer);
+            const roomId = new URL(referer).pathname.split('/').at(-1)*/
+            const roomId = req.session.roomId
+            console.log('roomId', roomId)
             const currentRoom = chat.adapter.rooms.get(roomId) 
-            const userCount = currentRoom.size || 0     // 방 현재 참가자 수 가져오기
+            //const userCount = currentRoom.size || 0     // 방 현재 참가자 수 가져오기
+            const userCount = currentRoom ? currentRoom.size : 0;
             if (userCount === 0) {
                 await removeRoom(roomId);
                 room.emit('removeRoom', roomId);

@@ -29,7 +29,7 @@ function Chat() {
 
     socketInstance.on('connect', () => {
       console.log('Connected to chat namespace');
-      socketInstance.emit('join', { boardId, userId });
+      socketInstance.emit('join', boardId );
       console.log('Joined room:', boardId, 'with userId:', userId);
 
       const joinMessage = {
