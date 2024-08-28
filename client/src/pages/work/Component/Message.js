@@ -2,69 +2,70 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 export const Message = (props) => {
-  const messageContent = props.messageContent;
-  const username = props.username;
-  const [who, setWho] = useState('me');
+  const { messageContent } = props;
+  const [who, setWho] = useState('userName');
+
   useEffect(() => {
-    username === messageContent.author ? setWho('me') : setWho('other');
-  }, [props]);
+    if (messageContent.author === 'userName') {
+      setWho('userName');
+    } else {
+      setWho('other');
+    }
+  }, [messageContent]);
 
   return (
     <MessageContainer who={who}>
-      <div>
-        <MessageBody who={who}>
-          <MessageText>{messageContent.message}</MessageText>
-        </MessageBody>
-        <MessageSub who={who}>
-          <Time>{messageContent.time}</Time>
-          <Author>{messageContent.author}</Author>
-        </MessageSub>
-      </div>
+      <MessageBody who={who}>
+        <MessageText>{messageContent.message}</MessageText>
+      </MessageBody>
+      <MessageSub who={who}>
+        <Time>{messageContent.time}</Time>
+        <Author>{messageContent.author}</Author>
+      </MessageSub>
     </MessageContainer>
   );
 };
 
 const MessageContainer = styled.div`
   display: flex;
-  justify-content: ${({ who }) => (who === 'me' ? 'flex-end' : 'flex-start')};
-  padding: 0 10px;
+  flex-direction: column;
+  align-items: ${({ who }) => (who === 'userName' ? 'flex-start' : 'flex-end')};
+  padding: 10px;
   box-sizing: border-box;
 `;
 
 const MessageBody = styled.div`
-  min-height: 40px;
   max-width: 550px;
-  border-radius: 5px;
+  border-radius: 15px;
   color: white;
-  display: flex;
-  align-items: center;
-  margin: 0 3px;
-  padding: 2px 5px;
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
   overflow-wrap: break-word;
-  word-break: break-all;
-  justify-content: ${({ who }) => (who === 'me' ? 'flex-end' : 'flex-start')};
-  background-color: ${({ who }) => (who === 'me' ? '#598da7' : '#2d617b')};
+  word-break: break-word;
+  background-color: ${({ who }) =>
+    who === 'userName' ? '#e0e0e0' : '#5678F4'};
 `;
 
 const MessageText = styled.p`
-  margin: 5px;
+  margin: 0;
 `;
 
 const MessageSub = styled.div`
-  display: flex;
   font-size: 12px;
-  justify-content: ${({ who }) => (who === 'me' ? 'flex-end' : 'flex-start')};
-  margin-right: ${({ who }) => (who === 'me' ? '10px' : '')};
-  margin-left: ${({ who }) => (who === 'me' ? '' : '10px')};
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+  margin-left: ${({ who }) => (who === 'userName' ? '0' : '10px')};
+  margin-right: ${({ who }) => (who === 'userName' ? '10px' : '0')};
 `;
 
 const Time = styled.p`
-  margin-top: 5px;
+  margin: 0;
   margin-right: 5px;
 `;
 
 const Author = styled.p`
-  margin-top: 5px;
-  margin-left: 5px;
+  margin: 0;
   font-weight: bold;
 `;

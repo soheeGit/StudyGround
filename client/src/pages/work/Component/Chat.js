@@ -7,14 +7,18 @@ import teamChatIcon from '../../../assets/talk.png';
 import sendIcon from '../../../assets/send.png';
 import chatImageIcon from '../../../assets/chatimage.png';
 import '../Content/Chat/Chat.css';
+import { useParams } from 'react-router-dom';
 
-function Chat({ boardId }) {
+function Chat() {
   const inputRef = useRef();
   const fileInputRef = useRef();
   const [messageList, setMessageList] = useState([]);
   const messageBottomRef = useRef(null);
   const userId = localStorage.getItem('userId');
   const [socket, setSocket] = useState(null);
+  const client = JSON.parse(localStorage.getItem('user'));
+  const userName = client.user.uName;
+  const { boardId } = useParams();
 
   useEffect(() => {
     const socketInstance = io('http://localhost:5000/chat', {
@@ -26,6 +30,7 @@ function Chat({ boardId }) {
     socketInstance.on('connect', () => {
       console.log('Connected to chat namespace');
       socketInstance.emit('join', { boardId, userId });
+      console.log(boardId, userId);
     });
 
     socketInstance.on('connect_error', (error) => {
@@ -52,7 +57,18 @@ function Chat({ boardId }) {
   const handleSend = () => {
     const message = inputRef.current.value;
     if (message && socket) {
-      socket.emit('send_message', { boardId, userId, message });
+      const messageData = {
+        boardId,
+        userId,
+        message,
+        time: new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        author: userName,
+      };
+      socket.emit('send_message', messageData);
+      setMessageList((list) => [...list, messageData]); // Update the message list immediately
       inputRef.current.value = '';
     }
   };
@@ -66,9 +82,18 @@ function Chat({ boardId }) {
           boardId,
           userId,
           image: reader.result,
+          time: new Date().toLocaleTimeString(),
+          author: userName,
         });
       };
       reader.readAsDataURL(file); // Convert the file to a Base64 string
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent the default action (form submission)
+      handleSend();
     }
   };
 
@@ -95,7 +120,12 @@ function Chat({ boardId }) {
         </MessageBox>
       </RoomBody>
       <ChatInputBox>
-        <ChatInput ref={inputRef} type="text" placeholder="Message." />
+        <ChatInput
+          ref={inputRef}
+          type="text"
+          placeholder="Message."
+          onKeyDown={handleKeyDown} // Add onKeyDown event listener here
+        />
         <ChatButton>
           <ChatIcon onClick={() => fileInputRef.current.click()}>
             <img
@@ -169,7 +199,7 @@ const ChatInputBox = styled.div`
   border-top: none;
   display: flex;
   border-radius: 0 0 6px 6px;
-  align-items: center; /* Align items vertically center */
+  align-items: center;
 `;
 
 const ChatInput = styled.input`
@@ -178,7 +208,6 @@ const ChatInput = styled.input`
   border: 0;
   padding: 0 0.7em;
   font-size: 1em;
-
   outline: none;
   background: transparent;
 `;
@@ -189,9 +218,9 @@ const ChatButton = styled.div`
   height: 100%;
   background: transparent;
   outline: none;
-  align-items: center; /* Align items vertically center */
-  justify-content: space-between; /* Space items evenly */
-  padding: 0 0.5em; /* Add padding for spacing */
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5em;
 `;
 
 const ChatIcon = styled.div`
@@ -199,7 +228,7 @@ const ChatIcon = styled.div`
   align-items: center;
   cursor: pointer;
   img {
-    height: 24px; /* Adjust icon size as needed */
+    height: 24px;
     width: 24px;
   }
 `;

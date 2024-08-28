@@ -2,18 +2,17 @@ import { useState, useEffect } from 'react';
 import Chat from '../../Component/Chat';
 import styled from 'styled-components';
 import io from 'socket.io-client';
+import { useParams } from 'react-router-dom';
 
 function Chating() {
   const [username, setUsername] = useState('');
-  const [boardId, setBoardId] = useState('');
+  const [roomId, setRoomId] = useState('');
   const [showChat, setShowChat] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [socket, setSocket] = useState(null);
   const client = JSON.parse(localStorage.getItem('user'));
-  const user = client.user;
   const userId = client.user.uId;
-
-  console.log('userId:', user.uId); // Check if userId is fetched correctly
+  const { boardId } = useParams();
 
   useEffect(() => {
     if (socket) {
@@ -44,6 +43,7 @@ function Chating() {
     e.preventDefault();
     if (userId && boardId) {
       socket.emit('join', { room: boardId, userId });
+
       console.log(
         `Emitted 'join' to room namespace with room: ${boardId} and username: ${userId}`
       );
@@ -74,7 +74,7 @@ function Chating() {
               value={boardId}
               onChange={(e) => {
                 setErrorMsg('');
-                setBoardId(e.target.value);
+                setRoomId(e.target.value);
               }}
             />
             <ErrorMessage>{errorMsg}</ErrorMessage>
