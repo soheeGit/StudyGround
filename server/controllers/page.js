@@ -118,6 +118,11 @@ exports.postApplyBoard = async (req, res) => {
       return res.status(400).json({ message: '이미 해당 스터디에 참여 중입니다.' });
     }
 
+    const boardRequest = await BoardRequest.findOne({where: {boardId: boardId, userId: userId}})
+    if(boardRequest){
+      return res.status(400).json({ message: '이미 해당 스터디를 신청했습니다.' })
+    }
+
     const request = await BoardRequest.create({
       boardId,
       userId,
