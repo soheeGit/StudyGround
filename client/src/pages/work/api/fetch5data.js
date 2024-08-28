@@ -12,6 +12,17 @@ export const fetchNotice5 = async (boardId) => {
   return response.data;
 };
 
+// 상위 5개 과제 get
+export const fetchTask5 = async (boardId) => {
+  const response = await axios.get(`/storage/currentTask/${boardId}`, {
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.data;
+};
+
 // 상위 5개 메모 get
 export const fetchMemo5 = async () => {
   const response = await axios.get(`/storage/currentMemo`, {
