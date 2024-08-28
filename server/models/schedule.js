@@ -4,7 +4,7 @@ class Schedule extends Sequelize.Model {
     static initiate(sequelize) {
         Schedule.init({
             title: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },
             startDate: {

@@ -9,7 +9,7 @@ import storage4 from '../../../../assets/storage4.png';
 import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import { fetchMemo5, fetchNotice5 } from '../../api/fetch5data';
+import { fetchMemo5, fetchNotice5, fetchTask5 } from '../../api/fetch5data';
 import { FormatMonthDay } from '../../Component/FormattedDate';
 
 const Storage = () => {
@@ -19,6 +19,12 @@ const Storage = () => {
   const { data: notice5, isNotice5Loading } = useQuery({
     queryKey: ['notice5', boardId],
     queryFn: () => fetchNotice5(boardId),
+  });
+
+  // 상위 5개 과제 데이터 fetch
+  const { data: task5, isTask5Lodaing } = useQuery({
+    queryKey: ['task5', boardId],
+    queryFn: () => fetchTask5(boardId),
   });
 
   // 상위 5개 메모 데이터 fetch
@@ -121,7 +127,21 @@ const Storage = () => {
               </div>
             </Link>
           </div>
-          <div></div>
+          <div className="storage-task-content-container">
+            {task5 && task5.length > 0 ? (
+              task5.map((task, taskId) => (
+                <div className="storage-task-content-row">
+                  <div className="storage-task-content-number">{taskId}</div>
+                  <div className="storage-task-content-title">{task.title}</div>
+                  <div className="storage-task-content-date">
+                    <FormatMonthDay dateString={task.updatedAt} />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     </>

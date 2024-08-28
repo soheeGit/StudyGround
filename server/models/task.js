@@ -4,7 +4,7 @@ class Task extends Sequelize.Model {
     static initiate(sequelize) {
         Task.init({
             title: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },  
             deadline: {

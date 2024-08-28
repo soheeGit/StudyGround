@@ -4,7 +4,7 @@ class StudyMaterial extends Sequelize.Model {
     static initiate(sequelize) {
         StudyMaterial.init({
             title: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },        
             content: {

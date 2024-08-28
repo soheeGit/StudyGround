@@ -1,9 +1,9 @@
 .storage-container {
+  height: 80%;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 30px;
-  margin-left: 24px;
-  margin-right: 24px;
+  margin-top: 2%;
+  margin-left: 5%;
 }
 
 .tab-header {
@@ -25,7 +25,7 @@
 }
 .storage-notice-container {
   width: 28%;
-  height: 40vh;
+  height: 50%;
   display: flex;
   flex-direction: column;
   border: 2px solid;
@@ -42,6 +42,7 @@
 }
 
 .storage-notice-content-row {
+  height: 9%;
   display: flex;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -77,6 +78,7 @@
 
 .storage-file-container {
   width: 28%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   border: 2px solid;
@@ -88,6 +90,7 @@
 
 .storage-memo-container {
   width: 28%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   border: 2px solid;
@@ -109,8 +112,8 @@
 }
 
 .storage-task-container {
-  width: 91%;
-  height: 40vh;
+  width: 90%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   border: 2px solid;
@@ -119,4 +122,46 @@
   margin-top: 30px;
   margin-left: 30px;
   margin-right: 30px;
+}
+
+.storage-task-content-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.storage-task-content-row {
+  height: 9%;
+  display: flex;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: solid 2px;
+  border-color: #948a8a;
+  font-weight: 600;
+  cursor: pointer;
+}
+.storage-task-content-row:hover {
+  background-color: #f0f0f0;
+  color: #333; /* 텍스트 색상을 조금 더 어두운 색으로 변경 */
+  transform: scale(1.02);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 추가 */
+  border-radius: 5px; /* 가장자리를 부드럽게 */
+  transition: all 0.2s ease-in-out; /* 부드러운 트랜지션 효과 */
+}
+.storage-task-content-number {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.storage-task-content-title {
+  align-items: center;
+  flex-grow: 1;
+}
+.storage-task-content-date {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
