@@ -22,3 +22,13 @@ export const FormatMonthDay = ({ dateString }) => {
 
   return <span>{formatDate(dateString)}</span>;
 };
+
+export const FormatFullDate2 = ({ dateString }) => {
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    let formattedDate = format(date, 'yyyy.MM.dd');
+    return formattedDate;
+  };
+
+  return <span>{formatDate(dateString)}</span>;
+};
