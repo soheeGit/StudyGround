@@ -58,8 +58,7 @@ module.exports = (sv, server, sessionMiddleware) => {
 
         socket.on('disconnect', async () => {
             console.log('클라이언트 접속 해제', ip, socket.id);
-            const { referer } = socket.request.headers;     //  /room/방아이디  //http://localhost:3000/work/2/dashboard
-            console.log('referer', referer);
+            const { referer } = socket.request.headers;     //  /room/방아이디
             const roomId = new URL(referer).pathname.split('/').at(-1)
             const currentRoom = chat.adapter.rooms.get(roomId) 
             const userCount = currentRoom.size || 0     // 방 현재 참가자 수 가져오기

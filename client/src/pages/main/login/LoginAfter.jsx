@@ -27,7 +27,7 @@ const LoginAfter = () => {
           <Link to="/Notice" className="navigation"></Link>
           <Link to="/About" className="navigation"></Link>
         </div>
-        <div className="addWorkHeader">
+        <div className="addWorkHeader" style={{ marginRight: '40px' }}>
           <WorkHeader />
         </div>
       </div>

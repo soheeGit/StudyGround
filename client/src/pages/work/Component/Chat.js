@@ -14,11 +14,11 @@ function Chat() {
   const fileInputRef = useRef();
   const [messageList, setMessageList] = useState([]);
   const messageBottomRef = useRef(null);
-  const userId = localStorage.getItem('userId');
-  const [socket, setSocket] = useState(null);
   const client = JSON.parse(localStorage.getItem('user'));
-  const userName = client.user.uName;
+  const userId = client?.user?.uId; // Retrieve userId from localStorage
+  const userName = client?.user?.uName; // Retrieve userName from localStorage
   const { boardId } = useParams();
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     const socketInstance = io('http://localhost:5000/chat', {
@@ -30,7 +30,15 @@ function Chat() {
     socketInstance.on('connect', () => {
       console.log('Connected to chat namespace');
       socketInstance.emit('join', { boardId, userId });
-      console.log(boardId, userId);
+      console.log('Joined room:', boardId, 'with userId:', userId);
+
+      const joinMessage = {
+        boardId,
+        userId: 'system',
+        message: `${userName}님이 들어왔습니다.`,
+      };
+      socketInstance.emit('send_message', joinMessage);
+      setMessageList((list) => [...list, joinMessage]); // Show the join message to the user who joined
     });
 
     socketInstance.on('connect_error', (error) => {
@@ -41,14 +49,24 @@ function Chat() {
       setMessageList((list) => [...list, data]);
     });
 
+    socketInstance.on('user_joined', (user) => {
+      const systemMessage = {
+        boardId,
+        userId,
+        message: `${user.userName}님이 참여했습니다.`,
+      };
+      setMessageList((list) => [...list, systemMessage]);
+    });
+
     setSocket(socketInstance);
 
     return () => {
       socketInstance.off('receive_message');
+      socketInstance.off('user_joined');
       socketInstance.off('connect');
       socketInstance.disconnect();
     };
-  }, [boardId, userId]);
+  }, [boardId, userId, userName]);
 
   useEffect(() => {
     messageBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -65,9 +83,9 @@ function Chat() {
           hour: '2-digit',
           minute: '2-digit',
         }),
-        author: userName,
       };
-      socket.emit('send_message', messageData);
+
+      socket.emit('send', messageData);
       setMessageList((list) => [...list, messageData]); // Update the message list immediately
       inputRef.current.value = '';
     }
@@ -107,15 +125,21 @@ function Chat() {
               alt="Team Chat Icon"
               className="chat-icon"
             />
-            <div className="chat-font"> Team Chat </div>
+            <div className="chat-font">Team Chat</div>
           </div>
         </RoomTitle>
       </RoomHeader>
       <RoomBody>
         <MessageBox>
-          {messageList.map((messageContent) => (
-            <Message messageContent={messageContent} key={uuidv4()} />
-          ))}
+          {messageList.map((messageContent) =>
+            messageContent.userId === 'system' ? (
+              <SystemMessage key={uuidv4()}>
+                {messageContent.message}
+              </SystemMessage>
+            ) : (
+              <Message messageContent={messageContent} key={uuidv4()} />
+            )
+          )}
           <div ref={messageBottomRef} />
         </MessageBox>
       </RoomBody>
@@ -124,7 +148,7 @@ function Chat() {
           ref={inputRef}
           type="text"
           placeholder="Message."
-          onKeyDown={handleKeyDown} // Add onKeyDown event listener here
+          onKeyDown={handleKeyDown}
         />
         <ChatButton>
           <ChatIcon onClick={() => fileInputRef.current.click()}>
@@ -231,4 +255,15 @@ const ChatIcon = styled.div`
     height: 24px;
     width: 24px;
   }
+`;
+
+const SystemMessage = styled.div`
+  width: 100%;
+  text-align: center;
+  margin: 10px 0;
+  font-size: 0.9em;
+  color: #888;
+  background: #f5f5f5;
+  border-radius: 5px;
+  padding: 5px;
 `;
