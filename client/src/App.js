@@ -58,7 +58,6 @@ function App() {
           <Route path="/Autho" element={<Autho />} />
           <Route path="/UserProfile/:userId" element={<UserProfile />} />
           <Route path="/evaluation/:boardId" element={<Evaluation />} />
-          <Route path="meet" element={<Meet />} />
 
           {/* Wokr페이지 라우팅 */}
           <Route path="/work/:boardId" element={<Work />}>
@@ -82,6 +81,7 @@ function App() {
               <Route path=":taskId/edit" element={<UpdateTask />} />
             </Route>
           </Route>
+          <Route path="meet/:boardId" element={<Meet />}></Route>
         </Routes>
       </div>
     </Router>

@@ -30,7 +30,10 @@ const SubmitTask = ({ submitTasks }) => {
     mutationFn: (formData) => submitTask({ taskId, formData }),
     onSuccess: () => {
       alert('과제가 성공적으로 제출되었습니다.');
-      queryClient.invalidateQueries(['tasks', boardId]);
+      queryClient.invalidateQueries({
+        queryKey: ['tasks', boardId],
+        refetchType: 'all',
+      });
     },
     onError: (error) => {
       console.error('과제 제출 중 오류 발생:', error);

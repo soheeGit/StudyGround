@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { Button } from '../../../Component/Button';
 import './UpdateTask.css';
+import { FormatFullDate } from '../../../Component/FormattedDate';
 
 const UpdateTask = () => {
   const { boardId, fetchTasksRef } = useOutletContext();
@@ -22,7 +23,7 @@ const UpdateTask = () => {
   const [deadline, setDeadline] = useState(task.deadline || '');
   const [files, setFiles] = useState([]);
   const [filesToDelete, setFilesToDelete] = useState([]);
-
+  console.log(task.deadline);
   const handleFileChange = (event) => {
     setFiles(event.target.files);
   };
@@ -92,12 +93,12 @@ const UpdateTask = () => {
         <div className="detail-field">
           <div className="detail-field-title">게시일</div>
           <div className="divider-column"></div>
-          {task.updatedAt}
+          {FormatFullDate({ dateString: task.updatedAt })}
         </div>
         <div className="detail-field">
           <div className="detail-field-title">마감일</div>
           <div className="divider-column"></div>
-          {task.deadline}
+          {FormatFullDate({ dateString: task.deadline })}
           {' -> '}
           <input
             type="datetime-local"

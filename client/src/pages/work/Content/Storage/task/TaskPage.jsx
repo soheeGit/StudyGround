@@ -16,7 +16,8 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchTasks } from '../../../api/taskApi';
 
 const TaskPage = () => {
-  const { boardId } = useOutletContext();
+  const { boardId, leaderId } = useOutletContext();
+  const client = JSON.parse(localStorage.getItem('user'));
   const location = useLocation();
   const navigate = useNavigate();
   const fetchTasksRef = useRef(null);
@@ -39,11 +40,12 @@ const TaskPage = () => {
     data: tasks,
     isLoading: isTasksLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ['tasks', boardId],
     queryFn: () => fetchTasks(boardId),
   });
-  console.log(tasks);
+  fetchTasksRef.current = refetch;
 
   // 현재 URL이 /task/addtask 경우 Outlet 활성화
   useEffect(() => {
@@ -156,18 +158,22 @@ const TaskPage = () => {
                 />
               ))}
             </div>
-            <div className="buttonsArea">
-              <Button
-                name="등록"
-                color="#E86161"
-                onClick={() => navigate('addtask')}
-                hoverColor="#D2625D"
-              />
-            </div>
+            {leaderId === client.user.id ? (
+              <div className="buttonsArea">
+                <Button
+                  name="등록"
+                  color="#E86161"
+                  onClick={() => navigate('addtask')}
+                  hoverColor="#D2625D"
+                />
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </>
       )}
-      <Outlet context={{ boardId }} />
+      <Outlet context={{ boardId, fetchTasksRef, leaderId, client }} />
     </>
   );
 };

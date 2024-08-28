@@ -3,18 +3,20 @@ import io from 'socket.io-client';
 import './Meet.css';
 import styled from 'styled-components';
 import FooterButtons from './FooterButtons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UsersButton from './UsersButton';
 import ChatSidebar from './ChatSidebar';
 import JoinMeetModal from './JoinMeetModal';
 import MeetGrid from './MeetGrid';
 
-const SOCKET_SERVER_URL = 'http://localhost:8000';
-let newSocket = io.connect(SOCKET_SERVER_URL, {
-  transports: ['websocket'],
-});
-
 const Meet = () => {
+  const SOCKET_SERVER_URL = 'http://localhost:8000';
+  let newSocket = io.connect(SOCKET_SERVER_URL, {
+    transports: ['websocket'],
+  });
+
+  const { boardId } = useParams();
+  console.log(boardId);
   const [users, setUsers] = useState([]);
   // LocalStorage의 id불러오기
   const client = JSON.parse(localStorage.getItem('user'));
@@ -27,8 +29,7 @@ const Meet = () => {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const roomId = 'newRoom';
-
+  const roomId = `newRoom/${boardId}`;
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 

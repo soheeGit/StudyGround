@@ -10,9 +10,7 @@ export const fetchTasks = async (boardId) => {
   });
   const responseWithStatus = response.data.map((task) => {
     const current_time = new Date();
-    console.log(current_time);
     const dedaline = new Date(task.deadline);
-    console.log(dedaline);
     return {
       ...task,
       status: current_time > dedaline ? '종료' : '진행중',
@@ -88,6 +86,14 @@ export const submitTask = async ({ taskId, formData }) => {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
+  });
+  return response.data;
+};
+
+// 제출과제 삭제
+export const mdeleteTask = async (taskId) => {
+  const response = await axios.get(`/storage/mDeleteTask/${taskId}`, {
+    withCredentials: true,
   });
   return response.data;
 };
