@@ -4,7 +4,7 @@ class Memo extends Sequelize.Model {
     static initiate(sequelize) {
         Memo.init({
             title: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.STRING(30),
                 allowNull: false,
             },        
             content: {

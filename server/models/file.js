@@ -4,7 +4,7 @@ class File extends Sequelize.Model {
     static initiate(sequelize) {
         File.init({
             fileName: {
-                type: Sequelize.STRING(200),
+                type: Sequelize.STRING(500),
                 allowNull: false,
             },
             fileableType: {

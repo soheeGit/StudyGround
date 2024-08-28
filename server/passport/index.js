@@ -5,7 +5,6 @@ const User = require('../models/user')
 
 module.exports = () => {
     passport.serializeUser((user, done) => {    //로그인시 실행
-        console.log('Serializing user with ID:', user.id);
         done(null, user.id)
     })
 
@@ -13,7 +12,6 @@ module.exports = () => {
         User.findOne({ where: { id } })
             .then(user => {
                 if (user) {
-                    console.log('User found:', user);
                     done(null, user); // 사용자 정보를 세션에 저장
                 } else {
                     console.log('User not found');
