@@ -49,10 +49,20 @@ function Chat() {
       setMessageList((list) => [...list, data]);
     });
 
+    socketInstance.on('user_joined', (user) => {
+      const systemMessage = {
+        boardId,
+        userId,
+        message: `${user.userName}님이 참여했습니다.`,
+      };
+      setMessageList((list) => [...list, systemMessage]);
+    });
+
     setSocket(socketInstance);
 
     return () => {
       socketInstance.off('receive_message');
+      socketInstance.off('user_joined');
       socketInstance.off('connect');
       socketInstance.disconnect();
     };
