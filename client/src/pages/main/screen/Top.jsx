@@ -34,25 +34,15 @@ function Top() {
           </Link>
         </div>
         <div className="menu" style={{ fontFamily: 'Imprima, sans-serif' }}>
-          <Link to="/Sidebar" className="navigation">
-            Work
-          </Link>
-          <Link to="/Chat" className="navigation">
-            Recruitment
-          </Link>
-          <Link to="/Notice" className="navigation">
-            Notice
-          </Link>
-          <Link to="/About" className="navigation">
-            About
-          </Link>
+          <Link to="/Sidebar" className="navigation"></Link>
+          <Link to="/Chat" className="navigation"></Link>
+          <Link to="/Notice" className="navigation"></Link>
+          <Link to="/About" className="navigation"></Link>
         </div>
         <div className="login">
           <button onClick={openModal}>로그인</button>
         </div>
       </div>
-
-      <div className="divider"></div>
 
       <Search />
       <Mid_Top />

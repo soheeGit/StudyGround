@@ -1,114 +1,116 @@
-.wrap{
-    width: 100%;
-    display: flex; /* flexbox를 사용하여 요소들을 가로로 배열 */
-    align-items: center; 
-    position: relative;
-    justify-content: baseline;
+.wrap {
+  width: 100%;
+  display: flex; /* flexbox를 사용하여 요소들을 가로로 배열 */
+  align-items: center;
+  position: relative;
+  justify-content: baseline;
 }
 
-.logo{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 180px;
-    margin-left: 155px;
+.logo {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 180px;
+  margin-left: 155px;
 }
 
-img{
-    display: block;
+img {
+  display: block;
 }
 
-.menu{
-    margin-left: 70px;
-    margin-top: 45px;
+.menu {
+  margin-left: 70px;
+  margin-top: 45px;
 }
 
-.menu a{
-    margin-right: 105px;
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    font-weight: 500;
+.menu a {
+  margin-right: 105px;
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .menu a:last-child {
-    margin-right: 0; /* 마지막 요소에는 margin-right를 적용하지 않음 */
+  margin-right: 0; /* 마지막 요소에는 margin-right를 적용하지 않음 */
 }
 
 .login {
-    margin-top: 45px;
-    font-size: 20px;
-    display: flex;
-    margin-left: 330px;
+  margin-top: 45px;
+  font-size: 20px;
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  flex: 1; /* 메뉴와 로그인 버튼이 같은 줄에 있도록 함 */
+  margin-right: 180px;
 }
 
 .login button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    font-weight: 500;
-    margin-right: 20px;
-    padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+  margin-right: 20px;
+  padding: 0;
 }
 
 .divider {
-    border-top: 2px solid #6abc81; 
-    width: calc(100% - 60px); /* 가로폭 계산: 전체 너비 - 로고 너비 */
-    margin-left: 20px; 
-    position: absolute;
-    transform: translateY(-50%); /* 부모 요소인 .wrap의 세로 중앙 정렬을 위해 */
+  border-top: 2px solid #6abc81;
+  width: calc(100% - 60px); /* 가로폭 계산: 전체 너비 - 로고 너비 */
+  margin-left: 20px;
+  position: absolute;
+  transform: translateY(-50%); /* 부모 요소인 .wrap의 세로 중앙 정렬을 위해 */
 }
 
 .inputWrap {
-    position: relative;
-    float: right;
-    margin-right: 150px;
-    margin-top: 10px;
-    width: 180px; 
-    border: 1px solid gray;
-    border-radius: 16px;
+  position: relative;
+  float: right;
+  margin-right: 150px;
+  margin-top: 10px;
+  width: 180px;
+  border: 1px solid gray;
+  border-radius: 16px;
 }
 
-.input{
-    border: none;
-    width: calc(100% - 30px);
-    padding: 5px;
-    background-color: transparent; 
+.input {
+  border: none;
+  width: calc(100% - 30px);
+  padding: 5px;
+  background-color: transparent;
 }
 
 .input:focus::placeholder {
-    color: transparent;
+  color: transparent;
 }
 
 .input:focus {
-    outline: none;
+  outline: none;
 }
 
 .input[aria-placeholder]:not(:focus):before {
-    content: attr(aria-placeholder);
-    display: block;
-    color: gray;
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+  content: attr(aria-placeholder);
+  display: block;
+  color: gray;
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .material-symbols-outlined {
-    position: absolute;
-    top: 50%;
-    right: 7px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: gray;
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: gray;
 }
 
-.plusButton{
-    float: right;
-    margin-top: 650px;
-    margin-right: 170px;
-    margin-bottom: 30px;
+.plusButton {
+  float: right;
+  margin-top: 650px;
+  margin-right: 170px;
+  margin-bottom: 30px;
 }

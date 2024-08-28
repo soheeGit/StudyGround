@@ -22,24 +22,16 @@ const LoginAfter = () => {
           </Link>
         </div>
         <div className="menu" style={{ fontFamily: 'Imprima, sans-serif' }}>
-          <Link to="/Sidebar" className="navigation">
-            Work
-          </Link>
-          <Link to="/Recruitment" className="navigation">
-            Recruitment
-          </Link>
-          <Link to="/Notice" className="navigation">
-            Notice
-          </Link>
-          <Link to="/About" className="navigation">
-            About
-          </Link>
+          <Link to="/Sidebar" className="navigation"></Link>
+          <Link to="/Recruitment" className="navigation"></Link>
+          <Link to="/Notice" className="navigation"></Link>
+          <Link to="/About" className="navigation"></Link>
         </div>
         <div className="addWorkHeader">
           <WorkHeader />
         </div>
       </div>
-      <div className="divider"></div>
+
       <Search />
       <Mid />
     </div>
