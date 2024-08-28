@@ -6,7 +6,7 @@ import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import storage1 from '../../../../assets/storage1.png';
 import storage3 from '../../../../assets/storage3.png';
-import { FormatFullDate } from '../../Component/FormattedDate';
+import { FormatFullDate2 } from '../../Component/FormattedDate';
 import { fetchMemo5, fetchNotice5 } from '../../api/fetch5data';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBoardDetails } from '../../api/boardDetailApi';
@@ -16,6 +16,7 @@ import Chat from '../Chat/Chat';
 const DashBoard = () => {
   const { boardId } = useOutletContext();
   const { myStudy } = useOutletContext();
+  const [dday, setDday] = useState('');
 
   // 스터디 종료 후 상호평가 모달 창
   const [showModal, setShowModal] = useState(false);
@@ -44,6 +45,8 @@ const DashBoard = () => {
     if (board) {
       const currentDate = new Date();
       const endDate = new Date(board.bClosingDate);
+      const dday = Math.ceil((endDate - currentDate) / (1000 * 60 * 60 * 24));
+      setDday(dday);
       if (currentDate > endDate) {
         setShowModal(true);
       }
@@ -57,15 +60,13 @@ const DashBoard = () => {
       <div className="dashboard-container">
         <div className="dashboard-header-container">
           <div className="dday-container">
-            <div className="dday1">
-              <a /> D - 365
-            </div>
+            <div className="dday1">D - {dday}</div>
             <div className="dday2">
               <a />
               {board && (
                 <>
-                  {new Date(board.bStartDate).toLocaleDateString()} ~{' '}
-                  {new Date(board.bClosingDate).toLocaleDateString()}
+                  {<FormatFullDate2 dateString={board.bStartDate} />} ~{' '}
+                  {<FormatFullDate2 dateString={board.bClosingDate} />}
                 </>
               )}
             </div>
@@ -104,7 +105,7 @@ const DashBoard = () => {
                   memo5.map((memo, index) => (
                     <>
                       <div className="dashboard-content-left-1-content-row">
-                        <FormatFullDate dateString={memo.updatedAt} />-{' '}
+                        <FormatFullDate2 dateString={memo.updatedAt} /> -{' '}
                         {memo.title}
                       </div>
                     </>
