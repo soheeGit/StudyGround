@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import './TaskPage.css';
 import WorkHeader from '../../../WorkHeader';
 import axios from 'axios';
+import { BsXLg } from 'react-icons/bs';
+import { IoCheckmarkSharp } from 'react-icons/io5';
 import {
   Link,
   Outlet,
@@ -18,6 +20,7 @@ import { fetchTasks } from '../../../api/taskApi';
 const TaskPage = () => {
   const { boardId, leaderId } = useOutletContext();
   const client = JSON.parse(localStorage.getItem('user'));
+  const userId = client.user.id;
   const location = useLocation();
   const navigate = useNavigate();
   const fetchTasksRef = useRef(null);
@@ -47,6 +50,20 @@ const TaskPage = () => {
   });
   fetchTasksRef.current = refetch;
 
+  // 과제 제출 상태 렌더링 로직
+  const responseWithIsSubmit =
+    tasks &&
+    tasks.map((task) => {
+      const isSubmitted = task.SubmitTasks.some(
+        (SubmitTask) => SubmitTask.userId === userId
+      );
+      return {
+        ...task,
+        isSubmitted: isSubmitted,
+      };
+    });
+  console.log(responseWithIsSubmit);
+
   // 현재 URL이 /task/addtask 경우 Outlet 활성화
   useEffect(() => {
     if (
@@ -74,12 +91,12 @@ const TaskPage = () => {
     setCurrentPage(pageNumber);
   };
 
-  // 현재 페이지의 공지사항 가져오기
+  // 현재 페이지의 과제 가져오기
   const indexOfLastData = currentPage * datasPerPage;
   const indexOfFirstData = indexOfLastData - datasPerPage;
   const currentDatas =
-    tasks && tasks.length > 0
-      ? tasks.slice(indexOfFirstData, indexOfLastData)
+    responseWithIsSubmit && responseWithIsSubmit.length > 0
+      ? responseWithIsSubmit.slice(indexOfFirstData, indexOfLastData)
       : [];
 
   // 페이지 번호 계산
@@ -137,7 +154,13 @@ const TaskPage = () => {
                       >
                         {task.status}
                       </div>
-                      <div className="isSubmit-status">{task.submitStatus}</div>
+                      <div className="isSubmit-status">
+                        {task.isSubmitted === true ? (
+                          <IoCheckmarkSharp color="green" />
+                        ) : (
+                          <BsXLg color="red" />
+                        )}
+                      </div>
                       <div className="duedate">{formatDate(task.deadline)}</div>
                     </div>
                   </>

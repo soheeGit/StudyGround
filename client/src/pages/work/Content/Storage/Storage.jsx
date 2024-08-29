@@ -108,7 +108,7 @@ const Storage = () => {
           <div className="memo-content-box">
             {memo5 && memo5.length > 0 ? (
               memo5.map((memo, memoId) => (
-                <div className="memo-content">{memo.title}</div>
+                <div className="memo-content-row">{memo.title}</div>
               ))
             ) : (
               <></>

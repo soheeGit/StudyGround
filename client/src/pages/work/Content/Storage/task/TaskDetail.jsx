@@ -22,6 +22,7 @@ const TaskDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { task } = location.state || {}; //location.state로 부터 task 데이터를 가져옴
+  console.log(task);
   const { boardId, leaderId, client } = useOutletContext();
   const { taskId } = useParams();
   const userId = client.user.id;

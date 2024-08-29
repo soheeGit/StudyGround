@@ -52,7 +52,7 @@ export const deleteTask = async (taskId) => {
   return response.data;
 };
 
-// 제출 과제 get
+// // 제출 과제 get
 // export const fetchmTasks = async (boardId) => {
 //     const response = await axios.get(`/storage/task/${boardId}`, {
 //       withCredentials: true,
@@ -89,7 +89,7 @@ export const submitTask = async ({ taskId, formData }) => {
   });
   return response.data;
 };
-
+// 제출 과제 GET
 // 제출과제 삭제
 export const mdeleteTask = async (taskId) => {
   const response = await axios.get(`/storage/mDeleteTask/${taskId}`, {

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
+import {
+  useNavigate,
+  useParams,
+  useOutletContext,
+  useNavigation,
+} from 'react-router-dom';
 import { Button } from '../../../Component/Button';
 import './SubmitTask.css';
 import Divider from '../../../Component/Divider';
@@ -34,6 +39,7 @@ const SubmitTask = ({ submitTasks }) => {
         queryKey: ['tasks', boardId],
         refetchType: 'all',
       });
+      navigate('../');
     },
     onError: (error) => {
       console.error('과제 제출 중 오류 발생:', error);
