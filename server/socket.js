@@ -52,7 +52,6 @@ module.exports = (sv, server, sessionMiddleware) => {
             })
 
             socket.on('send', (messageData) => {
-                console.log('Sending message:', messageData);
                 socket.to(messageData.boardId).emit('receive_message', messageData);  // 메시지를 특정 방에 있는 모든 클라이언트에게 전송
             });          
 
