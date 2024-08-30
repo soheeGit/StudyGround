@@ -1,3 +1,4 @@
+// 채팅 메세지 방
 import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import { Message } from './Message';
@@ -15,8 +16,8 @@ function Chat() {
   const [messageList, setMessageList] = useState([]);
   const messageBottomRef = useRef(null);
   const client = JSON.parse(localStorage.getItem('user'));
-  const userId = client?.user?.uId; // Retrieve userId from localStorage
-  const userName = client?.user?.uName; // Retrieve userName from localStorage
+  const userId = client?.user?.uId;
+  const userName = client?.user?.uName;
   const { boardId } = useParams();
   const [socket, setSocket] = useState(null);
 
@@ -25,35 +26,50 @@ function Chat() {
       path: '/socket.io',
       transports: ['websocket'],
       withCredentials: true,
+      reconnection: false, // 자동 연결 비활성화
     });
 
     socketInstance.on('connect', () => {
       console.log('Connected to chat namespace');
-      socketInstance.emit('join', boardId );
+      socketInstance.emit('join', boardId);
       console.log('Joined room:', boardId, 'with userId:', userId);
 
-      const joinMessage = {
-        boardId,
-        userId: 'system',
-        message: `${userName}님이 들어왔습니다.`,
-      };
-      socketInstance.emit('send_message', joinMessage);
-      setMessageList((list) => [...list, joinMessage]); // Show the join message to the user who joined
+      // 임시
+      // const joinMessage = {
+      //   boardId,
+      //   userId: 'system',
+      //   message: `${userName}님이 들어왔습니다.`,
+      // };
+      // socketInstance.emit('send_message', joinMessage);
+      // setMessageList((list) => [...list, joinMessage]);
     });
 
     socketInstance.on('connect_error', (error) => {
       console.error('Connection Error:', error);
     });
 
+    // 메시지 수신
     socketInstance.on('receive_message', (data) => {
+      console.log('Received message:', data);
       setMessageList((list) => [...list, data]);
     });
 
-    socketInstance.on('user_joined', (user) => {
+    // user 입장
+    socketInstance.on('join', (data) => {
       const systemMessage = {
         boardId,
         userId,
-        message: `${user.userName}님이 참여했습니다.`,
+        message: data.chat,
+      };
+      setMessageList((list) => [...list, systemMessage]);
+    });
+
+    // user 퇴장
+    socketInstance.on('exit', (data) => {
+      const systemMessage = {
+        boardId,
+        userId: 'system',
+        message: data.chat,
       };
       setMessageList((list) => [...list, systemMessage]);
     });
@@ -62,7 +78,8 @@ function Chat() {
 
     return () => {
       socketInstance.off('receive_message');
-      socketInstance.off('user_joined');
+      socketInstance.off('join');
+      socketInstance.off('exit');
       socketInstance.off('connect');
       socketInstance.disconnect();
     };
@@ -76,17 +93,20 @@ function Chat() {
     const message = inputRef.current.value;
     if (message && socket) {
       const messageData = {
+        id: uuidv4(), // 고유한 메시지 ID 추가
         boardId,
         userId,
         message,
         time: new Date().toLocaleTimeString([], {
           hour: '2-digit',
           minute: '2-digit',
+          author: userName,
         }),
       };
 
+      console.log('Sending message:', messageData);
       socket.emit('send', messageData);
-      setMessageList((list) => [...list, messageData]); // Update the message list immediately
+      setMessageList((list) => [...list, messageData]);
       inputRef.current.value = '';
     }
   };
@@ -104,13 +124,13 @@ function Chat() {
           author: userName,
         });
       };
-      reader.readAsDataURL(file); // Convert the file to a Base64 string
+      reader.readAsDataURL(file);
     }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Prevent the default action (form submission)
+      event.preventDefault();
       handleSend();
     }
   };
@@ -137,7 +157,11 @@ function Chat() {
                 {messageContent.message}
               </SystemMessage>
             ) : (
-              <Message messageContent={messageContent} key={uuidv4()} />
+              <Message
+                key={messageContent.id || uuidv4()} // 중복된 key 방지
+                messageContent={messageContent}
+                currentUserId={userId}
+              />
             )
           )}
           <div ref={messageBottomRef} />

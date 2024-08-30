@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 export const Message = (props) => {
-  const { messageContent } = props;
-  const [who, setWho] = useState('userName');
+  const { messageContent, currentUserId } = props;
+  const [who, setWho] = useState('other');
 
   useEffect(() => {
-    if (messageContent.author === 'userName') {
-      setWho('userName');
+    if (messageContent.userId === currentUserId) {
+      setWho('user');
     } else {
       setWho('other');
     }
-  }, [messageContent]);
+  }, [messageContent, currentUserId]);
 
   return (
     <MessageContainer who={who}>
@@ -29,22 +29,22 @@ export const Message = (props) => {
 const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: ${({ who }) => (who === 'userName' ? 'flex-start' : 'flex-end')};
+  align-items: ${({ who }) => (who === 'user' ? 'flex-end' : 'flex-start')};
   padding: 10px;
   box-sizing: border-box;
 `;
 
 const MessageBody = styled.div`
   max-width: 550px;
-  border-radius: 15px;
+  border-radius: 20px;
   color: white;
   display: inline-block;
   margin: 5px;
   padding: 10px;
   overflow-wrap: break-word;
   word-break: break-word;
-  background-color: ${({ who }) =>
-    who === 'userName' ? '#e0e0e0' : '#5678F4'};
+  background-color: ${({ who }) => (who === 'user' ? '#5678F4' : '#ECECEC')};
+  color: ${({ who }) => (who === 'user' ? 'white' : 'black')};
 `;
 
 const MessageText = styled.p`
@@ -56,8 +56,8 @@ const MessageSub = styled.div`
   display: flex;
   align-items: center;
   margin-top: 2px;
-  margin-left: ${({ who }) => (who === 'userName' ? '0' : '10px')};
-  margin-right: ${({ who }) => (who === 'userName' ? '10px' : '0')};
+  margin-left: ${({ who }) => (who === 'user' ? '10px' : '0')};
+  margin-right: ${({ who }) => (who === 'user' ? '0' : '10px')};
 `;
 
 const Time = styled.p`
