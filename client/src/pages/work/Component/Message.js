@@ -15,8 +15,12 @@ export const Message = (props) => {
 
   return (
     <MessageContainer who={who}>
-      <MessageBody who={who}>
-        <MessageText>{messageContent.message}</MessageText>
+      <MessageBody who={who} hasImage={!!messageContent.image}>
+        {messageContent.image ? (
+          <MessageImage src={messageContent.image} alt="Sent image" />
+        ) : (
+          <MessageText who={who}>{messageContent.message}</MessageText>
+        )}
       </MessageBody>
       <MessageSub who={who}>
         <Time>{messageContent.time}</Time>
@@ -43,12 +47,26 @@ const MessageBody = styled.div`
   padding: 10px;
   overflow-wrap: break-word;
   word-break: break-word;
-  background-color: ${({ who }) => (who === 'user' ? '#5678F4' : '#ECECEC')};
-  color: ${({ who }) => (who === 'user' ? 'white' : 'black')};
+  background-color: ${({ who, hasImage }) =>
+    hasImage ? 'transparent' : who === 'user' ? '#5678F4' : '#ECECEC'};
+  color: ${({ who, hasImage }) =>
+    hasImage ? 'inherit' : who === 'user' ? 'white' : 'black'};
 `;
 
 const MessageText = styled.p`
   margin: 0;
+  img {
+    max-width: 100px; /* 이미지 최대 너비 */
+    max-height: 100px; /* 이미지 최대 높이 */
+    display: block;
+    margin-top: 10px;
+    object-fit: cover;
+  }
+`;
+
+const MessageImage = styled.img`
+  max-width: 100%;
+  border-radius: 10px;
 `;
 
 const MessageSub = styled.div`
