@@ -1,4 +1,5 @@
 .work-container {
+  height: 100vh;
   display: flex;
   font-family: 'imprima', Jost, sans-serif;
 }

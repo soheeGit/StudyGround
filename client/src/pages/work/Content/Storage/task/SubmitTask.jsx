@@ -56,6 +56,7 @@ const SubmitTask = ({ submitTasks }) => {
       formData.append('files', file);
     });
     mutation.mutate(formData);
+    console.log(formData);
   };
 
   // 내 제출한 과제 확인

@@ -14,6 +14,8 @@ import clip from '../../../../../assets/clip.png';
 import star from '../../../../../assets/star.png';
 import nostar from '../../../../../assets/nostar.png';
 import { Button } from '../../../Component/Button';
+import AddFile from './AddFile';
+import styled from 'styled-components';
 
 const FilePage = () => {
   const { boardId } = useOutletContext();
@@ -71,6 +73,7 @@ const FilePage = () => {
       {/* body */}
       <div className="filter-box"></div>
       <div className="my-container">
+        <AddFile boardId={boardId} />
         <div className="table-header-container">
           <div className="table-header-1">순번</div>
           <div className="table-header-2">이름</div>
@@ -78,7 +81,7 @@ const FilePage = () => {
           <div className="table-header-4">유형</div>
           <div className="table-header-5">크기</div>
         </div>
-        {files && files.length > 0 ? (
+        {/* {files && files.length > 0 ? (
           files.map((file, fileKey) => (
             <div className="table-content-container">
               <div className="table-content-1">{file.fileKey}</div>
@@ -90,10 +93,16 @@ const FilePage = () => {
           ))
         ) : (
           <></>
-        )}
-        <Button name={'파일추가'} />
+        )} */}
       </div>
     </>
   );
 };
 export default FilePage;
+
+const AddFileButton = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2px;
+`;
