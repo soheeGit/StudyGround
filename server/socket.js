@@ -32,7 +32,6 @@ module.exports = (sv, server, sessionMiddleware) => {
         console.log('chat 네임스페이스 접속');
 
         const req = socket.request;
-        console.log(req.user);
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         console.log('새로운 클라이언트 접속', ip, socket.id);
         try {
@@ -61,6 +60,13 @@ module.exports = (sv, server, sessionMiddleware) => {
                 console.log('클라이언트 접속 해제', ip, socket.id);
                 const roomId = req.session.roomId
                 console.log('roomId', roomId)
+                const currentRoom = chat.adapter.rooms.get(roomId)
+                const userCount = currentRoom ? currentRoom.size : 0;
+                if(userCount === 0) {
+                    await removeRoom(roomId);
+                    room.emit('removeRoom', roomId);
+                    console.log('방 제거 요청 성공')
+                }
                 socket.to(roomId).emit('exit', {
                     user: 'system',
                     chat: `${user.uName}님이 퇴장하셨습니다.`
