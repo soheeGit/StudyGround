@@ -1,5 +1,4 @@
 const { Board, User, Chat } = require('../models');
-const { removeRoom: removeRoomService } = require('../services/chat')
 
 /*exports.createRoom = async (req, res, next) => {
     const boardId = req.params.id;
@@ -64,7 +63,7 @@ exports.removeRoom = async (req, res, next) => {
         if(now < board.bClosingDate) {
             return res.status(400).json({ error: '스터디가 아직 종료되지 않았습니다.' });
         }
-        await removeRoomService(boardId)
+        await Chat.destroy({ where: {boardId: boardId} })
         return res.status(200).json({ message: '채팅방 삭제 성공' });
     } catch(error) {
         console.error(error);

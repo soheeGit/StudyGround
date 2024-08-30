@@ -1,9 +1,8 @@
 const { Board, Chat } = require('../models')
 
-exports.removeRoom = async (req, res, next) => {
-    const boardId = req.params.id;
+exports.removeRoom = async (roomId) => {
     try {
-        await Chat.remove({ where: {boardId: boardId} })
+        await Chat.destroy({ where: {boardId: roomId} })
     } catch(error) {
         throw error;
     }

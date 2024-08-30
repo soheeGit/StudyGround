@@ -1,5 +1,7 @@
+// 채팅 메세지 방
 import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
+import axios from 'axios';
 import { Message } from './Message';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,8 +17,8 @@ function Chat() {
   const [messageList, setMessageList] = useState([]);
   const messageBottomRef = useRef(null);
   const client = JSON.parse(localStorage.getItem('user'));
-  const userId = client?.user?.uId; // Retrieve userId from localStorage
-  const userName = client?.user?.uName; // Retrieve userName from localStorage
+  const userId = client?.user?.uId;
+  const userName = client?.user?.uName;
   const { boardId } = useParams();
   const [socket, setSocket] = useState(null);
 
@@ -25,34 +27,59 @@ function Chat() {
       path: '/socket.io',
       transports: ['websocket'],
       withCredentials: true,
+      reconnection: false, // 자동 연결 비활성화
     });
 
     socketInstance.on('connect', () => {
       console.log('Connected to chat namespace');
-      socketInstance.emit('join', { boardId, userId });
+      socketInstance.emit('join', boardId);
       console.log('Joined room:', boardId, 'with userId:', userId);
-
-      const joinMessage = {
-        boardId,
-        userId: 'system',
-        message: `${userName}님이 들어왔습니다.`,
-      };
-      socketInstance.emit('send_message', joinMessage);
-      setMessageList((list) => [...list, joinMessage]); // Show the join message to the user who joined
+      // 임시
+      // const joinMessage = {
+      //   boardId,
+      //   userId: 'system',
+      //   message: `${userName}님이 들어왔습니다.`,
+      // };
+      // socketInstance.emit('send_message', joinMessage);
+      // setMessageList((list) => [...list, joinMessage]);
     });
 
     socketInstance.on('connect_error', (error) => {
       console.error('Connection Error:', error);
     });
 
+    // 메시지 수신
     socketInstance.on('receive_message', (data) => {
+      console.log('Received message:', data);
       setMessageList((list) => [...list, data]);
+    });
+
+    // user 입장
+    socketInstance.on('join', (data) => {
+      const systemMessage = {
+        boardId,
+        userId,
+        message: data.chat,
+      };
+      setMessageList((list) => [...list, systemMessage]);
+    });
+
+    // user 퇴장
+    socketInstance.on('exit', (data) => {
+      const systemMessage = {
+        boardId,
+        userId: 'system',
+        message: data.chat,
+      };
+      setMessageList((list) => [...list, systemMessage]);
     });
 
     setSocket(socketInstance);
 
     return () => {
       socketInstance.off('receive_message');
+      socketInstance.off('join');
+      socketInstance.off('exit');
       socketInstance.off('connect');
       socketInstance.disconnect();
     };
@@ -66,6 +93,7 @@ function Chat() {
     const message = inputRef.current.value;
     if (message && socket) {
       const messageData = {
+        id: uuidv4(), // 고유한 메시지 ID 추가
         boardId,
         userId,
         message,
@@ -73,10 +101,12 @@ function Chat() {
           hour: '2-digit',
           minute: '2-digit',
         }),
+        author: userName,
       };
 
+      console.log('Sending message:', messageData);
       socket.emit('send', messageData);
-      setMessageList((list) => [...list, messageData]); // Update the message list immediately
+      setMessageList((list) => [...list, messageData]);
       inputRef.current.value = '';
     }
   };
@@ -86,21 +116,29 @@ function Chat() {
     if (file && socket) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        socket.emit('send_message', {
+        const messageData = {
+          id: uuidv4(), // 고유한 메시지 ID 추가
           boardId,
           userId,
-          image: reader.result,
-          time: new Date().toLocaleTimeString(),
+          image: reader.result, // 이미지 데이터 추가
+          time: new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
           author: userName,
-        });
+        };
+
+        console.log('Sending image message:', messageData);
+        socket.emit('send', messageData);
+        setMessageList((list) => [...list, messageData]);
       };
-      reader.readAsDataURL(file); // Convert the file to a Base64 string
+      reader.readAsDataURL(file);
     }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Prevent the default action (form submission)
+      event.preventDefault();
       handleSend();
     }
   };
@@ -127,7 +165,11 @@ function Chat() {
                 {messageContent.message}
               </SystemMessage>
             ) : (
-              <Message messageContent={messageContent} key={uuidv4()} />
+              <Message
+                key={messageContent.id || uuidv4()} // 중복된 key 방지
+                messageContent={messageContent}
+                currentUserId={userId}
+              />
             )
           )}
           <div ref={messageBottomRef} />
@@ -168,7 +210,7 @@ export default Chat;
 
 const RoomContainer = styled.div`
   width: 100%;
-  max-width: 620px;
+  max-width: 650px;
   @media screen and (max-width: 550px) {
     width: 90%;
   }
@@ -187,13 +229,13 @@ const RoomTitle = styled.p`
   padding: 0 1em 0 2em;
   font-weight: 700;
   line-height: 45px;
-  margin-left: -45px;
+  margin-left: -38px;
   margin-top: 10px;
 `;
 
 const RoomBody = styled.div`
-  height: 420px;
-  border: 1px solid #355463;
+  height: 435px;
+  border: 1px solid #c8c8c8;
   background: #fff;
   position: relative;
   margin-top: 10px;
@@ -202,14 +244,15 @@ const RoomBody = styled.div`
 const MessageBox = styled.div`
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-y: auto; /* 기존 scroll에서 auto로 변경 */
+  overflow-x: hidden; /* 가로 스크롤은 숨김 */
   padding-top: 5px;
+  box-sizing: border-box; /* 테두리와 패딩을 포함한 전체 크기 설정 */
 `;
 
 const ChatInputBox = styled.div`
   height: 40px;
-  border: 1px solid #355463;
+  border: 1px solid #c8c8c8;
   border-top: none;
   display: flex;
   border-radius: 0 0 6px 6px;
@@ -224,6 +267,7 @@ const ChatInput = styled.input`
   font-size: 1em;
   outline: none;
   background: transparent;
+  color: #9f9f9f;
 `;
 
 const ChatButton = styled.div`
@@ -245,6 +289,7 @@ const ChatIcon = styled.div`
     height: 24px;
     width: 24px;
   }
+  margin-right: 15px;
 `;
 
 const SystemMessage = styled.div`

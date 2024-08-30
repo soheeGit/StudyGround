@@ -1,3 +1,4 @@
+// 채팅방 참여
 import { useState, useEffect } from 'react';
 import Chat from '../../Component/Chat';
 import styled from 'styled-components';
@@ -5,13 +6,13 @@ import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
 function Chating() {
-  const [username, setUsername] = useState('');
   const [roomId, setRoomId] = useState('');
   const [showChat, setShowChat] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [socket, setSocket] = useState(null);
   const client = JSON.parse(localStorage.getItem('user'));
-  const userId = client.user.uId;
+  const userId = client?.user?.uId;
+  const userName = client?.user?.uName;
   const { boardId } = useParams();
 
   const connectSocket = () => {
@@ -30,9 +31,7 @@ function Chating() {
     e.preventDefault();
     if (userId && boardId && socket) {
       socket.emit('join', { room: boardId, userId });
-      console.log(
-        `Emitted 'join' to room namespace with room: ${boardId} and userId: ${userId}`
-      );
+      console.log(`Emitted 'join' with room: ${boardId} and userId: ${userId}`);
       setShowChat(true);
     } else {
       setErrorMsg('Please enter a valid userId and boardId.');
@@ -47,6 +46,7 @@ function Chating() {
 
       socket.on('connect_error', (error) => {
         console.error('Connection Error:', error);
+        setErrorMsg('Connection failed. Please try again.');
       });
 
       return () => {
@@ -86,7 +86,7 @@ function Chating() {
           <ChatTitle onClick={connectSocket}>Team Chat</ChatTitle>
         )
       ) : (
-        <Chat socket={socket} username={username} boardId={boardId} />
+        <Chat socket={socket} userName={userName} boardId={boardId} />
       )}
     </ChatApp>
   );
@@ -116,6 +116,7 @@ const ChatTitle = styled.h3`
   font-size: 2rem;
   margin-bottom: 1rem;
   color: black;
+  cursor: pointer;
 `;
 
 const ChatInput = styled.input`
@@ -125,6 +126,9 @@ const ChatInput = styled.input`
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 16px;
+  &:read-only {
+    background: #f0f0f0;
+  }
 `;
 
 const ErrorMessage = styled.p`
