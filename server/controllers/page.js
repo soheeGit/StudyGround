@@ -4,7 +4,15 @@ const User = require('../models/user');
 
 exports.getBoardData = async (req, res) => {
   try {
-    const boards = await Board.findAll();
+    const boards = await Board.findAll({
+      include: [
+        {
+          model: User,
+          as: 'Leader',
+          attributes: ['uName'],
+        },
+      ],
+    });
     res.json(boards);
   } catch (error) {
     console.error(error);
