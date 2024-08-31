@@ -136,19 +136,22 @@ const AddStudyForm = () => {
           <br />
           <div>
             카테고리<span className="red-asterisk">*</span>
-            {categoryOptions.map((category) => (
-              <label key={category} className="radio-label">
-                <input
-                  type="radio"
-                  name="bType"
-                  value={category}
-                  checked={formData.bType === category}
-                  onChange={handleChange}
-                />
-                {category}
-              </label>
-            ))}
+            <div className="category-grid">
+              {categoryOptions.map((category) => (
+                <label key={category} className="category-radio-label">
+                  <input
+                    type="radio"
+                    name="bType"
+                    value={category}
+                    checked={formData.bType === category}
+                    onChange={handleChange}
+                  />
+                  {category}
+                </label>
+              ))}
+            </div>
           </div>
+
           <br />
           <label>
             스터디 시작일<span className="red-asterisk">*</span>
