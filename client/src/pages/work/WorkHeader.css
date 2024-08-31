@@ -11,8 +11,8 @@
   flex-grow: 1;
 }
 .header-left h1 {
-  margin-top: 20px;
   margin-left: 30px;
+  margin-top: 0;
 }
 .header-right {
   display: flex;

@@ -10,7 +10,12 @@ import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { fetchMemo5, fetchNotice5, fetchTask5 } from '../../api/fetch5data';
-import { FormatMonthDay } from '../../Component/FormattedDate';
+import {
+  FormatFullDate,
+  FormatFullDate2,
+  FormatMonthDay,
+} from '../../Component/FormattedDate';
+import styled from 'styled-components';
 
 const Storage = () => {
   const { boardId } = useOutletContext();
@@ -39,82 +44,92 @@ const Storage = () => {
     setSelectedTab(title);
     console.log(selectedTab);
   };
-
+  console.log(task5);
+  console.log(memo5);
   return (
     <>
       <WorkHeadr title="Storage" />
       <div className="storage-container">
-        {/* Notice Tab*/}
-        <div className="storage-notice-container">
-          <div className="tab-header">
-            <div className="tab-header-img">
-              <img src={storage1} width={'50px'} />
-            </div>
-            <p>Notice</p>
-            <Link to={`/work/${boardId}/notice`} style={{ display: 'flex' }}>
-              <div className="tab-header-button">
-                <FaPlus />
+        <div className="content-up-wrapper">
+          {/* Notice Tab*/}
+          <div className="storage-notice-container">
+            <div className="tab-header">
+              <div className="tab-header-img">
+                <img src={storage1} width={'50px'} />
               </div>
-            </Link>
-          </div>
-          <div className="storage-notice-content-container">
-            {notice5 && notice5.length > 0 ? (
-              notice5.map((notice5, notice5Key) => (
-                <div className="storage-notice-content-row">
-                  <div className="storage-notice-content-number">
-                    {notice5.id}
-                  </div>
-                  <div className="storage-notice-content-title">
-                    {notice5.title}
-                  </div>
-                  <div className="storage-notice-content-date">
-                    <FormatMonthDay dateString={notice5.updatedAt} />
-                  </div>
+              <p>Notice</p>
+              <Link to={`/work/${boardId}/notice`} style={{ display: 'flex' }}>
+                <div className="tab-header-button">
+                  <FaPlus />
                 </div>
-              ))
-            ) : (
-              <></>
-            )}
-          </div>
-        </div>
-        {/* File Tab*/}
-        <div className="storage-file-container">
-          <div className="tab-header">
-            <div className="tab-header-img">
-              <img src={storage2} width={'50px'} />
+              </Link>
             </div>
-            <p>File</p>
-            <Link to={`/work/${boardId}/file`} style={{ display: 'flex' }}>
-              <div className="tab-header-button">
-                <FaPlus />
-              </div>
-            </Link>
-          </div>
-          <div></div>
-        </div>
-        {/* Memo Tab*/}
-        <div className="storage-memo-container">
-          <div className="tab-header">
-            <div className="tab-header-img">
-              <img src={storage3} width={'50px'} />
+            <div className="storage-notice-content-container">
+              {notice5 && notice5.length > 0 ? (
+                notice5.map((notice5, notice5Key) => (
+                  <div className="storage-notice-content-row">
+                    <div className="storage-notice-content-number">
+                      {notice5.id}
+                    </div>
+                    <div className="storage-notice-content-title">
+                      {notice5.title}
+                    </div>
+                    <div className="storage-notice-content-date">
+                      <FormatFullDate2 dateString={notice5.updatedAt} />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
             </div>
-            <p>Memo</p>
-            <Link to={`/work/${boardId}/memo`} style={{ display: 'flex' }}>
-              <div className="tab-header-button">
-                <FaPlus />
-              </div>
-            </Link>
           </div>
-          <div className="memo-content-box">
-            {memo5 && memo5.length > 0 ? (
-              memo5.map((memo, memoId) => (
-                <div className="memo-content-row">{memo.title}</div>
-              ))
-            ) : (
-              <></>
-            )}
+          {/* File Tab*/}
+          <div className="storage-file-container">
+            <div className="tab-header">
+              <div className="tab-header-img">
+                <img src={storage2} width={'50px'} />
+              </div>
+              <p>File</p>
+              <Link to={`/work/${boardId}/file`} style={{ display: 'flex' }}>
+                <div className="tab-header-button">
+                  <FaPlus />
+                </div>
+              </Link>
+            </div>
+            <div></div>
+          </div>
+          {/* Memo Tab*/}
+          <div className="storage-memo-container">
+            <div className="tab-header">
+              <div className="tab-header-img">
+                <img src={storage3} width={'50px'} />
+              </div>
+              <p>Memo</p>
+              <Link to={`/work/${boardId}/memo`} style={{ display: 'flex' }}>
+                <div className="tab-header-button">
+                  <FaPlus />
+                </div>
+              </Link>
+            </div>
+            <div className="memo-content-box">
+              {memo5 && memo5.length > 0 ? (
+                memo5.map((memo, memoId) => (
+                  <div className="memo-content-row">
+                    <div className="memo-content-id">{memoId}</div>
+                    <div className="memo-content-title">{memo.title}</div>
+                    <div className="memo-content-date">
+                      <FormatFullDate2 dateString={memo.updatedAt} />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </div>
+
         <div className="storage-task-container">
           <div className="tab-header">
             <div className="tab-header-img">
@@ -133,8 +148,12 @@ const Storage = () => {
                 <div className="storage-task-content-row">
                   <div className="storage-task-content-number">{taskId}</div>
                   <div className="storage-task-content-title">{task.title}</div>
+                  <div className="storage-task-content-isSubmit">
+                    {task.status}
+                  </div>
                   <div className="storage-task-content-date">
-                    <FormatMonthDay dateString={task.updatedAt} />
+                    <FormatFullDate dateString={task.deadline} />
+                    &nbsp; 마감
                   </div>
                 </div>
               ))
@@ -149,3 +168,12 @@ const Storage = () => {
 };
 
 export default Storage;
+
+const Block = styled.div`
+  width: 90%;
+  height: 50%;
+  display: flex;
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+`;

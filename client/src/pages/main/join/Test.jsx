@@ -53,17 +53,20 @@ function Test() {
       <div className="Joinup-form-wrap">
         <Top1 />
       </div>
-      <div className="text-top">
-        <p>
-          다음은 팀프로젝트 성격 유형에 대한 자료입니다.
-          <br />
-          자신이 가장 유사하다고 생각하는 유형을 골라주세요.
-        </p>
+      <div className="text-top-wrapper">
+        <div className="text-top">
+          <p>
+            다음은 팀프로젝트 성격 유형에 대한 자료입니다.
+            <br />
+            자신이 가장 유사하다고 생각하는 유형을 골라주세요.
+          </p>
+        </div>
       </div>
+
       <div className="Text-Column">
         <div className="table-header">
-          <div className="nickname">별명</div>
-          <div className="personality">특징</div>
+          <div className="th-nickname">별명</div>
+          <div className="th-personality">특징</div>
         </div>
         <table>
           <tbody>
@@ -71,11 +74,11 @@ function Test() {
               <tr key={item.title} className={`row-${index} table-row`}>
                 <td
                   className="Joinup-form-wrap"
-                  style={{ textAlign: 'center', width: '150px' }}
+                  style={{ textAlign: 'center', width: '20%' }}
                 >
                   {item.title}
                 </td>
-                <td className="Joinup-form-wrap" style={{ width: '600px' }}>
+                <td className="Joinup-form-wrap" style={{ width: '70%' }}>
                   {item.name}
                 </td>
                 <td

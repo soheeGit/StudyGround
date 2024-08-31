@@ -1,11 +1,18 @@
 .Text-Column {
   width: 60%;
-  margin-top: 50px;
-  margin-left: 340px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 table {
+  width: 100%;
   border-collapse: collapse;
+}
+.table-header {
+  width: 100%;
+  display: flex;
+  margin-bottom: 1%;
 }
 
 .Joinup-form-wrap th,
@@ -18,7 +25,7 @@ td {
 .table-row {
   display: block;
   margin-bottom: 20px;
-  width: 800px;
+  width: 100%;
 }
 
 .Test-button button {
@@ -30,12 +37,15 @@ td {
   cursor: pointer;
   width: 15%;
   display: inline-block;
+  margin-left: 47.5%;
 }
 
 .Test-button {
-  text-align: center;
+  width: 60%;
   margin-bottom: 40px;
   margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .row-0 {
@@ -73,16 +83,22 @@ td {
 .row-8 {
   background-color: #ffe9e9;
 }
-
-.text-top {
-  width: 580px;
-  height: 95px;
-  background-color: #e8ffee;
-  text-align: center;
-  padding-top: 10px;
+.text-top-wrapper {
+  width: 60%;
+  display: flex;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+.text-top {
+  width: 40%;
+  background-color: #e8ffee;
+  text-align: center;
   margin-top: 45px;
+  margin-left: 10%;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 10px;
   border: 1px solid #8a8a8a;
 }
@@ -92,18 +108,15 @@ input[type='checkbox'] {
   height: 18px;
 }
 
-.nickname,
-.personality {
-  width: 150px;
+.th-nickname,
+.th-personality {
   text-align: center;
 }
 
-.personality {
-  margin-left: 360px;
-  margin-bottom: 12px;
+.th-personality {
+  width: 70%;
 }
 
-.nickname {
-  margin-bottom: -21px;
-  margin-left: 25px;
+.th-nickname {
+  width: 20%;
 }

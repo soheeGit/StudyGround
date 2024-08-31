@@ -25,6 +25,7 @@
   width: 85%;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 600;
 }
 /* header */
 .task-content-header {
@@ -34,7 +35,6 @@
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 17px;
-  font-weight: 700;
 }
 
 .number-of-contents {

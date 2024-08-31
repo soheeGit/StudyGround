@@ -18,9 +18,14 @@
   border: solid 2px;
 }
 .header-button-continaer {
-  margin-left: 50px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
   margin-bottom: 5px;
   display: flex;
+}
+.header-button-continaer button {
+  background-color: #7ed321;
 }
 .calendar-container td {
   width: 30px;
@@ -33,6 +38,9 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.calendar-header button {
+  background-color: #7ed321;
 }
 .calendar-header-title {
   width: 50%;
