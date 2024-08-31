@@ -1,7 +1,6 @@
 // 채팅 메세지 방
 import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
-import axios from 'axios';
 import { Message } from './Message';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -35,13 +34,13 @@ function Chat() {
       socketInstance.emit('join', boardId);
       console.log('Joined room:', boardId, 'with userId:', userId);
       // 임시
-      // const joinMessage = {
-      //   boardId,
-      //   userId: 'system',
-      //   message: `${userName}님이 들어왔습니다.`,
-      // };
-      // socketInstance.emit('send_message', joinMessage);
-      // setMessageList((list) => [...list, joinMessage]);
+      const joinMessage = {
+        boardId,
+        userId: 'system',
+        message: `${userName}님이 들어왔습니다.`,
+      };
+      socketInstance.emit('send_message', joinMessage);
+      setMessageList((list) => [...list, joinMessage]);
     });
 
     socketInstance.on('connect_error', (error) => {
@@ -234,7 +233,7 @@ const RoomTitle = styled.p`
 `;
 
 const RoomBody = styled.div`
-  height: 435px;
+  height: 410px;
   border: 1px solid #c8c8c8;
   background: #fff;
   position: relative;

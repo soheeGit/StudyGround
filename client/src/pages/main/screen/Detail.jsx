@@ -56,7 +56,7 @@ function Detail({ board }) {
 
         <div className="detail-content">
           <div className="contentName">| 작성자</div>
-          <div className="contentText">{board.leaderId}</div>
+          <div className="contentText">{board.Leader.uName}</div>
         </div>
 
         <div className="detail-content">
