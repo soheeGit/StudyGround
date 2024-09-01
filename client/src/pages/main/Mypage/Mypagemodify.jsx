@@ -131,7 +131,6 @@ const Mypagemodify = () => {
           <div className="mpm_profile">
             <img
               src={preview || userData.profileImage || '/default-profile.png'}
-              alt="사진"
               className="mpm_profile_image"
               style={{
                 borderColor: getBorderColor(userData.uLevel),

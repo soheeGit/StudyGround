@@ -141,9 +141,15 @@ const Autho = () => {
                 </span>
               </div>
             </div>
+
+            {studyGroup.requests.length > 0 && (
+              <div className="part-message">
+                <span id="participant-message">스터디 참여를 원합니다.</span>
+              </div>
+            )}
+
             {studyGroup.requests.map((request) => (
               <div className="participant-container" key={request.id}>
-                <span id="participant-message">스터디 참여를 원합니다.</span>
                 <div className="participant-info-box">
                   <div className="participant-info-box1">
                     <div className="participant-info">
@@ -156,7 +162,7 @@ const Autho = () => {
                           handleNicknameClick(request.userId);
                         }}
                       >
-                        {request.User?.uName}{' '}
+                        {request.User?.uName}
                       </div>
                     </div>
                     <div className="participant-info">
