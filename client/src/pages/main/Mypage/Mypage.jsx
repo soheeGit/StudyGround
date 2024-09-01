@@ -128,7 +128,6 @@ const Mypage = () => {
           <div className="profile">
             <img
               src={userData.profileImage}
-              alt="사진"
               className="profile_image"
               style={{
                 borderColor: getBorderColor(userData.uLevel),

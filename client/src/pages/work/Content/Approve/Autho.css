@@ -65,7 +65,12 @@ h1 {
 }
 
 #participant-message {
-  margin: 10px 0;
+  margin-left: 40px;
+}
+
+.part-message {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .participant-info-box {
