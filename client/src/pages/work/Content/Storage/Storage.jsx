@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import WorkHeadr from '../../WorkHeader';
 import './Storage.css';
 import storage1 from '../../../../assets/storage1.png';
@@ -18,6 +18,7 @@ import {
 import styled from 'styled-components';
 
 const Storage = () => {
+  const navigate = useNavigate();
   const { boardId } = useOutletContext();
 
   // 상위 5개 공지사항 데이터 fetch
@@ -46,6 +47,10 @@ const Storage = () => {
   };
   console.log(task5);
   console.log(memo5);
+  const handleClickNotice = ({ data, id }) => {
+    navigate(`/work/${boardId}/notice/${id}`, { state: { notice: data } });
+  };
+
   return (
     <>
       <WorkHeadr title="Storage" />
@@ -67,7 +72,15 @@ const Storage = () => {
             <div className="storage-notice-content-container">
               {notice5 && notice5.length > 0 ? (
                 notice5.map((notice5, notice5Key) => (
-                  <div className="storage-notice-content-row">
+                  <div
+                    className="storage-notice-content-row"
+                    onClick={() =>
+                      handleClickNotice({
+                        data: notice5,
+                        id: notice5.id,
+                      })
+                    }
+                  >
                     <div className="storage-notice-content-number">
                       {notice5.id}
                     </div>

@@ -4,6 +4,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
 .dday-container {
   display: flex;
 }
@@ -66,6 +67,7 @@
   margin-right: auto;
 }
 .dashboard-content-left-1-content-row {
+  display: flex;
   font-weight: 600;
   padding: 10px 10px 10px 10px;
   cursor: pointer;
@@ -78,7 +80,13 @@
   border-radius: 5px; /* 가장자리를 부드럽게 */
   transition: all 0.2s ease-in-out; /* 부드러운 트랜지션 효과 */
 }
-
+.dashboard-content-title {
+  width: 80%;
+}
+.dashboard-content-date {
+  display: flex;
+  justify-content: flex-end;
+}
 .dashboard-content-right-wrap {
   width: 60%;
   height: 100%;
@@ -91,4 +99,8 @@
   margin-bottom: auto;
   border: 1px solid #939393;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-content-memo-title {
+  width: 80%;
 }

@@ -143,7 +143,6 @@ const TaskPage = () => {
                       <div
                         className="title-of-contents"
                         onClick={() => handleClickTask(task)}
-                        // onClick={() => onSelectTask(task)}
                       >
                         {task.title}
                       </div>

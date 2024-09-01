@@ -52,7 +52,7 @@ const DashBoard = () => {
       }
     }
   }, [board]);
-
+  console.log(notice5);
   return (
     <>
       <WorkHeader title="DashBoard" />
@@ -85,7 +85,12 @@ const DashBoard = () => {
                   notice5.map((notice, index) => (
                     <>
                       <div className="dashboard-content-left-1-content-row">
-                        [ {notice.title} ]
+                        <div className="dashboard-content-title">
+                          [{notice.title}]
+                        </div>
+                        <div className="dashboard-content-date">
+                          <FormatFullDate2 dateString={notice.updatedAt} />
+                        </div>
                       </div>
                     </>
                   ))
@@ -105,8 +110,12 @@ const DashBoard = () => {
                   memo5.map((memo, index) => (
                     <>
                       <div className="dashboard-content-left-1-content-row">
-                        <FormatFullDate2 dateString={memo.updatedAt} /> -{' '}
-                        {memo.title}
+                        <div className="dashboard-content-memo-title">
+                          {memo.title}
+                        </div>
+                        <div className="dashboard-content-memo-date">
+                          <FormatFullDate2 dateString={memo.updatedAt} />
+                        </div>
                       </div>
                     </>
                   ))

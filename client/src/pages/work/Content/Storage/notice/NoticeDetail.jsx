@@ -17,7 +17,7 @@ const NoticeDetail = () => {
   const host = 'http://localhost:5000';
   const location = useLocation();
   const navigate = useNavigate();
-  const { notice } = location.state || {}; //location.state로 부터 notice 데이터를 가져옴
+  const { notice } = location.state || {};
   const { boardId, fetchNoticesRef } = useOutletContext();
   const { noticeId } = useParams();
 
