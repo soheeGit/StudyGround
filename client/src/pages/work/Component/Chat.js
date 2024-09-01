@@ -209,7 +209,7 @@ export default Chat;
 
 const RoomContainer = styled.div`
   width: 100%;
-  max-width: 650px;
+  max-width: 1000px;
   @media screen and (max-width: 550px) {
     width: 90%;
   }
@@ -233,7 +233,7 @@ const RoomTitle = styled.p`
 `;
 
 const RoomBody = styled.div`
-  height: 410px;
+  height: 560px;
   border: 1px solid #c8c8c8;
   background: #fff;
   position: relative;
