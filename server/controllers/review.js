@@ -1,8 +1,8 @@
 const { Board, Review, User, Praise } = require('../models');
-const { updateUserLevel } = require('../services/userService');
+const { updateUserLevel, checkAllReviewsCompleted } = require('../services/userService');
 
 exports.submitReview = async (req, res, next) => {
-    const { revieweeId, rating, content, praises } = req.body;
+    const { revieweeIds, rating, content, praises } = req.body;
     const reviewerId = req.user.id;
     const boardId = req.params.id;
 
@@ -15,27 +15,39 @@ exports.submitReview = async (req, res, next) => {
         if (now < board.bClosingDate) {
             return res.status(400).json({ error: '스터디가 아직 종료되지 않았습니다.' });
         }
-        const review = await Review.create({
-            reviewerId,
-            revieweeId,
-            rating,
-            content,
-            boardId,
-        });
-        if (praises && praises.length > 0) {
-            const praiseRecords = await Praise.findAll({
-                where: {
-                    name: praises
-                }
+        const reviewPromises = revieweeIds.map(async (revieweeId) => {
+            const review = await Review.create({
+                reviewerId,
+                revieweeId,
+                rating,
+                content,
+                boardId,
             });
-            await review.addPraises(praiseRecords);
+            if (praises && praises.length > 0) {
+                const praiseRecords = await Praise.findAll({
+                    where: {
+                        name: praises
+                    }
+                });
+                await review.addPraises(praiseRecords);
+            }
+            return review;
+        });
+
+        const reviews = await Promise.all(reviewPromises);
+
+        const allCompleted = await checkAllReviewsCompleted(boardId);
+        if (allCompleted) {
+            await Promise.all([
+                ...revieweeIds.map(id => updateUserLevel(id)),
+                updateUserLevel(reviewerId)
+            ]);
         }
 
-        await updateUserLevel(revieweeId);
         return res.status(201).json({
             success: true,
             message: '리뷰가 성공적으로 작성되었습니다.',
-            review
+            reviews
         });
     } catch (error) {
         console.error(error);

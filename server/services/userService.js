@@ -1,6 +1,38 @@
 const { User, Review, Board } = require('../models');
 
-const updateUserLevel = async (userId) => {
+exports.checkAllReviewsCompleted = async (boardId) => {
+    try {
+        const board = await Board.findByPk(boardId, {
+            include: {
+                model: User,
+                through: 'BoardUser'
+            }
+        });
+
+        const requiredReviews = board.bTotalNumber - 1;
+        
+        const users = board.Users;
+
+        // 각 사용자가 requiredReviews만큼의 리뷰를 받았는지 확인
+        const reviewCounts = await Promise.all(users.map(async (user) => {
+            const reviews = await Review.count({
+                where: {
+                    boardId: boardId,
+                    revieweeId: user.id
+                }
+            });
+            return reviews;
+        }));
+
+        // 모든 사용자가 requiredReviews만큼 리뷰를 받았는지 확인
+        return reviewCounts.every(count => count >= requiredReviews);
+    } catch (error) {
+        console.error(error);
+        throw new Error('리뷰 완료 체크 중 오류 발생');
+    }
+};
+
+exports.updateUserLevel = async (userId) => {
     try {
         const boards = await Board.findAll({
             include: [
@@ -11,6 +43,7 @@ const updateUserLevel = async (userId) => {
                 }
             ]
         });
+        console.log('레벨 업데이트', userId);
         let levelUpCount = 0;
         let levelDownCount = 0;
         for (const board of boards) {
@@ -46,6 +79,8 @@ const updateUserLevel = async (userId) => {
             if (levelUpCount >= 2) user.uLevel = '파랑';
         } else if (user.uLevel === '파랑') {
             if (levelUpCount >= 3) user.uLevel = '보라';
+        } else if (user.uLevel === '보라') {
+            user.uLevel = '보라';
         }
 
         if (levelDownCount > 0) {
@@ -55,6 +90,7 @@ const updateUserLevel = async (userId) => {
             else if (user.uLevel === '노랑') user.uLevel = '주황';
             else if (user.uLevel === '주황') user.uLevel = '빨강';
             else if (user.uLevel === '빨강') user.uLevel = '하양';
+            else if (user.uLevel === '하양') user.uLevel = '하양';
         }
 
         await user.save();
@@ -62,5 +98,3 @@ const updateUserLevel = async (userId) => {
         console.error(error);
     }
 };
-
-module.exports = { updateUserLevel };
