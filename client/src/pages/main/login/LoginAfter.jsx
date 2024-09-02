@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../screen/Top.css';
-import Search from '../screen/Search';
 import Mid from '../screen/Mid';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
@@ -38,8 +37,10 @@ const LoginAfter = () => {
         </div>
       </div>
 
-      <Search onFilterChange={handleFilterChange} />
-      <Mid selectedFilter={selectedFilter} />
+      <Mid
+        selectedFilter={selectedFilter}
+        onFilterChange={handleFilterChange}
+      />
     </div>
   );
 };
