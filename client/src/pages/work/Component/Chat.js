@@ -37,7 +37,7 @@ function Chat() {
       const joinMessage = {
         boardId,
         userId: 'system',
-        message: `${userName}님이 들어왔습니다.`,
+        message: `${userName}님이 입장하셨습니다..`,
       };
       socketInstance.emit('send_message', joinMessage);
       setMessageList((list) => [...list, joinMessage]);
@@ -57,7 +57,7 @@ function Chat() {
     socketInstance.on('join', (data) => {
       const systemMessage = {
         boardId,
-        userId,
+        userId: 'system',
         message: data.chat,
       };
       setMessageList((list) => [...list, systemMessage]);
