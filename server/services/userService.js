@@ -9,7 +9,7 @@ exports.checkAllReviewsCompleted = async (boardId) => {
             }
         });
 
-        const requiredReviews = board.bTotalNumber - 1;
+        const requiredReviews = board.bCurrentNumber - 1;
         
         const users = board.Users;
 
