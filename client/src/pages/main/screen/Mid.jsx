@@ -5,10 +5,11 @@ import './Mid.css';
 import CustomModal2 from '../Modal/Modal2';
 import { Link } from 'react-router-dom';
 
-const Mid = () => {
+function Mid({ selectedFilter }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedBoard, setSelectedBoard] = useState(null);
+  const [selectedBoard, setSelectedBoard] = useState('');
   const [boards, setBoards] = useState([]);
+  const [filteredBoards, setFilteredBoards] = useState([]);
 
   const openModal = (board) => {
     setSelectedBoard(board);
@@ -23,6 +24,10 @@ const Mid = () => {
     fetchBoards();
   }, []);
 
+  useEffect(() => {
+    filterBoards();
+  }, [boards, selectedFilter]);
+
   const fetchBoards = async () => {
     try {
       const response = await axios.get('/api/boards', {
@@ -34,10 +39,20 @@ const Mid = () => {
     }
   };
 
+  const filterBoards = () => {
+    if (selectedFilter === '전체') {
+      setFilteredBoards(boards);
+    } else {
+      setFilteredBoards(
+        boards.filter((board) => board.bType === selectedFilter)
+      );
+    }
+  };
+
   return (
     <div className="mid_recruit">
       <ul className="mid_box-list">
-        {boards.map((board) => (
+        {filteredBoards.map((board) => (
           <li key={board.bId} className="box">
             <div className="title" onClick={() => openModal(board)}>
               <b>{board.bName}</b>
@@ -70,6 +85,6 @@ const Mid = () => {
       />
     </div>
   );
-};
+}
 
 export default Mid;

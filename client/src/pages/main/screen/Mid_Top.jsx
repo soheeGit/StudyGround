@@ -5,11 +5,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Mid_Top() {
+function Mid_Top({ selectedFilter }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedTitle, setSelectedTitle] = useState(''); // 새로운 state 추가
-  const navigate = useNavigate();
+  const [selectedTitle, setSelectedTitle] = useState('');
   const [boards, setBoards] = useState([]);
+  const [filteredBoards, setFilteredBoards] = useState([]);
+  const navigate = useNavigate();
 
   const isLoggedIn = () => {
     return false;
@@ -37,6 +38,10 @@ function Mid_Top() {
     fetchBoards();
   }, []);
 
+  useEffect(() => {
+    filterBoards();
+  }, [boards, selectedFilter]);
+
   const fetchBoards = async () => {
     try {
       const response = await axios.get('/api/boards', {
@@ -48,10 +53,20 @@ function Mid_Top() {
     }
   };
 
+  const filterBoards = () => {
+    if (selectedFilter === '전체') {
+      setFilteredBoards(boards);
+    } else {
+      setFilteredBoards(
+        boards.filter((board) => board.bType === selectedFilter)
+      );
+    }
+  };
+
   return (
     <div className="recruit">
       <ul className="box-list">
-        {boards.map((board) => (
+        {filteredBoards.map((board) => (
           <li key={board.bId} className="box">
             <div className="title" onClick={() => openModal(board)}>
               <b>{board.bName}</b>

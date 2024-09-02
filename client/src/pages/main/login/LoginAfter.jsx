@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../screen/Top.css';
 import Search from '../screen/Search';
 import Mid from '../screen/Mid';
@@ -7,6 +7,12 @@ import logo from '../../../assets/logo.png';
 import WorkHeader from '../../work/WorkHeader';
 
 const LoginAfter = () => {
+  const [selectedFilter, setSelectedFilter] = useState('전체');
+
+  const handleFilterChange = (filter) => {
+    setSelectedFilter(filter);
+  };
+
   return (
     <div>
       <div className="wrap">
@@ -32,8 +38,8 @@ const LoginAfter = () => {
         </div>
       </div>
 
-      <Search />
-      <Mid />
+      <Search onFilterChange={handleFilterChange} />
+      <Mid selectedFilter={selectedFilter} />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 function Top() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('전체');
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -17,6 +18,10 @@ function Top() {
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const handleFilterChange = (filter) => {
+    setSelectedFilter(filter);
   };
 
   return (
@@ -44,8 +49,8 @@ function Top() {
         </div>
       </div>
 
-      <Search />
-      <Mid_Top />
+      <Search onFilterChange={handleFilterChange} />
+      <Mid_Top selectedFilter={selectedFilter} />
 
       <CustomModal isOpen={modalIsOpen} onRequestClose={closeModal} />
     </div>
