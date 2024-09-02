@@ -6,7 +6,6 @@ import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
 function Chating() {
-  const [roomId, setRoomId] = useState('');
   const [showChat, setShowChat] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [socket, setSocket] = useState(null);
@@ -76,7 +75,7 @@ function Chating() {
               value={boardId}
               onChange={(e) => {
                 setErrorMsg('');
-                setRoomId(e.target.value);
+                /*setRoomId(e.target.value);*/
               }}
             />
             <ErrorMessage>{errorMsg}</ErrorMessage>
