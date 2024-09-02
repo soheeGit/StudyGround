@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './Autho.css';
 import WorkHeader from '../../WorkHeader';
 import Sidebar from '../../sidebar/Sidebar';
-import { useNavigate } from 'react-router-dom';
 
 const Autho = () => {
   const [selectedTab, setSelectedTab] = useState('ongoing');
   const [applyList, setApplyList] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,14 +97,6 @@ const Autho = () => {
     }
   };
 
-  const handleNicknameClick = (userId) => {
-    if (userId) {
-      navigate(`/UserProfile/${userId}`);
-    } else {
-      console.error('User ID is undefined');
-    }
-  };
-
   return (
     <>
       <Sidebar />
@@ -154,16 +144,7 @@ const Autho = () => {
                   <div className="participant-info-box1">
                     <div className="participant-info">
                       <div className="info-title">닉네임</div>
-                      <div
-                        className="info-content"
-                        onClick={() => {
-                          console.log('Request object:', request); // Debugging
-                          console.log('User ID on click:', request.userId); // Updated for correct userId
-                          handleNicknameClick(request.userId);
-                        }}
-                      >
-                        {request.User?.uName}
-                      </div>
+                      <div className="info-content">{request.User?.uName}</div>
                     </div>
                     <div className="participant-info">
                       <div className="info-title">등급</div>

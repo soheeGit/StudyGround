@@ -5,14 +5,12 @@ import Login from './pages/main/login/Login';
 import JoinupForm2 from './pages/main/join/JoinupForm2';
 import Test from './pages/main/join/Test';
 import LoginAfter from './pages/main/login/LoginAfter';
-import Profile from './pages/main/profile/profile';
 import Sidebar from './pages/work/sidebar/Sidebar';
 import AddStudyForm from './pages/main/screen/AddStudyForm';
 import EvaluationTest from './pages/main/evaluation/EvaluationTest';
 import Detail from './pages/main/screen/Detail';
 import Mypage from './pages/main/Mypage/Mypage';
 import Mypagemodify from './pages/main/Mypage/Mypagemodify';
-import UserProfile from './pages/main/profile/UserProfile';
 import Evaluation from './pages/main/evaluation/Evaluation';
 /* Work페이지 Component import */
 import Work from './pages/work/Work';
@@ -21,7 +19,7 @@ import VideoPage from './pages/work/Content/Video/Video';
 import Board from './pages/work/Content/Board/Board';
 import Storage from './pages/work/Content/Storage/Storage';
 import Autho from './pages/work/Content/Approve/Autho';
-import Chat from './pages/work/Content/Chat/Chat'; // 임시 위치
+import Chat from './pages/work/Content/Chat/Chat';
 // Storage
 import Memo from './pages/work/Content/Storage/Memo';
 import TaskPage from './pages/work/Content/Storage/task/TaskPage';
@@ -47,7 +45,6 @@ function App() {
           <Route path="/JoinupForm" element={<JoinupForm2 />} />
           <Route path="/Test" element={<Test />} />
           <Route path="/LoginAfter" element={<LoginAfter />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/Sidebar" element={<Sidebar />} />
           <Route path="/add-study" element={<AddStudyForm />} />
           <Route path="/boardList" element={<BoardList />} />
@@ -56,7 +53,6 @@ function App() {
           <Route path="Mypage" element={<Mypage />} />
           <Route path="Mypagemodify" element={<Mypagemodify />} />
           <Route path="/Autho" element={<Autho />} />
-          <Route path="/UserProfile/:userId" element={<UserProfile />} />
           <Route path="/evaluation/:boardId" element={<Evaluation />} />
 
           {/* Wokr페이지 라우팅 */}

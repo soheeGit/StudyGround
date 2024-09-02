@@ -33,11 +33,12 @@ function Chat() {
       console.log('Connected to chat namespace');
       socketInstance.emit('join', boardId);
       console.log('Joined room:', boardId, 'with userId:', userId);
+
       // 임시
       const joinMessage = {
         boardId,
         userId: 'system',
-        message: `${userName}님이 입장하셨습니다..`,
+        message: `${userName}님이 입장하셨습니다.`,
       };
       socketInstance.emit('send_message', joinMessage);
       setMessageList((list) => [...list, joinMessage]);
@@ -103,7 +104,7 @@ function Chat() {
         author: userName,
       };
 
-      console.log('Sending message:', messageData);
+      // console.log('Sending message:', messageData);
       socket.emit('send', messageData);
       setMessageList((list) => [...list, messageData]);
       inputRef.current.value = '';
