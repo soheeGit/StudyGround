@@ -49,6 +49,7 @@ const TaskPage = () => {
     queryFn: () => fetchTasks(boardId),
   });
   fetchTasksRef.current = refetch;
+  console.log(tasks);
   // 과제 제출 상태 렌더링 로직
   const responseWithIsSubmit =
     tasks &&

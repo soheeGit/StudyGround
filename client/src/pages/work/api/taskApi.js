@@ -2,28 +2,33 @@ import axios from 'axios';
 
 // 과제 get
 export const fetchTasks = async (boardId) => {
-  const response = await axios.get(`/storage/task/${boardId}`, {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  const responseWithStatus = response.data.map((task) => {
-    const current_time = new Date();
-    const dedaline = new Date(task.deadline);
-    return {
-      ...task,
-      status: current_time > dedaline ? '종료' : '진행중',
-    };
-  });
-  // deadline 기준으로 정렬
-  responseWithStatus.sort((a, b) => {
-    const deadlineA = new Date(a.deadline);
-    const deadlineB = new Date(b.deadline);
-    return deadlineB - deadlineA;
-  });
-  console.log(responseWithStatus);
-  return responseWithStatus;
+  try {
+    const response = await axios.get(`/storage/task/${boardId}`, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    const responseWithStatus = response.data.tasks.map((task) => {
+      const current_time = new Date();
+      const dedaline = new Date(task.deadline);
+      return {
+        ...task,
+        status: current_time > dedaline ? '종료' : '진행중',
+      };
+    });
+    // deadline 기준으로 정렬
+    responseWithStatus.sort((a, b) => {
+      const deadlineA = new Date(a.deadline);
+      const deadlineB = new Date(b.deadline);
+      return deadlineB - deadlineA;
+    });
+    console.log(responseWithStatus);
+    return responseWithStatus;
+  } catch (error) {
+    console.error('과제 데이터를 가져오는 중 오류 발생 : ', error);
+  }
 };
 
 // 과제 추가(방장)

@@ -24,7 +24,7 @@ const SubmitTaskDetail = ({ submitTasks }) => {
               <div className="submitTaskDetail-row">
                 <div className="submitTaskDetail-row-1">작성자</div>
                 <div className="divider-column"></div>
-                {submitTask.userName}
+                {submitTask.User.uName}
               </div>
               <div className="submitTaskDetail-row">
                 <div className="submitTaskDetail-row-1">제출일시</div>

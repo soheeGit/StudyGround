@@ -5,15 +5,15 @@ export function Button({ name, type, size, onClick, color, hoverColor }) {
   const buttonStyle = {
     width: `${size}`,
     backgroundColor: isHovered ? hoverColor : color,
-    'background-color': `${color}`,
+    backgroundColor: `${color}`,
     border: 'none',
-    'border-radius': '10px',
+    borderRadius: '10px',
     color: 'white',
-    'padding-top': '5px',
-    'padding-bottom': '5px',
-    'padding-left': '30px',
-    'padding-right': '30px',
-    'margin-left': '20px',
+    paddingTop: '5px',
+    paddingBottom: '5px',
+    paddingLeft: '30px',
+    paddingRight: '30px',
+    marginRight: '20px',
     cursor: 'pointer',
   };
   return (
