@@ -13,6 +13,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteNotice } from '../../../api/noticeApi';
 
 const NoticeDetail = () => {
+  const { userId, leaderId } = useOutletContext();
   const queryClient = useQueryClient();
   const host = 'http://localhost:5000';
   const location = useLocation();
@@ -20,7 +21,8 @@ const NoticeDetail = () => {
   const { notice } = location.state || {};
   const { boardId, fetchNoticesRef } = useOutletContext();
   const { noticeId } = useParams();
-
+  console.log(userId);
+  console.log(leaderId);
   // 공지사항 삭제
   const deleteNoticeMutation = useMutation({
     mutationFn: () => deleteNotice({ noticeId }),
@@ -72,20 +74,26 @@ const NoticeDetail = () => {
       ))}
       <div className="divider-row"></div>
       <div className="buttonsArea">
-        <Button
-          name="수정"
-          color="#3D9BF3"
-          onClick={() =>
-            navigate(`../${noticeId}/update`, { state: { notice } })
-          }
-          hoverColor="#5AA7F6"
-        />
-        <Button
-          name="삭제"
-          color="#E86161"
-          onClick={handleDelete}
-          hoverColor="#D2625D"
-        />
+        {leaderId === userId ? (
+          <>
+            <Button
+              name="수정"
+              color="#3D9BF3"
+              onClick={() =>
+                navigate(`../${noticeId}/update`, { state: { notice } })
+              }
+              hoverColor="#5AA7F6"
+            />
+            <Button
+              name="삭제"
+              color="#E86161"
+              onClick={handleDelete}
+              hoverColor="#D2625D"
+            />
+          </>
+        ) : (
+          <></>
+        )}
         <Button
           name="목록"
           color="#D9D9D9"

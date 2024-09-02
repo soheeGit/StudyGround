@@ -49,7 +49,7 @@ const TaskPage = () => {
     queryFn: () => fetchTasks(boardId),
   });
   fetchTasksRef.current = refetch;
-
+  console.log(tasks);
   // 과제 제출 상태 렌더링 로직
   const responseWithIsSubmit =
     tasks &&
@@ -128,7 +128,7 @@ const TaskPage = () => {
         <>
           <div className="task-content-container">
             <div className="task-content-header">
-              <div className="number-of-contents">순번</div>
+              <div className="number-of-contents">번호</div>
               <div className="title-of-contents"></div>
               <div className="status-of-contents">진행</div>
               <div className="isSubmit-status">제출</div>
@@ -139,7 +139,7 @@ const TaskPage = () => {
                 currentDatas.map((task, taskKey) => (
                   <>
                     <div className="task-data-container" key={task.id}>
-                      <div className="number-of-contents">{task.id}</div>
+                      <div className="number-of-contents">{taskKey}</div>
                       <div
                         className="title-of-contents"
                         onClick={() => handleClickTask(task)}

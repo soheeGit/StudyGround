@@ -167,8 +167,16 @@ exports.getTaskData = async (req, res, next) => {
                         {
                             model: File,
                             as: 'files'
+                        },
+                        {
+                            model: User,
+                            attributes: ['uName']
                         }
                     ]
+                },
+                {
+                    model: User,
+                    attributes: ['uName']
                 }
             ]
         });
@@ -180,8 +188,7 @@ exports.getTaskData = async (req, res, next) => {
         return res.status(200).json({
             success: true,
             message: '과제 조회 성공',
-            tasks,
-            user: user.uName,
+            tasks
         });
     } catch (error) {
         console.error(error);
