@@ -146,7 +146,12 @@ exports.updateTask = async (req, res, next) => {
 
 exports.getTaskData = async (req, res, next) => {
     const boardId = req.params.id;
+    const userId = req.user.id;
     try {
+        const user = await User.findOne({ where: {id: userId} });
+        if(!user) {
+            return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+        }
         const tasks = await Task.findAll({
             where: {
                 boardId: boardId
@@ -172,7 +177,12 @@ exports.getTaskData = async (req, res, next) => {
             return res.status(200).json({ message: '해당 스터디의 자료가 없습니다.' });
         }
         
-        res.json(tasks);
+        return res.status(200).json({
+            success: true,
+            message: '과제 조회 성공',
+            tasks,
+            user: user.uName,
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: '서버 오류' });
