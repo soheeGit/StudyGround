@@ -19,11 +19,13 @@ import { useQuery } from '@tanstack/react-query';
 import { FormatFullDate } from '../../../Component/FormattedDate';
 
 const NoticePage = () => {
-  const { boardId } = useOutletContext();
+  const client = JSON.parse(localStorage.getItem('user'));
+  const userId = client.user.id;
+  const { boardId, leaderId } = useOutletContext();
   const location = useLocation();
   const navigate = useNavigate();
   const [isOutletVisible, setIsOutletVisible] = useState(false); // Outlet 활성화 상태
-
+  // const userId = client.user.id;
   const [selectedNotice, setSelectedNotice] = useState(null);
 
   // 현재 URL이 /addnotice인 경우 Outlet 활성화
@@ -154,19 +156,23 @@ const NoticePage = () => {
                   />
                 ))}
               </div>
-              <div className="buttonsArea">
-                <Button
-                  name="등록"
-                  color="#E86161"
-                  onClick={() => navigate('addnotice')}
-                  hoverColor="#D2625D"
-                />
-              </div>
+              {userId === leaderId ? (
+                <div className="buttonsArea">
+                  <Button
+                    name="등록"
+                    color="#E86161"
+                    onClick={() => navigate('addnotice')}
+                    hoverColor="#D2625D"
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </>
       )}
-      <Outlet context={{ boardId }} />
+      <Outlet context={{ boardId, userId, leaderId }} />
     </>
   );
 };

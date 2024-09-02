@@ -9,6 +9,7 @@ import { mdeleteTask } from '../../../api/taskApi';
 const SubmitTaskDetail = ({ submitTasks }) => {
   console.log(submitTasks);
   const navigate = useNavigate();
+  const host = 'http://localhost:5000';
 
   // 내 제출한 과제 확인
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -23,7 +24,7 @@ const SubmitTaskDetail = ({ submitTasks }) => {
               <div className="submitTaskDetail-row">
                 <div className="submitTaskDetail-row-1">작성자</div>
                 <div className="divider-column"></div>
-                {submitTask.userId}
+                {submitTask.userName}
               </div>
               <div className="submitTaskDetail-row">
                 <div className="submitTaskDetail-row-1">제출일시</div>
@@ -34,8 +35,20 @@ const SubmitTaskDetail = ({ submitTasks }) => {
                 {submitTask.content}
               </div>
               <div className="submitTaskDetail-row">
-                <div className="submitTaskDetail-row-1">첨부파일</div>
-                {submitTask.files.fileName}
+                <div className="submitTaskDetail-row-1">
+                  첨부파일 ({submitTask.files.length})개
+                </div>
+                {submitTask.files.map((file, key) => (
+                  <div className="attachment-box">
+                    <a
+                      href={`${host}/files/${file.fileName}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {file.fileName}
+                    </a>
+                  </div>
+                ))}
               </div>
               <div className="buttonsArea">
                 {submitTask.userId === userId ? (
