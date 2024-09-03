@@ -9,11 +9,11 @@ const AddFile = ({ boardId, fetchFiles }) => {
 
   // 파일 선택 처리 함수
   const handleFileChange = async (event) => {
-    setFiles([...files, ...event.target.files]);
-    console.log(files);
+    const selectedFiles = Array.from(event.target.files);  // 새롭게 선택한 파일들
+    setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
 
     const formData = new FormData();
-    files.forEach((file) => {
+    selectedFiles.forEach((file) => {
       formData.append('files', file);
     });
 
@@ -56,4 +56,5 @@ const AddFile = ({ boardId, fetchFiles }) => {
     </div>
   );
 };
+
 export default AddFile;
