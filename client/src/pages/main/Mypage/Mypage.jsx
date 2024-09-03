@@ -90,7 +90,7 @@ const Mypage = () => {
       case '보라':
         return 'purple';
       default:
-        return 'black';
+        return 'gray';
     }
   };
 
@@ -197,7 +197,7 @@ const Mypage = () => {
                     <div className="review_contentname">팀원들의 한줄평</div>
                     <hr />
                     {board.reviews.map((review, index) => (
-                      <div key={index}>{review.content}</div>
+                      <div key={index}>· {review.content}</div>
                     ))}
                   </div>
                 )}

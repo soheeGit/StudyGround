@@ -118,7 +118,7 @@ const Mypagemodify = () => {
       case '보라':
         return 'purple';
       default:
-        return 'black';
+        return 'gray';
     }
   };
 
