@@ -26,12 +26,34 @@ class File extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.File.belongsTo(db.Notice, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
-        db.File.belongsTo(db.StudyMaterial, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
-        db.File.belongsTo(db.Task, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
-        db.File.belongsTo(db.SubmitTask, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
-        db.File.belongsTo(db.FileStorage, { foreignKey: 'fileableId', constraints: false, onDelete: 'CASCADE' });
-    }
+        db.File.belongsTo(db.Task, {
+          foreignKey: 'fileableId',
+          constraints: false, // 외래 키 제약 조건 제거
+          scope: { fileableType: 'Task' },
+          onDelete: 'CASCADE',
+        });
+        db.File.belongsTo(db.Notice, {
+          foreignKey: 'fileableId',
+          constraints: false, // 외래 키 제약 조건 제거
+          scope: { fileableType: 'Notice' },
+          onDelete: 'CASCADE',
+        });
+        db.File.belongsTo(db.StudyMaterial, {
+          foreignKey: 'fileableId',
+          constraints: false, // 외래 키 제약 조건 제거
+          onDelete: 'CASCADE',
+        });
+        db.File.belongsTo(db.SubmitTask, {
+          foreignKey: 'fileableId',
+          constraints: false, // 외래 키 제약 조건 제거
+          onDelete: 'CASCADE',
+        });
+        db.File.belongsTo(db.FileStorage, {
+          foreignKey: 'fileableId',
+          constraints: false, // 외래 키 제약 조건 제거
+          onDelete: 'CASCADE',
+        });
+      }
 }
 
 module.exports = File;
