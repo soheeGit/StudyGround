@@ -37,7 +37,10 @@ function Mid({ selectedFilter, onFilterChange }) {
         withCredentials: true,
       });
       const allBoards = response.data;
-      setMyBoards(allBoards);
+      console.log('Fetched boards:', allBoards); // API 응답을 콘솔에 출력하여 확인
+
+      // 응답이 배열인지 확인한 후 상태 설정
+      setMyBoards(Array.isArray(allBoards) ? allBoards : []);
     } catch (error) {
       console.error('Error fetching my boards:', error);
     }
@@ -72,24 +75,29 @@ function Mid({ selectedFilter, onFilterChange }) {
         <p className="small-text">내 스터디</p>
       </div>
       <ul className="mid_box-list">
-        {myBoards.map((board) => (
-          <li key={board.bId} className="box">
-            <div className="mid_title">
-              <Link to={`/work/${board.bId}/dashboard`}>
-                <b>{board.bName}</b>
-              </Link>
-            </div>
-
-            <div className="user-info">
-              <div className="mid_info">
-                <div className="mid_count">
-                  {board.bCurrentNumber} / {board.bTotalNumber}
+        {Array.isArray(myBoards) &&
+          myBoards.map(
+            (
+              board // 배열 확인 후 map 실행
+            ) => (
+              <li key={board.bId} className="box">
+                <div className="mid_title">
+                  <Link to={`/work/${board.bId}/dashboard`}>
+                    <b>{board.bName}</b>
+                  </Link>
                 </div>
-              </div>
-              <div className="detail"></div>
-            </div>
-          </li>
-        ))}
+
+                <div className="user-info">
+                  <div className="mid_info">
+                    <div className="mid_count">
+                      {board.bCurrentNumber} / {board.bTotalNumber}
+                    </div>
+                  </div>
+                  <div className="detail"></div>
+                </div>
+              </li>
+            )
+          )}
         <Link
           to="/add-study"
           className="new-study-link"

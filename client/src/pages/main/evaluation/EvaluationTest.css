@@ -63,7 +63,7 @@
 
 .stars {
   display: flex;
-  margin-left: 120px;
+  margin-left: 140px;
   margin-top: -42px;
 }
 
@@ -72,6 +72,7 @@
   cursor: pointer;
   color: white;
   -webkit-text-stroke: 1px black;
+  margin-left: 5px;
 }
 
 .star.selected {
@@ -82,7 +83,7 @@
 .compliments-options {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 120px;
+  margin-left: 140px;
   margin-top: -37px;
 }
 
