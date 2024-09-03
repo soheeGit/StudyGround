@@ -90,7 +90,7 @@ const FilePage = () => {
           <AddFile boardId={boardId} fetchFiles={refetch} />
         </AddFileWrap>
         <div className="table-header-container">
-          <div className="table-header-1">순번</div>
+          <div className="table-header-1"></div>
           <div className="table-header-2">이름</div>
           <div className="table-header-3">수정일</div>
           <div className="table-header-4">유형</div>
