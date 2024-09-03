@@ -20,7 +20,7 @@ const AddTask = () => {
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
   };
-
+  console.log(files);
   // 과제 추가 post
   const mutation = useMutation({
     mutationFn: (formData) => addTask({ boardId, formData }),
@@ -40,13 +40,13 @@ const AddTask = () => {
 
     const formData = new FormData();
     formData.append('title', title);
-    formData.append('content', content);
     formData.append('deadline', deadline);
+    formData.append('content', content);
     files.forEach((file) => {
       formData.append('files', file);
     });
     // FormData 내용을 콘솔에 출력
-    console.log(files);
+    console.log(formData);
     for (let pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     }
@@ -74,15 +74,6 @@ const AddTask = () => {
             className="inputType"
             onChange={(e) => setDeadline(e.target.value)}
           />
-          {/* <div className="checkboxArea">
-            지각제출 허용
-            <input
-              type="checkbox"
-              id="checkbox"
-              checked={isImportant}
-              onChange={(e) => setIsImportant(e.target.checked)}
-            />
-          </div> */}
         </div>
         <div className="detail-field">
           <textarea
@@ -96,32 +87,17 @@ const AddTask = () => {
           <div className="attachArea-row">
             <div className="attachArea-title">첨부파일</div>
             <div className="divider-column"></div>
-            <input
-              type="file"
-              id="files"
-              multiple
-              onChange={handleFileChange}
-            />
+            <input type="file" multiple onChange={handleFileChange} />
           </div>
           <div className="attachArea-row">
             <div className="attachArea-title">첨부파일</div>
             <div className="divider-column"></div>
-            <input
-              type="file"
-              id="files"
-              multiple
-              onChange={handleFileChange}
-            />
+            <input type="file" multiple onChange={handleFileChange} />
           </div>
           <div className="attachArea-row">
             <div className="attachArea-title">첨부파일</div>
             <div className="divider-column"></div>
-            <input
-              type="file"
-              id="files"
-              multiple
-              onChange={handleFileChange}
-            />
+            <input type="file" multiple onChange={handleFileChange} />
           </div>
           <div className="divider-row"></div>
           <div className="enroll-button">

@@ -16,52 +16,65 @@ import nostar from '../../../../../assets/nostar.png';
 import { Button } from '../../../Component/Button';
 import AddFile from './AddFile';
 import styled from 'styled-components';
+import { FormatFullDate } from '../../../Component/FormattedDate';
+import { FaRegImage } from 'react-icons/fa6';
+import { FaFilePdf } from 'react-icons/fa';
+import { RiFileExcel2Fill } from 'react-icons/ri';
+import { HiOutlineDocumentText } from 'react-icons/hi';
+import { useQuery } from '@tanstack/react-query';
+import { fetchFiles } from '../../../api/fileStorageApi';
 
 const FilePage = () => {
   const { boardId } = useOutletContext();
+  const host = 'http://localhost:5000';
   const location = useLocation();
   const navigate = useNavigate();
   const [isOutletVisible, setIsOutletVisible] = useState(false); // Outlet 활성화 상태
 
-  // 파일 데이터
-  const [files, setFiles] = useState([]);
-  // const [selectedNotice, setSelectedNotice] = useState(null);
-
-  // 현재 URL이 /addnotice인 경우 Outlet 활성화
-  // useEffect(() => {
-  //   if (
-  //     location.pathname.includes('/notice/addnotice') ||
-  //     /\/notice\/\d+/.test(location.pathname)
-  //   ) {
-  //     setIsOutletVisible(true);
-  //   } else {
-  //     setIsOutletVisible(false);
-  //   }
-  // }, [location]);
-
   // 파일 데이터 get
-  useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const response = await axios.get(`/storage/StudyMaterial/${boardId}`, {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setFiles(response.data);
-      } catch (error) {
-        console.error('파일 데이터를 가져오는 중 오류 발생:', error);
-      }
-    };
+  const {
+    data: files,
+    isLoading: isFilesLoading,
+    isError: isFilesError,
+    refetch,
+  } = useQuery({
+    queryKey: ['files', boardId],
+    queryFn: () => fetchFiles(boardId),
+  });
+  console.log(files);
 
-    fetchFiles();
-  }, [boardId]);
+  // 파일 크기 포맷팅 함수
+  const formatFileSize = (bytes) => {
+    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    let size = bytes;
+    let unitIndex = 0;
 
-  // // 파일 상세확인 : NopticeDetail로 notice데이터 넘겨준다
-  // const handleClickNotice = (notice) => {
-  //   navigate(`/work/${boardId}/notice/${notice.id}`, { state: { notice } });
-  // };
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024;
+      unitIndex++;
+    }
+
+    return `${size.toFixed(2)} ${units[unitIndex]}`;
+  };
+
+  // 파일 형식 추출 함수
+  const getFileType = (fileName) => {
+    const extension = fileName.split('.').pop();
+    return extension ? extension.toUpperCase() : 'UNKNOWN';
+  };
+
+  const selectIcon = (fileName) => {
+    const extension = fileName.split('.').pop();
+    if (extension === 'png') {
+      return <FaRegImage />;
+    } else if (extension === 'pdf') {
+      return <FaFilePdf />;
+    } else if (extension === 'xlsx') {
+      return <RiFileExcel2Fill />;
+    } else {
+      return <HiOutlineDocumentText />;
+    }
+  };
 
   return (
     <>
@@ -73,7 +86,9 @@ const FilePage = () => {
       {/* body */}
       <div className="filter-box"></div>
       <div className="my-container">
-        <AddFile boardId={boardId} />
+        <AddFileWrap>
+          <AddFile boardId={boardId} fetchFiles={refetch} />
+        </AddFileWrap>
         <div className="table-header-container">
           <div className="table-header-1">순번</div>
           <div className="table-header-2">이름</div>
@@ -81,28 +96,62 @@ const FilePage = () => {
           <div className="table-header-4">유형</div>
           <div className="table-header-5">크기</div>
         </div>
-        {/* {files && files.length > 0 ? (
-          files.map((file, fileKey) => (
-            <div className="table-content-container">
-              <div className="table-content-1">{file.fileKey}</div>
-              <div className="table-content-2">{file.fileName}</div>
-              <div className="table-content-3">123131</div>
-              <div className="table-content-4">13131</div>
-              <div className="table-content-5">13131</div>
-            </div>
-          ))
-        ) : (
-          <></>
-        )} */}
+        <TableContent>
+          {files && files.length > 0 ? (
+            files.map((file, key) => {
+              const fileData = file.files && file.files[0]; // 파일이 있는지 확인
+              if (!fileData) return null; // 파일 데이터가 없으면 렌더링하지 않음
+              return (
+                <>
+                  <a
+                    href={`${host}/files/${file.files[0].fileName}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="file-row">
+                      <div className="row1">
+                        {selectIcon(file.files[0].fileName)}
+                      </div>
+                      <div className="row2">{file.files[0].fileName}</div>
+                      <div className="row3">
+                        <FormatFullDate dateString={file.files[0].updatedAt} />
+                      </div>
+                      <div className="row4">
+                        {getFileType(file.files[0].fileName)}
+                      </div>
+                      <div className="row5"></div>
+                    </div>
+                  </a>
+                </>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </TableContent>
       </div>
     </>
   );
 };
 export default FilePage;
+const AddFileWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+`;
 
 const AddFileButton = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-bottom: 2px;
+`;
+
+const TableContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  a {
+    text-decoration: none;
+  }
 `;
