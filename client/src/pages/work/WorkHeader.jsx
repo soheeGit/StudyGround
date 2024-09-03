@@ -55,6 +55,25 @@ const WorkHeader = ({ title }) => {
     setDropdownVisible(!dropdownVisible);
   };
 
+  const getBorderColor = (level) => {
+    switch (level) {
+      case '빨강':
+        return 'red';
+      case '주황':
+        return 'orange';
+      case '노랑':
+        return 'yellow';
+      case '초록':
+        return 'green';
+      case '파랑':
+        return 'blue';
+      case '보라':
+        return 'purple';
+      default:
+        return 'gray';
+    }
+  };
+
   const handleProfileClick = () => {
     navigate('/Mypage');
   };
@@ -86,7 +105,13 @@ const WorkHeader = ({ title }) => {
       <div className="header-right">
         <div className="profile-container" onClick={toggleDropdown}>
           <div className="profile-img">
-            <Avatar src={userData.profileImage} alt="프로필 사진" />
+            <Avatar
+              src={userData.profileImage}
+              alt="프로필 사진"
+              style={{
+                borderColor: getBorderColor(userData.uLevel),
+              }}
+            />
           </div>
           <div className="profile">
             {userName}님
