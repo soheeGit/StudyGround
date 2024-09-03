@@ -1,4 +1,5 @@
 .approve-container {
+  width: 100%;
   margin-left: 180px;
   padding: 20px;
   position: absolute;
@@ -18,6 +19,7 @@ h1 {
 }
 
 .tab-selector {
+  display: flex;
   margin-bottom: 20px;
 }
 
@@ -38,10 +40,26 @@ h1 {
 }
 
 .study-group {
-  margin-left: 10px;
-  margin-right: 10px;
 }
-
+.tipButton-wrap {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  width: 5%;
+  display: flex;
+  align-items: center;
+}
+.tipButton {
+  border-radius: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background-color: #7ed321;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+}
 .autho-header-container {
   display: flex;
   width: 100%;

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 
 export function Button({ name, type, size, onClick, color, hoverColor }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -17,7 +18,7 @@ export function Button({ name, type, size, onClick, color, hoverColor }) {
     cursor: 'pointer',
   };
   return (
-    <div className="button-container">
+    <ButtonWrap>
       <button
         type={type}
         onClick={onClick}
@@ -27,6 +28,12 @@ export function Button({ name, type, size, onClick, color, hoverColor }) {
       >
         {name}
       </button>
-    </div>
+    </ButtonWrap>
   );
 }
+
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

@@ -154,4 +154,6 @@ const TableContent = styled.div`
   a {
     text-decoration: none;
   }
+
+  overflow-y: auto;
 `;

@@ -8,7 +8,7 @@ import storage3 from '../../../../assets/storage3.png';
 import storage4 from '../../../../assets/storage4.png';
 import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchMemo5, fetchNotice5, fetchTask5 } from '../../api/fetch5data';
 import {
   FormatFullDate,
@@ -16,17 +16,39 @@ import {
   FormatMonthDay,
 } from '../../Component/FormattedDate';
 import styled from 'styled-components';
+import { fetchFiles5 } from '../../api/fileStorageApi';
+import { FaRegImage } from 'react-icons/fa6';
+import { FaFilePdf } from 'react-icons/fa';
+import { RiFileExcel2Fill } from 'react-icons/ri';
+import { HiOutlineDocumentText } from 'react-icons/hi';
 
 const Storage = () => {
   const navigate = useNavigate();
   const { boardId } = useOutletContext();
-
+  // icon 선택
+  const selectIcon = (fileName) => {
+    const extension = fileName.split('.').pop();
+    if (extension === 'png') {
+      return <FaRegImage />;
+    } else if (extension === 'pdf') {
+      return <FaFilePdf />;
+    } else if (extension === 'xlsx') {
+      return <RiFileExcel2Fill />;
+    } else {
+      return <HiOutlineDocumentText />;
+    }
+  };
   // 상위 5개 공지사항 데이터 fetch
   const { data: notice5, isNotice5Loading } = useQuery({
     queryKey: ['notice5', boardId],
     queryFn: () => fetchNotice5(boardId),
   });
 
+  // 상위 5개 파일 데이터 fetch
+  const { data: file5, isFile5Loading } = useQuery({
+    queryKey: ['file5', boardId],
+    queryFn: () => fetchFiles5(boardId),
+  });
   // 상위 5개 과제 데이터 fetch
   const { data: task5, isTask5Lodaing } = useQuery({
     queryKey: ['task5', boardId],
@@ -50,6 +72,7 @@ const Storage = () => {
   const handleClickNotice = ({ data, id }) => {
     navigate(`/work/${boardId}/notice/${id}`, { state: { notice: data } });
   };
+  console.log(file5);
 
   return (
     <>
@@ -82,7 +105,7 @@ const Storage = () => {
                     }
                   >
                     <div className="storage-notice-content-number">
-                      {notice5.id}
+                      {notice5Key + 1}
                     </div>
                     <div className="storage-notice-content-title">
                       {notice5.title}
@@ -110,7 +133,25 @@ const Storage = () => {
                 </div>
               </Link>
             </div>
-            <div></div>
+            <div className="storage-notice-content-container">
+              {file5 && file5.length > 0 ? (
+                file5.map((file5, key) => (
+                  <div className="storage-notice-content-row">
+                    <div className="storage-notice-content-number">
+                      {selectIcon(file5.files[0].fileName)}
+                    </div>
+                    <div className="storage-notice-content-title">
+                      {file5.files[0].fileName}
+                    </div>
+                    <div className="storage-notice-content-date">
+                      <FormatFullDate2 dateString={file5.files[0].updatedAt} />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
           {/* Memo Tab*/}
           <div className="storage-memo-container">
@@ -159,7 +200,9 @@ const Storage = () => {
             {task5 && task5.length > 0 ? (
               task5.map((task, taskId) => (
                 <div className="storage-task-content-row">
-                  <div className="storage-task-content-number">{taskId}</div>
+                  <div className="storage-task-content-number">
+                    {taskId + 1}
+                  </div>
                   <div className="storage-task-content-title">{task.title}</div>
                   <div className="storage-task-content-isSubmit">
                     {task.status}
