@@ -70,3 +70,35 @@
 .table-content-5 {
   width: 10%;
 }
+
+.file-row {
+  display: flex;
+  color: black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  div {
+    display: flex;
+    justify-content: center;
+  }
+  .row1 {
+    width: 10%;
+  }
+  .row2 {
+    width: 40%;
+  }
+  .row3 {
+    width: 20%;
+  }
+  .row4 {
+    width: 20%;
+  }
+}
+.file-row:hover {
+  background-color: #f0f0f0;
+  color: #333; /* 텍스트 색상을 조금 더 어두운 색으로 변경 */
+  transform: scale(1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 추가 */
+  border-radius: 5px; /* 가장자리를 부드럽게 */
+  transition: all 0.2s ease-in-out; /* 부드러운 트랜지션 효과 */
+}

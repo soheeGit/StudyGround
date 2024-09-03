@@ -24,7 +24,7 @@ const AddNotice = () => {
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
   };
-
+  console.log(files);
   // 공지사항 추가 mutation
   const mutation = useMutation({
     mutationFn: (formData) => addNotice({ boardId, formData }),
@@ -49,7 +49,10 @@ const AddNotice = () => {
     files.forEach((file) => {
       formData.append('files', file);
     });
-
+    console.log(formData);
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
     mutation.mutate(formData);
   };
 
