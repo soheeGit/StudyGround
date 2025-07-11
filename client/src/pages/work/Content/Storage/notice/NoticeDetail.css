@@ -1,0 +1,52 @@
+.detail-container {
+  display: flex;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.detail-field {
+  display: flex;
+  border-top: solid 2px;
+  border-color: #948a8a;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #4e4949;
+}
+.detail-field-title {
+  display: flex;
+  justify-content: center;
+  width: 10%;
+}
+
+.detail-field-content {
+  flex-grow: 1;
+}
+
+.divider-column {
+  border: solid 1px;
+  border-color: #948a8a;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.divider-row {
+  border: solid 1px;
+  border-color: #948a8a;
+}
+
+/* 내용영역 */
+.detail-contentType {
+  height: 400px;
+  padding-top: 20px;
+}
+
+.attachmentType {
+  margin-bottom: 20px;
+}
+.attachment-box {
+  margin-bottom: 20px;
+}
+.buttonsArea {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}

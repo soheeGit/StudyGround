@@ -1,0 +1,90 @@
+.notice-content-header {
+  display: flex;
+  width: 100%;
+  background-color: #d9d9d9;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 17px;
+  font-weight: 700;
+  align-items: center; /* 추가된 부분 */
+  text-align: center; /* 추가된 부분 */
+}
+
+/* table header 영역*/
+.notice-header-1,
+.notice-header-2,
+.notice-header-3,
+.notice-header-4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.notice-header-1 {
+  width: 10%;
+}
+.notice-header-2 {
+  width: 50%;
+}
+.notice-header-3 {
+  width: 20%;
+}
+.notice-header-4 {
+  width: 20%;
+}
+
+/* table content 영역 */
+.notice-content-container {
+  height: 60vh;
+  overflow-y: auto; /* 내용이 고정 높이를 초과할 경우 세로 스크롤 추가 */
+}
+.notice-content-box {
+  display: flex;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-bottom: solid 1px;
+  align-items: center;
+  text-align: center;
+}
+.notice-content-box:hover {
+  background-color: #f0f0f0;
+  color: #333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 추가 */
+  transition: all 0.2s ease-in-out; /* 부드러운 트랜지션 효과 */
+}
+.notice-content-title {
+  cursor: pointer;
+  font-family: 'Imprima', sans-serif;
+}
+
+.notice-content-1,
+.notice-content-3,
+.notice-content-4 {
+  display: flex;
+  justify-content: center;
+}
+
+.notice-content-1 {
+  width: 10%;
+}
+.notice-content-2 {
+  width: 50%;
+  display: flex;
+}
+.notice-content-3 {
+  width: 20%;
+}
+.notice-content-4 {
+  width: 20%;
+}
+
+.table-footer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,6 @@
+{
+    "workbench.editor.enablePreview": false,
+    "editor.defaultFoldingRangeProvider": null,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+}

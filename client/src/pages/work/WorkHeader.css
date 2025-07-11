@@ -1,0 +1,78 @@
+.work-header-container {
+  width: auto; /* Change to fit within the available space */
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+}
+.header-left {
+  flex-grow: 1;
+}
+.header-left h1 {
+  margin-left: 30px;
+  margin-top: 0;
+}
+.header-right {
+  display: flex;
+}
+.profile-container {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.profile-container:hover {
+  background-color: #f0f0f0;
+}
+
+.profile-img {
+  width: 30px;
+  height: 30px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  font-weight: bolder;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  width: 150px;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.dropdown-menu li {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f5f5f5;
+}
+
+.alarm-container {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  cursor: pointer;
+}

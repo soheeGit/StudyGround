@@ -1,0 +1,111 @@
+.year-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 40px;
+}
+.calendar-wrap {
+  height: 80%;
+  display: flex;
+}
+.calendar-container {
+  width: 60%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 2px;
+}
+.header-button-continaer {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
+  margin-bottom: 5px;
+  display: flex;
+}
+.header-button-continaer button {
+  background-color: #7ed321;
+}
+.calendar-container td {
+  width: 30px;
+  border: solid 1px #ddd;
+  vertical-align: top; /* 세로 가운데 정렬 */
+  text-align: center; /* 가로 가운데 정렬 */
+}
+.calendar-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.calendar-header button {
+  background-color: #7ed321;
+}
+.calendar-header-title {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.calendar-month-num {
+  font-size: 50px;
+}
+
+/* table body */
+.claendar-table {
+  width: 100%;
+  flex-grow: 1;
+  margin-top: 20px;
+  border-collapse: collapse; /* 셀 간격 제거 */
+  table-layout: auto; /* 셀 크기를 내용에 맞춰 자동으로 조정 */
+}
+.prevMonthDay,
+.nextMonthDay {
+  opacity: 0.2;
+}
+
+.calendar-body td {
+  position: relative;
+  width: 14.28%; /* 7열 기준 */
+  height: 65px; /* You can adjust the height as needed */
+  vertical-align: top;
+}
+.calendar-body td .schedule-content-wrapper {
+  width: 100%;
+  height: 100%; /* Make the content wrapper fill the cell */
+  overflow-y: auto; /* Add vertical scroll when content overflows */
+  overflow-x: hidden;
+  cursor: pointer;
+}
+.calendar-body td .schedule-content-wrapper:hover {
+  background-color: #f0f0f0;
+  color: #333;
+  transform: scale(1.02); /* 약간 확대 효과 */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 추가 */
+  border-radius: 5px; /* 가장자리를 부드럽게 */
+}
+.schedule {
+  margin-top: 2px;
+  padding: 2px;
+  font-size: 0.8em;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 5px;
+}
+
+/* 토요일, 일요일 색상 설정 */
+.claendar-table th:nth-child(1),
+.calendar-body tr td:nth-child(1) .schedule-content-day {
+  color: red;
+}
+.claendar-table th:nth-child(7),
+.calendar-body tr td:nth-child(7) .schedule-content-day {
+  color: blue;
+}
+
+.calendar-body tr td .schedule-content-day {
+  font-weight: 600;
+}

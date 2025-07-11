@@ -1,0 +1,109 @@
+.mypage_header {
+  font-size: 26px;
+  margin-bottom: 30px;
+}
+
+.mypage_title,
+.mypage_activities {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.work-header-container {
+  margin-right: 100px;
+}
+
+.mypage_info,
+.activity,
+.review_board {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #cfcfcf;
+  width: 800px;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.profile_image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 3px solid;
+}
+
+.profile_details {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.edit_profile_button {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #cfcfcf;
+  margin-left: 400px;
+}
+
+.mypage_activities {
+  margin-top: 20px;
+}
+
+.activity p {
+  margin-left: 40px;
+}
+
+.mydelete,
+.accrej_study {
+  background-color: rgb(246, 246, 246);
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #cfcfcf;
+  margin: 20px 0;
+}
+
+.review_praises ul {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.review_praises li {
+  background-color: #e4ffdf;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 7px;
+}
+
+.average_rating {
+  margin: 10px;
+}
+
+.review_left {
+  margin-left: 30px;
+  width: 100px;
+}
+
+.review_right {
+  margin-left: 25px;
+}
+
+.toggle-button {
+  padding: 5px 10px;
+  border: none;
+  color: #434343;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 520px;
+}

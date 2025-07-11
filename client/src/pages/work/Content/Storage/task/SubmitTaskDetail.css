@@ -1,0 +1,27 @@
+.submitTaskDetail-container {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+.submitTaskDetail-row {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #948a8a;
+}
+.submitTaskDetail-row-1 {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  color: #4e4949;
+}
+
+.submitTaskDetail-content {
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #948a8a;
+}

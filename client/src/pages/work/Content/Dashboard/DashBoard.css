@@ -1,0 +1,106 @@
+.dashboard-container {
+  width: 95%;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dday-container {
+  display: flex;
+}
+
+.dday1 {
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.dday2 {
+  color: gray;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  align-content: end;
+}
+
+.dashboard-content-container {
+  width: 95%;
+  height: 80vh;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 50px;
+}
+
+.dashboard-content-left {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.dashboard-content-left-1 {
+  height: 45%;
+  border: 1px solid #939393;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+.dashboard-content-left-1:hover {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3),
+    /* 외부(outset) 그림자 */ inset 1px 1px 10px rgba(0, 0, 0, 0.1); /* 내부(inset) 그림자 */
+}
+
+.dashboard-content-left-1-title {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 25px;
+  font-weight: 900;
+  gap: 10px;
+}
+.dashboard-content-left-1-content {
+  width: 95%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dashboard-content-left-1-content-row {
+  display: flex;
+  font-weight: 600;
+  padding: 10px 10px 10px 10px;
+  cursor: pointer;
+}
+.dashboard-content-left-1-content-row:hover {
+  background-color: #f0f0f0;
+  color: #333; /* 텍스트 색상을 조금 더 어두운 색으로 변경 */
+  transform: scale(1.02);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 추가 */
+  border-radius: 5px; /* 가장자리를 부드럽게 */
+  transition: all 0.2s ease-in-out; /* 부드러운 트랜지션 효과 */
+}
+.dashboard-content-title {
+  width: 80%;
+}
+.dashboard-content-date {
+  display: flex;
+  justify-content: flex-end;
+}
+.dashboard-content-right-wrap {
+  width: 60%;
+  height: 100%;
+  display: flex;
+}
+.dashboard-content-right-1 {
+  width: 100%;
+  height: 95%;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: 1px solid #939393;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-content-memo-title {
+  width: 80%;
+}

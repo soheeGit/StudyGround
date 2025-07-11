@@ -1,0 +1,163 @@
+.approve-container {
+  width: 100%;
+  margin-left: 180px;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: calc(100% - 300px);
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  font-size: 0.9em;
+  color: #8a8a8a;
+}
+
+.tab-selector {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.tab-selector button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1em;
+  border-bottom: 3px solid transparent;
+  color: #8a8a8a;
+}
+
+.tab-selector button.active {
+  border-bottom: 3px solid black;
+  color: black;
+}
+
+.study-group {
+}
+.tipButton-wrap {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  width: 5%;
+  display: flex;
+  align-items: center;
+}
+.tipButton {
+  border-radius: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background-color: #7ed321;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+}
+.autho-header-container {
+  display: flex;
+  width: 100%;
+}
+
+#span1 {
+  font-weight: bold;
+}
+
+.study-date {
+  color: #8a8a8a;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.participant-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 20px;
+}
+
+#participant-message {
+  margin-left: 40px;
+}
+
+.part-message {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.participant-info-box {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  border: 3px solid;
+  border-radius: 20px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+  padding-left: 40px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.participant-info-box1 {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.participant-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-title {
+  text-align: center;
+  color: #6b6b6b;
+}
+
+.info-content {
+  text-align: center;
+}
+
+.buttons {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.accept-btn {
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 0.9em;
+  background-color: #e0f7fa;
+}
+
+.reject-btn {
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 0.9em;
+  background-color: #ffebee;
+}
+
+/* hr {
+  border: none;
+  height: 2px;
+  background-color: #f0f0f0;
+} */

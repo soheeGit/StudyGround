@@ -1,0 +1,22 @@
+.color-picker {
+  margin-bottom: 20px;
+}
+
+.color-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 20px;
+}
+
+.color-picker-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-picker-box.selected {
+  transform: scale(1.2);
+  border: 2px solid black;
+}

@@ -1,0 +1,28 @@
+.add-memo-modal-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#input-title {
+  height: 40px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#input-content {
+  height: 290px;
+  font-size: 15px;
+}
+
+.add-memo-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.add-memo-buttons button {
+  height: 40px;
+  margin-left: 10px;
+  border-radius: 10px;
+}
